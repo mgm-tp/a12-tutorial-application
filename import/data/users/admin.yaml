@@ -1,0 +1,5 @@
+username: admin
+password: A12-admintest
+authorities:
+  - admin
+firstname: admin

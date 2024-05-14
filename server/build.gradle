@@ -1,0 +1,140 @@
+import com.bmuschko.gradle.docker.tasks.image.*
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
+subprojects {
+    ext.artifactsVar = {
+        archives bootJar
+    }
+
+    ext.publishingVar = {
+        publications {
+            serverBootJar(MavenPublication) {
+                groupId = rootProject.group
+                artifactId = serviceName
+                version = rootProject.version
+
+                artifact bootJar
+            }
+        }
+    }
+
+    // build server image using Paketo build pack
+    ext.bootBuildImageVar = {
+        environment = ['BP_JVM_VERSION': '17.*']
+        publish = false
+        builder = "${dockerRegistryForRead}/paketobuildpacks/builder:base"
+        runImage = "${dockerRegistryForRead}/paketobuildpacks/run:base-cnb"
+        imageName = calculateFullTag(serviceName)
+        if (dockerUseCredentials.toBoolean()) {
+            docker {
+                host = project.findProperty('dockerHost')
+                builderRegistry registryCredentialsForReadVar
+                publishRegistry registryCredentialsForPublishVar
+            }
+        }
+    }
+
+    if (!skipCheckstyle.toBoolean()) {
+        apply plugin: 'checkstyle'
+
+        def configDir = "${project.rootDir}/quality/checkstyle"
+
+        checkstyle {
+            toolVersion "${checkstyleVersion}"
+            configFile file("$configDir/checkstyle.xml")
+            ignoreFailures false
+        }
+
+        tasks.withType(Checkstyle).configureEach {
+            reports {
+                xml.required = true
+                html.required = true
+            }
+        }
+    }
+
+    // build server image using spring layer index approach
+    tasks.register('createDockerfile', Dockerfile) {
+        group 'docker'
+        dependsOn build
+
+        destFile = file("${buildDir}/Dockerfile")
+
+        def baseImage = "${dockerRegistryForRead}/${dockerSeverBaseImage}"
+
+        // NOTE: Mac M1 users may experience bad performance
+        if (DefaultNativePlatform.currentArchitecture.isArm()) {
+            baseImage = "--platform=linux/x86_64 $baseImage"
+        }
+
+        from "$baseImage as builder"
+        workingDir "extracted"
+        arg "JAR_FILE=libs/${project.name}-${project.version}.jar"
+        copyFile "\${JAR_FILE}", "application.jar"
+        runCommand "java -Djarmode=layertools -jar application.jar extract"
+
+        from baseImage
+        label(imageLabels)
+        runCommand "set -eux; " +
+            "groupadd -r -g 1001 a12; " +
+            "useradd -r -m -d /home/a12 -u 1001 -g 1001 a12; " +
+            "mkdir -p /var/lib/a12; " +
+            "chown -R a12:a12 /var/lib/a12;"
+        user "a12"
+        workingDir "/var/lib/a12/application"
+        copyFile "--from=builder extracted/dependencies/", "./"
+        copyFile "--from=builder extracted/spring-boot-loader/", "./"
+        copyFile "--from=builder extracted/snapshot-dependencies/", "./"
+        copyFile "--from=builder extracted/application/", "./"
+        entryPoint "java", "org.springframework.boot.loader.JarLauncher"
+    }
+
+    tasks.register('buildImagesPlain', DockerBuildImage) {
+        group 'docker'
+        dependsOn createDockerfile
+
+        images.add(calculateFullTag(serviceName))
+        inputDir.set(file(buildDir))
+        if (dockerUseCredentials.toBoolean()) {
+            dockerRegistryCredentialsForRead
+        }
+    }
+
+    tasks.register('pushImagesPlain', DockerPushImage) {
+        group 'docker'
+        dependsOn buildImagesPlain
+        images.add(calculateFullTag(serviceName))
+    }
+
+
+    tasks.register('buildImages') {
+        group 'docker'
+        if (usePaketoBuildPack.toBoolean()) {
+            bootBuildImage.publish = false
+            dependsOn bootBuildImage
+        } else {
+            dependsOn buildImagesPlain
+        }
+    }
+
+    tasks.register('pushImages') {
+        group 'docker'
+        dependsOn ':import:publish'
+        if (usePaketoBuildPack.toBoolean()) {
+            bootBuildImage.publish = true
+            dependsOn bootBuildImage
+        } else {
+            dependsOn pushImagesPlain
+        }
+    }
+
+    tasks.register('removeTagFull', DockerRemoveImage) {
+        group 'clean'
+        targetImageId calculateFullTag(serviceName)
+    }
+
+    tasks.register('cleanImages') {
+        group 'clean'
+        dependsOn removeTagFull
+    }
+}

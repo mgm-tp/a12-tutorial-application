@@ -1,0 +1,7 @@
+# Before publishing .npmignore is merged with .gitignore files,
+# see package.json > scripts > prepack.
+
+!.gitignore
+internal
+# It's necessary to include this empty line, as merge of .npmignore and .gitignore get's messed up otherwise
+

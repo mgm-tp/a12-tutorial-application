@@ -1,0 +1,95 @@
+{
+  "name": "Extend Data Services Permission Definition",
+  "description": "Authorization for user access",
+  "policies": [
+    {
+      "name": "Document Read By User Created",
+      "description": "User is only able to read the documents created by them",
+      "target": "hasAccessRight('DOCUMENT_READ') && containsAnyRole('user')",
+      "rules": [
+        "principal.username == #resource.createdBy"
+      ]
+    },
+    {
+      "name": "Document Delete By User Created",
+      "description": "User is only able to delete the documents created by them",
+      "target": "hasAccessRight('DOCUMENT_DELETE') && containsAnyRole('user')",
+      "rules": [
+        "principal.username == #resource.createdBy"
+      ]
+    },
+    {
+      "name": "User Has Actuator Path Access",
+      "description": "Users with access right ACCESS_ACTUATOR are allowed to access /actuator/** path",
+      "rules": [
+        "hasAccessRight('ACCESS_ACTUATOR')"
+      ]
+    },
+    {
+      "name": "User Has Attachment Upload Right",
+      "description": "Check that current user has access right to upload attachment.",
+      "rules": [
+        "hasAccessRight('ATTACHMENT_UPLOAD')"
+      ]
+    }
+  ],
+  "repositoryPolicies": [
+    {
+      "name": "Document List By User Created",
+      "description": "User is only able to see the documents created by them",
+      "target": "hasAccessRight('DOCUMENT_LIST') && containsAnyRole('user')",
+      "templates": [
+        "'created_by:' + principal.username"
+      ]
+    }
+  ],
+  "permissions": [
+    {
+      "name": "User Read Document Permission",
+      "policy-refs": [
+        "Document Read By User Created"
+      ],
+      "scopes": [
+        "Document Read"
+      ]
+    },
+    {
+      "name": "User Delete Document Permission",
+      "policy-refs": [
+        "Document Delete By User Created"
+      ],
+      "scopes": [
+        "Document Delete"
+      ]
+    },
+    {
+      "name": "User List Document Permission",
+      "repository-refs": [
+        "Document List By User Created"
+      ],
+      "scopes": [
+        "Document List"
+      ]
+    },
+    {
+      "name": "Actuator Access Permission",
+      "description": "Control actuator accessibility by relative URL",
+      "policy-refs": [
+        "User Has Actuator Path Access"
+      ],
+      "scopes": [
+        "RelativePath"
+      ]
+    },
+    {
+      "name": "Attachment Upload Access",
+      "description": "Check the current user has the correct rule, which has access right to upload Attachment.",
+      "policy-refs": [
+        "User Has Attachment Upload Right"
+      ],
+      "scopes": [
+        "Attachment Upload"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+dependencies {
+    // For versions comparison
+    implementation 'org.semver4j:semver4j:4.3.0'
+    //  For getting system OS information
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+}

@@ -1,0 +1,29 @@
+[
+    {
+        "jsonrpc": "2.0",
+        "method": "ADD_DOCUMENT",
+        "id": "AddPerson1",
+        "params": {
+            "document": {
+                "Person": {
+                    "PersonalData": {
+                        "FirstName": "Johny",
+                        "LastName": "Smith",
+                        "Email": "johny.smith@mgm-tp.com",
+                        "DateOfBirth": "1987-10-11",
+                        "Nationality": "British",
+                        "PlaceOfBirth": "London"
+                    },
+                    "Phones": [
+                        {
+                            "PhoneNumber": "123456",
+                            "Type": "WORK"
+                        }
+                    ]
+                }
+            },
+            "documentModelName": "Person-document",
+            "locale": "en"
+        }
+    }
+]

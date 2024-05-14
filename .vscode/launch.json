@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "name": "client start",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [ "start" ],
+            "cwd": "${workspaceFolder}/client"
+        },
+        {
+            "type": "java",
+            "name": "server start (local-db)",
+            "request": "launch",
+            "mainClass": "com.mgmtp.a12.template.server.ServerApplication",
+            "args": [
+                "--spring.profiles.active=local-db-env"
+            ],
+            "cwd": "${workspaceFolder}/server/app",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "server start (h2-in-mem)",
+            "request": "launch",
+            "mainClass": "com.mgmtp.a12.template.server.ServerApplication",
+            "args": [
+                "--spring.profiles.active=dev-env"
+            ],
+            "cwd": "${workspaceFolder}/server/app",
+            "projectName": "app"
+        }
+    ]
+}

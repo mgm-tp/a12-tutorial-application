@@ -1,0 +1,5 @@
+username: user1
+password: A12-user1test
+authorities:
+  - user
+firstname: user1

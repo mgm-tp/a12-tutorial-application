@@ -1,0 +1,214 @@
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import com.mgmtp.a12.Utils
+
+plugins {
+    alias(gradlePluginLibs.plugins.node.gradle)
+}
+
+sonar {
+    properties {
+        property 'sonar.sources', 'src'
+    }
+}
+
+ext {
+    imageLabels = ["name"       : "${calculateShortTag(clientName)}".toString(),
+                   "vendor"     : "mgm technology partners GmbH",
+                   "version"    : project.version,
+                   "release"    : "2023.06",
+                   "summary"    : "A Nginx-based server for serving A12 Client",
+                   "description": "The A12 Client is built around the established React/Redux ecosystem, integrates the A12 UI components like engines and widgets, and interact with the A12 Data Services in the backend via HTTP/REST endpoints."]
+}
+
+def versionsFile = file("$rootDir/tool-versions.json")
+def checkedVersions = [:]
+
+node {
+//    CONFIG: Uncommenting this line enables the use of npm ci for reproducible builds.
+//    npmInstallCommand = System.env.BUILD_NUMBER ? "ci" : "install"
+}
+
+nodeSetup.configure {
+    mustRunAfter 'checkNodeNpmVersions'
+    if (downloadNode.toBoolean()) {
+        //necessary to initiate up node plugin extension in configuration phase
+        project.node.download = true
+        dependsOn 'alignNodeNpmVersions'
+    }
+}
+
+npmSetup.configure {
+    mustRunAfter 'checkNodeNpmVersions'
+    if (downloadNode.toBoolean()) {
+        dependsOn 'alignNodeNpmVersions'
+    }
+}
+
+tasks.register('checkNodeNpmVersions') {
+    group 'Config'
+    description 'Checks if system Node and npm versions satisfy required versions in \'./tool-versions.json\' file.'
+
+    println "\nChecking Node and npm versions..."
+    checkedVersions.node = Utils.checkToolVersion(versionsFile, 'node')
+    checkedVersions.npm = Utils.checkToolVersion(versionsFile, 'npm')
+
+    if (!checkedVersions.node.versionSatisfies || !checkedVersions.npm.versionSatisfies) {
+        if (downloadNode.toBoolean()) {
+            println "Parameter 'downloadNode' set to 'true', versions will be aligned with requirements."
+        } else {
+            logger.warn("""\
+            WARNING: If tools do not satisfy recommended versions, the process can finish unexpectedly.
+            Please consider changing the versions or use '-PdownloadNode=true' parameter.
+            """.stripIndent())
+        }
+    }
+}
+
+tasks.register('alignNodeNpmVersions') {
+    group 'Config'
+    description "Aligns Node and npm versions with project requirements if initiated by parameter " +
+        "'-PdownloadNode=true'. Should not run separately."
+    mustRunAfter 'checkNodeNpmVersions'
+
+    doLast {
+        if (downloadNode.toBoolean()) {
+            project.node.version = checkedVersions.node.versionsFileVersion
+            if (checkedVersions.npm.versionSatisfies) {
+                if (checkedVersions.node.versionSatisfies) {
+                    project.node.download = false
+                    println "Versions aligned already, nothing to download."
+                } else {
+                    //avoid downloading npm if unnecessary
+                    project.node.npmVersion = ""
+                    println "Required Node version will be downloaded if necessary."
+                }
+            } else {
+                project.node.npmVersion = checkedVersions.npm.versionsFileVersion
+                println "Required Node and npm versions will be downloaded if necessary."
+            }
+        } else {
+            //if someone runs this task manually
+            throw new Exception ("Task 'alignNodeNpmVersions' should not run if property 'downloadNode' is set to false.")
+        }
+    }
+}
+
+tasks.register('compile', NpmTask) {
+    group 'build'
+    dependsOn npmInstall
+    finalizedBy test
+
+    if(skipESLintPrettier.toBoolean()) {
+        args = ['run-script', 'compile:skipESLintPrettier']
+    } else {
+        args = ['run-script', 'compile']
+    }
+}
+
+tasks.register('test', NpmTask) {
+    group 'build'
+    dependsOn compile
+    args = ['test']
+}
+
+tasks.register('webpack', NpmTask) {
+    group 'build'
+    dependsOn compile
+
+    args = ['run-script', 'webpack']
+}
+
+tasks.register('start', NpmTask) {
+    dependsOn "stop"
+    args = ['run-script', 'start']
+}
+
+tasks.register('stop', NodeTask) {
+    description 'Stops the service that runs on port defined in webpack-dev-server setup.'
+
+    script = file('scripts/kill-port.js')
+}
+
+tasks.register('universalizePackageLock', NodeTask) {
+    description 'Removes "resolved" and "integrity" keys and values from the lockfile.'
+
+    script = file('scripts/universalize-package-lock.js');
+}
+
+tasks.register('update', NpmTask) {
+    args = ['update']
+}
+
+tasks.register('prettierFix', NpmTask) {
+    description 'Fixes issues highlighted by prettier.'
+    args = ['run-script','prettier:fix']
+}
+
+assemble.dependsOn compile
+
+tasks.register('copyNginxConf', Sync) {
+    group 'docker'
+
+    from 'nginx.conf.template'
+    from 'nginx.conf.k8s'
+    into 'build'
+}
+
+tasks.register('createDockerfile', Dockerfile) {
+    group 'docker'
+    dependsOn webpack, copyNginxConf
+
+    destFile = file("$buildDir/Dockerfile")
+
+    def baseImage = "${dockerRegistryForRead}/${dockerClientBaseImage}"
+
+    from "$baseImage"
+    copyFile 'nginx.conf.k8s', '/etc/nginx/nginx.conf'
+    copyFile 'nginx.conf.template', '/etc/nginx/nginx.conf.template'
+    copyFile 'webpack', '/var/lib/a12/application/nginx/html'
+
+    runCommand "set -eux; " +
+        "touch /var/run/nginx.pid; " +
+        "addgroup -S -g 1001 a12; " +
+        "adduser -S --home /home/a12 --uid 1001 --ingroup a12 a12; " +
+        "mkdir -p /var/lib/a12; " +
+        "chown -R a12:a12 /var/lib/a12; " +
+        "chown -R a12:a12 /etc/nginx; " +
+        "chown -R a12:a12 /var/cache/nginx;" +
+        "chown -R a12:a12 /var/run/nginx.pid;"
+    user "a12"
+    workingDir "/var/lib/a12/application"
+    label(imageLabels)
+    defaultCommand "/bin/sh\" , \"-c\" , \"([ -z \${NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL} ] || envsubst '\${NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf) && cat /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+}
+
+tasks.register('buildImages', DockerBuildImage) {
+    group 'docker'
+    dependsOn createDockerfile
+
+    images.add(calculateFullTag(clientName))
+    inputDir.set(file(buildDir))
+    if (dockerUseCredentials.toBoolean()) {
+        dockerRegistryCredentialsForRead
+    }
+}
+
+tasks.register('pushImages', DockerPushImage) {
+    group 'docker'
+    dependsOn buildImages
+
+    images.add(calculateFullTag(clientName))
+}
+
+tasks.register('removeTagFull', DockerRemoveImage) {
+    group 'clean'
+    targetImageId calculateFullTag(clientName)
+}
+
+tasks.register('cleanImages') {
+    group 'clean'
+    dependsOn removeTagFull
+}

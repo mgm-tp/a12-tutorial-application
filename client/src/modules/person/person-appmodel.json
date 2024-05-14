@@ -1,0 +1,138 @@
+{
+  "header": {
+    "id": "person-appmodel",
+    "modelType": "application",
+    "modelVersion": "5.0.0",
+    "locales": [
+      {
+        "code": "en"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "admin,user"
+      }
+    ]
+  },
+  "content": {
+    "modules": [
+      {
+        "name": "PersonModule",
+        "menu": {
+          "name": "Person",
+          "label": [
+            {
+              "locale": "en",
+              "text": "Person"
+            },
+            {
+              "locale": "de",
+              "text": "Person"
+            }
+          ],
+          "initialActivity": {
+            "descriptor": {
+              "module": "Person"
+            }
+          }
+        },
+        "flows": [
+          {
+            "name": "PersonFlow",
+            "scenes": [
+              {
+                "name": "PersonOverview",
+                "description": "Overview of Person Documents",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Person"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": false
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "REGION_CLEAR",
+                      "layout": {
+                        "name": "MasterDetail"
+                      }
+                    },
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "OverviewEngine",
+                      "models": [
+                        {
+                          "modelType": "overview",
+                          "name": "Person-overview"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "name": "PersonForm",
+                "description": "Form showing on Person Document",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Person"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": true
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "FormEngine",
+                      "constraints": {
+                        "type": "MasterDetail"
+                      },
+                      "models": [
+                        {
+                          "modelType": "form",
+                          "name": "Person-form",
+                          "documentModel": "Person-document"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "region": {
+      "name": "APP",
+      "layout": {
+        "name": "ApplicationFrame"
+      },
+      "subRegions": [
+        {
+          "name": "CONTENT",
+          "layout": {
+            "name": "MasterDetail"
+          }
+        }
+      ]
+    },
+    "defaultRegion": [
+      "CONTENT"
+    ],
+    "initialActivity": {
+      "descriptor": {
+        "module": "Person"
+      }
+    }
+  }
+}

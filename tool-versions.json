@@ -1,0 +1,34 @@
+{ "notesForUsage": "Versions of tools can be written in NPM semver style described here: https://github.com/npm/node-semver.",
+  "tools": {
+    "jdk": {
+      "name": "JDK",
+      "superscript": "",
+      "version": "17",
+      "note": ""
+    },
+    "gradle": {
+      "name": "Gradle",
+      "superscript": "1",
+      "version": ">=7.6.x <8",
+      "note": "Optional. Gradle Wrapper <sup>2</sup> can be used instead."
+    },
+    "node": {
+      "name": "Node",
+      "superscript": "",
+      "version": "18.15.x",
+      "note": "Optional. Gradle node plugin <sup>3</sup> can be used instead."
+    },
+    "npm": {
+      "name": "npm",
+      "superscript": "1",
+      "version": "9.5.x",
+      "note": "Optional. Gradle node plugin <sup>3</sup> can be used instead."
+    },
+    "docker": {
+      "name": "Docker",
+      "superscript": "1",
+      "version": ">=20.x",
+      "note": ""
+    }
+  }
+}

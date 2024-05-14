@@ -1,0 +1,50 @@
+{
+  "serverPackage": {
+    "current": "com.mgmtp.a12.template.server",
+    "alternative": "your.project.server"
+  },
+  "projectProperties": {
+    "current": "mgmtp.a12.template.server",
+    "alternative": "your.project.server"
+  },
+  "projectGroup": {
+    "current": "com.mgmtp.your-project-name",
+    "alternative": "your.project.group"
+  },
+  "projectName": {
+    "current": "your-project-name",
+    "alternative": "your-project-name"
+  },
+  "title": {
+    "current": "Your-Project-Name",
+    "alternative": "your-project-title"
+  },
+  "dsDatabaseName": {
+    "current": "your-ds-db-name",
+    "alternative": "your-ds-db-name"
+  },
+  "dsDatabaseUsername": {
+    "current": "your-ds-username",
+    "alternative": "your-ds-username"
+  },
+  "dsDatabasePassword": {
+    "current": "your-ds-password",
+    "alternative": "your-ds-password"
+  },
+  "csDatabaseName": {
+    "current": "your-cs-db-name",
+    "alternative": "your-cs-db-name"
+  },
+  "csDatabaseUsername": {
+    "current": "your-cs-username",
+    "alternative": "your-cs-username"
+  },
+  "csDatabasePassword": {
+    "current": "your-cs-password",
+    "alternative": "your-cs-password"
+  },
+  "postgresDatabasePassword": {
+    "current": "your-postgres-password",
+    "alternative": "your-postgres-password"
+  }
+}

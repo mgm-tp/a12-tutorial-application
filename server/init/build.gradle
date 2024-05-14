@@ -1,0 +1,49 @@
+import com.mgmtp.a12.A12AlignmentRule
+
+plugins {
+    id 'java'
+    alias(gradlePluginLibs.plugins.spring.boot)
+    alias(gradlePluginLibs.plugins.test.logger)
+}
+
+ext {
+    serviceName = rootProject.serverInitName
+    imageLabels = ["name"       : "${calculateShortTag(rootProject.serverInitName)}".toString(),
+                   "vendor"     : "mgm technology partners GmbH",
+                   "version"    : project.version,
+                   "release"    : "2023.06",
+                   "summary"    : "A12 Data Services Init application for initialization and migration purposes in production environments",
+                   "description": "A12 Data Services Init application to deal with models and documents initialization and migration purposes in production environments"]
+}
+
+dependencies {
+
+    // Spring
+    annotationProcessor libs.spring.boot.configuration.processor
+    // developmentOnly libs.spring.boot.devtools  // Causes problems when running from IDE
+
+    // A12 dataservices distribution
+    implementation a12Libs.dataservices.server.init.app
+
+    // Align A12 Versions
+    components.all(A12AlignmentRule)
+
+    // Virtual BOMs
+    implementation(platform(a12Libs.base.bom))
+
+    // Native BOMs
+    implementation(platform(a12Libs.kernel.bom))
+    implementation(platform(a12Libs.uaa.bom))
+    implementation(platform(a12Libs.dataservices.bom))
+}
+
+springBoot {
+    mainClass = 'com.mgmtp.a12.dataservices.init.app.InitAppApplication'
+}
+
+artifacts artifactsVar
+
+publishing publishingVar
+
+// Docker builds
+bootBuildImage bootBuildImageVar

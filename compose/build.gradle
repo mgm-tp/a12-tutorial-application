@@ -1,0 +1,24 @@
+plugins {
+    alias(gradlePluginLibs.plugins.docker.compose)
+}
+
+dockerCompose {
+    projectName = "${rootProject.name}"
+    captureContainersOutput = true
+    environment.put 'VERSION', "${version}"
+    environment.put 'PROJECT_NAME', "${rootProject.name}"
+    environment.put 'FRONTEND_IMAGE', "${project.calculateFullTag(rootProject.clientName)}"
+    environment.put 'SERVER_IMAGE', "${project.calculateFullTag(rootProject.serverName)}"
+    environment.put 'DOCKER_REGISTRY_FOR_READ', "${dockerRegistryForRead}"
+    environment.put 'DOCKER_REGISTRY_FOR_PUBLISH', "${dockerRegistryForPublish}"
+
+    postgres {
+        projectName = "${rootProject.name}"
+        startedServices = ['postgres']
+    }
+
+    noclient {
+        projectName = "${rootProject.name}"
+        startedServices = ['server', 'postgres']
+    }
+}

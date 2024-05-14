@@ -1,0 +1,163 @@
+{
+  "header": {
+    "id": "Person-overview",
+    "modelType": "overview",
+    "modelVersion": "36.4.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [
+      {
+        "locale": "en",
+        "text": "Overview"
+      },
+      {
+        "locale": "de",
+        "text": "Überblick"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "admin,user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "purpose": "document-model-for-overview",
+        "modelType": "document",
+        "alias": "DM",
+        "reference": "Person-document"
+      }
+    ]
+  },
+  "content": {
+    "subHeaderBox": {
+      "majorElements": [
+        {
+          "type": "search"
+        },
+        {
+          "type": "filter"
+        }
+      ],
+      "minorElements": [
+        {
+          "type": "button",
+          "label": [
+            {
+              "locale": "en",
+              "text": "Add"
+            },
+            {
+              "locale": "de",
+              "text": "hinzufügen"
+            }
+          ],
+          "event": "add",
+          "destructive": false,
+          "icon": {
+            "name": "add"
+          },
+          "primary": false
+        }
+      ]
+    },
+    "footerBox": {
+      "majorElements": [],
+      "minorElements": []
+    },
+    "columns": [
+      {
+        "id": "column-c3b30",
+        "label": [
+          {
+            "locale": "en",
+            "text": "Profile picture"
+          },
+          {
+            "locale": "de",
+            "text": "Profilbild"
+          }
+        ],
+        "width": 1,
+        "elementRef": "group_05909",
+        "sortable": false
+      },
+      {
+        "id": "column-5bd25",
+        "width": 1,
+        "elementRef": "F3",
+        "sortable": true,
+        "preferredSorting": "ASC"
+      },
+      {
+        "id": "column-5847d",
+        "width": 1,
+        "elementRef": "F4",
+        "sortable": true,
+        "preferredSorting": "ASC"
+      },
+      {
+        "id": "column-3eb14",
+        "width": 1,
+        "elementRef": "F7",
+        "sortable": false
+      },
+      {
+        "id": "column-d37d5",
+        "width": 1,
+        "elementRef": "F9",
+        "sortable": false
+      }
+    ],
+    "rowActionGroup": {
+      "actions": [
+        {
+          "event": "event_delete",
+          "confirmation": {
+            "title": [
+              {
+                "locale": "en",
+                "text": "Delete Item"
+              },
+              {
+                "locale": "de",
+                "text": "Item löschen"
+              }
+            ],
+            "message": [
+              {
+                "locale": "en",
+                "text": "Do you really want to delete this item?"
+              },
+              {
+                "locale": "de",
+                "text": "Möchten Sie diesen Eintrag wirklich löschen?"
+              }
+            ]
+          },
+          "icon": {
+            "name": "delete"
+          },
+          "primary": false
+        }
+      ]
+    },
+    "configuration": {
+      "pagingSize": 10,
+      "showFullTextSearch": true,
+      "enableFilter": true,
+      "filterConfiguration": {
+        "showFilterButton": true,
+        "showFilterBar": true,
+        "filterMode": "all"
+      }
+    }
+  }
+}

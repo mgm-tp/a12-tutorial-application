@@ -1,0 +1,38 @@
+# Tools / IDE
+.classpath
+.project
+.settings
+.idea
+.sdkmanrc
+**/*.iml
+
+# Dev configs
+**/developer.properties
+
+# Build tools
+**/.gradle/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Build directories
+**/build
+**/bin
+**/out
+**/target
+**/node_modules
+**/lib
+**/.npm
+
+# Log files
+*.log
+*.gz
+*.tgz
+
+# Other
+**/*.bak
+*.txt
+.DS_Store

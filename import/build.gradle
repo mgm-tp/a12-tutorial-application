@@ -1,0 +1,49 @@
+def importDirectory = file("${projectDir}")
+def hasPackableContent = hasContent(importDirectory)
+
+tasks.register('importsPackage', Zip) {
+    group 'Publishing'
+    description 'Packages importable resources of ProjectTemplate to zip.'
+
+    from importDirectory
+    exclude 'build','build.gradle'
+    archiveBaseName.set('project-template-imports')
+    if (hasPackableContent) {
+        doLast {
+            println "Content of $importDirectory packed."
+        }
+    } else {
+        println "No packable files in directory $importDirectory."
+    }
+}
+
+if (hasPackableContent) {
+    publishing {
+        publications {
+            importsZip(MavenPublication) {
+                groupId rootProject.group
+                artifactId 'project-template-imports'
+                artifact source: importsPackage, extension: 'zip'
+                version rootProject.version
+                pom {
+                    name = 'Project Template Imports'
+                    description = 'Packed resources to be imported to Project Template.'
+                }
+            }
+        }
+    }
+
+    publish {
+        dependsOn 'importsPackage'
+    }
+}
+
+boolean hasContent (File importDir) {
+    def hasContent = importDir.listFiles().any { file ->
+        file.name != 'build' && file.name != 'build.gradle'
+    }
+    if (!hasContent) {
+        println "No packable files in directory $importDir."
+    }
+    return hasContent
+}

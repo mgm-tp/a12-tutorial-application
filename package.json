@@ -1,0 +1,22 @@
+{
+  "name": "@com.mgmtp.a12.projecttemplate/project-template",
+  "version": "202306.6.0-local-auth",
+  "description": "Project Template",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@bitbucket.mgm-tp.com:7999/a12/full-stack-project-template.git"
+  },
+  "publishConfig": {
+    "registry": "https://artifacts.mgm-tp.com/artifactory/api/npm/a12-npm-local"
+  },
+  "keywords": [
+    "a12",
+    "project",
+    "template"
+  ],
+  "author": "mgm technology partners",
+  "license": "UNLICENSED",
+  "scripts": {
+    "prepack": "cat .gitignore >> .npmignore;"
+  }
+}

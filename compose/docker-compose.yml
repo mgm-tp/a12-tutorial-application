@@ -1,0 +1,81 @@
+version: "2.4"
+
+services:
+  frontend:
+    image: ${FRONTEND_IMAGE}
+    container_name: ${PROJECT_NAME}_frontend
+    environment:
+      NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL: http://server:8080/api
+    ports:
+      - 8081:8081
+    depends_on:
+      - "server"
+    networks:
+      - a12_compose
+
+  server:
+    image: ${SERVER_IMAGE}
+    container_name: ${PROJECT_NAME}_server
+    environment:
+      SPRING_PROFILES_ACTIVE: dev-env,external_postgres
+      SERVER_PORT: 8080
+      SERVER_ADDRESS: 0.0.0.0
+
+      SPRING_DATASOURCES_DATASERVICES_URL: jdbc:postgresql://postgres:5432/your-ds-db-name
+      SPRING_DATASOURCES_DATASERVICES_USERNAME: your-ds-username
+      SPRING_DATASOURCES_DATASERVICES_PASSWORD: your-ds-password
+      SPRING_DATASOURCES_CONTENTSTORE_URL: jdbc:postgresql://postgres:5432/your-cs-db-name
+      SPRING_DATASOURCES_CONTENTSTORE_USERNAME: your-cs-username
+      SPRING_DATASOURCES_CONTENTSTORE_PASSWORD: your-cs-password
+      SPRING_DATASOURCES_CONTENTSTORE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE: postgresql
+      SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      MGMTP_A12_DATASERVICES_CONTENTSTORE_BASE-URL: http://localhost:8082
+      MGMTP_A12_DATASERVICES_SEARCH_INDEX_INITIALIZATION_MODE: update_index
+      MGMTP_A12_UAA_AUTHENTICATION_USER_ACCESS-RIGHTS-RESOURCE: file:/var/lib/a12/data/import/data/roles.yaml
+      MGMTP_A12_UAA_AUTHORIZATION_CHILD-AUTHORIZATION-DEFINITIONS: file:/var/lib/a12/data/import/data/childAuthorizationDefinition.json
+      MGMTP_A12_DATASERVICES_INITIALIZATION_SCRIPTS_JSONRPC_PATH: file:/var/lib/a12/data/import/data/request/*.json
+      MGMTP_A12_DATASERVICES_INITIALIZATION_IMPORT_MODELS_PATH: file:/var/lib/a12/data/import/models/
+      MGMTP_A12_UAA_AUTHENTICATION_USER_LOCAL-CONFIG_USER-RESOURCES: file:/var/lib/a12/data/import/data/users/*.yaml
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - a12_compose
+    ports:
+      - 8082:8080
+    volumes:
+      - ../import:/var/lib/a12/data/import
+
+  postgres:
+    image: ${DOCKER_REGISTRY_FOR_READ}/postgres:${POSTGRES_VERSION}
+    container_name: ${PROJECT_NAME}_postgres
+    ports:
+      - 8083:5432
+    environment:
+      POSTGRES_PASSWORD: your-postgres-password
+      DATA_SERVICES_USER: your-ds-username
+      DATA_SERVICES_PASSWORD: your-ds-password
+      DATA_SERVICES_DB: your-ds-db-name
+      CONTENT_STORE_USER: your-cs-username
+      CONTENT_STORE_PASSWORD: your-cs-password
+      CONTENT_STORE_DB: your-cs-db-name
+    healthcheck:
+      #       Checks whether Postgres is ready.
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready --username your-ds-username --dbname your-ds-db-name && pg_isready --username your-cs-username --dbname your-cs-db-name",
+        ]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+    volumes:
+      - ./postgres/db-init.sh:/docker-entrypoint-initdb.d/db-init.sh
+    networks:
+      - a12_compose
+
+networks:
+  a12_compose:
+    driver: bridge

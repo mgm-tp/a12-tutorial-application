@@ -1,0 +1,204 @@
+import com.mgmtp.a12.Utils
+
+plugins {
+    alias(gradlePluginLibs.plugins.docker.remote.api)
+    alias(gradlePluginLibs.plugins.versions.update)
+    alias(gradlePluginLibs.plugins.sonarqube)
+}
+
+sonar {
+    properties {
+        property 'sonar.projectKey', 'Project-Template'
+        property 'sonar.projectName', 'Project Template'
+        property 'sonar.projectVersion', "${rootProject.version}"
+        property 'sonar.log.level', 'TRACE'
+        property 'sonar.scm.provider', 'git'
+        property 'sonar.qualitygate.wait', true
+    }
+}
+
+allprojects {
+    apply plugin: 'base'
+}
+
+project.ext {
+    imageGroup = project.group
+}
+
+subprojects {
+    apply {
+        plugin 'maven-publish'
+        plugin 'com.bmuschko.docker-remote-api'
+        plugin 'org.sonarqube'
+    }
+
+    ext.registryCredentialsForPublishVar = {
+        url = dockerRegistryForPublish
+        username = project.repository_username
+        password = project.repository_password
+    }
+
+    ext.registryCredentialsForReadVar = {
+        url = dockerRegistryForRead
+        username = project.repository_username
+        password = project.repository_password
+    }
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    if (dockerUseCredentials.toBoolean()) {
+        docker {
+            url = project.findProperty('dockerHost') ?: url.get()
+            registryCredentials registryCredentialsForPublishVar
+        }
+
+        ext.dockerRegistryCredentialsForRead = docker {
+            registryCredentials registryCredentialsForReadVar
+        }
+    }
+
+    ext.calculateShortTag = { String name -> "${rootProject.name}-${name}" }
+    ext.calculateFullTag = { String name ->
+        if (project.hasProperty("variant")) {
+            String variant = project.getProperty("variant")
+            "${dockerRegistryForPublish}/${imageGroup}/${name}/${variant}:${version}"
+        } else {
+            "${dockerRegistryForPublish}/${imageGroup}/${name}:${version}"
+        }
+    }
+}
+
+tasks.register('getVersion') {
+    println project.version
+}
+
+def readmeFile = file("README.md")
+def versionsFile = file("tool-versions.json")
+//should run with every build
+build.dependsOn('updateReadmeToolsVersions')
+tasks.register('updateReadmeToolsVersions') {
+    group 'Config'
+    description "Checks if './tool-versions.json' file was changed and updates tool versions table in README accordingly."
+
+    def toolFileDiff
+    def diffExitCode
+    try {
+        println "\nChecking diff of '$versionsFile.name'."
+        toolFileDiff = ("git diff --ignore-cr-at-eol --exit-code HEAD $versionsFile").execute()
+        diffExitCode = toolFileDiff.waitFor()
+    } catch (Exception e) {
+        logger.warn("""\
+                There is probably no git installed on the system. Diff for '$versionsFile.name' finished with error:
+                $e
+                Tool versions table will be updated regardless of diff.""".stripIndent())
+        diffExitCode = 127
+    }
+
+    if (diffExitCode == 0) {
+        println "'$versionsFile.name' not changed, no need to update '$readmeFile.name' tool versions table.\n"
+    } else {
+        println "'$versionsFile.name' possibly changed, updating tool versions table in '$readmeFile.name' from '$versionsFile.name'."
+        Utils.updateReadmeToolVersions(versionsFile, readmeFile)
+    }
+}
+
+//should run with every build
+check.dependsOn('checkToolVersions')
+tasks.register('checkToolVersions') {
+    group 'Config'
+    description 'Checks if tool system versions satisfy required versions in \'./tool-versions.json\' file.'
+
+    dependsOn ':client:checkNodeNpmVersions'
+    println "\nChecking tool versions..."
+    def dockerSatisfies = Utils.checkToolVersion(versionsFile, 'docker').versionSatisfies
+    def jdkSatisfies = Utils.checkToolVersion(versionsFile, 'jdk').versionSatisfies
+    def gradleSatisfies = Utils.checkToolVersion(versionsFile, 'gradle').versionSatisfies
+    if (!dockerSatisfies || !jdkSatisfies || !gradleSatisfies) {
+        def gradleWarn = ""
+        if (!gradleSatisfies) {
+            gradleWarn = "\nPlease consider using 'gradlew' wrapper instead of locally installed 'gradle'."
+        }
+        logger.warn("WARNING: If tools do not satisfy recommended versions, the process can finish unexpectedly." + gradleWarn + "\n")
+    }
+}
+
+tasks.register('getJiraTicket') {
+    if (project.findProperty('jiraTicket')) {
+        println project.jiraTicket
+    }
+}
+
+tasks.register('initProject') {
+    // TODO: Remove these lines below in your project. This is only used for the adapting in the project template.
+    // BEGIN
+    // Only execute on Jenkins
+    if (System.env.BUILD_NUMBER) {
+        imageGroup = 'com.mgmtp.a12.projecttemplate/full-stack-template-test-only'
+        allprojects.each { project ->
+            project.dockerRegistryForPublish = 'a12.dockerregistry.mgm-tp.com'
+            project.group = 'com.mgmtp.a12.projecttemplate'
+        }
+        ant.propertyfile(file: 'gradle.properties') {
+            entry(key: 'group', value: 'com.mgmtp.a12.projecttemplate')
+            entry(key: 'dockerRegistryForPublish', value: 'a12.dockerregistry.mgm-tp.com')
+        }
+    }
+    if (project.hasProperty("releaseVersion")) {
+        String projectVersion = project.getProperty("releaseVersion")
+        allprojects.each { project -> project.version = projectVersion
+        }
+        ant.propertyfile(file: 'gradle.properties') {
+            entry(key: 'version', value: projectVersion)
+        }
+        return
+    }
+    // END
+
+    String projectVersion = project.version.split('-')[0].trim()
+    if (System.env.BUILD_NUMBER) {
+        // TODO: We currently keep it simple here to publish only SNAPSHOT version. You should update this pattern to adapt with your project's strategy.
+        projectVersion = projectVersion + "-build${String.format("%05d", Integer.parseInt(System.env.BUILD_NUMBER))}-SNAPSHOT"
+
+        allprojects.each { project -> project.version = projectVersion
+        }
+        ant.propertyfile(file: 'gradle.properties') {
+            entry(key: 'version', value: projectVersion)
+        }
+    }
+}
+
+tasks.register('test') {
+    dependsOn initProject
+}
+
+tasks.register('prerelease') {
+    dependsOn test, initProject
+}
+
+subprojects.each {
+    test.dependsOn it.getTasksByName('test', true), it.getTasksByName('checkstyleMain', true)
+    prerelease.dependsOn it.getTasksByName('pushImages', true)
+}
+
+tasks.register("replacePlaceholders") {
+    doLast {
+        def filesContainingDocs = fileTree("${project.projectDir}")
+        def setupFile = new File("setup.json")
+        Utils.replacePlaceholders(setupFile, filesContainingDocs, project.projectDir.path)
+    }
+}
+
+tasks.register("buildImagesComposeUp") {
+    group 'Docker'
+
+    description 'Alias for combining image build and docker compose tasks to improve user experience.'
+
+    subprojects.each {
+        dependsOn it.getTasksByName('buildImages', true)
+
+    }
+    finalizedBy ':compose:composeUp'
+}

@@ -1,0 +1,59 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "declarationMap": true,
+        "downlevelIteration": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "incremental": true,
+        "jsx": "react",
+        "lib": [
+            "DOM",
+            "ES2016",
+            "ES2017.Intl",
+            "ES2017.Object",
+            "ES2017.String",
+            "ES2017.TypedArrays",
+            "ES2018.AsyncGenerator",
+            "ES2018.AsyncIterable",
+            "ES2018.Intl",
+            "ES2018.Promise",
+            "ES2018.Regexp",
+            "ES2019.Array",
+            "ES2019.Object",
+            "ES2019.String",
+            "ES2019.Symbol",
+            "ES2020.Intl",
+            "ES2020.Promise",
+            "ES2020.String",
+            "ES2020.Symbol.WellKnown"
+        ],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "newLine": "LF",
+        "noEmitOnError": true,
+        "noErrorTruncation": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": false,
+        "outDir": "./build/javascript",
+        "preserveConstEnums": true,
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "ES2020",
+        "tsBuildInfoFile": "./build/tsconfig.tsbuildinfo",
+        "typeRoots": [
+            "./node_modules/@types"
+        ],
+        "types": [
+            "jest",
+            "webpack-env"
+        ]
+    },
+    "include": [
+        "./src/**/*",
+        "./test/**/*"
+    ]
+}
