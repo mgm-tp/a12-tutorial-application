@@ -29,8 +29,15 @@
         <property name="message" value="Line has trailing spaces."/>
     </module>
 
+
     <module name="TreeWalker">
         <property name="fileExtensions" value="java"/>
+        <module name="ImportControl">
+            <property name="severity" value="error"/>
+            <property name="file" value="${importControlFile}"/>
+            <property name="path" value="^.*[\\/]src[\\/]main[\\/].*$"/>
+        </module>
+
 
         <module name="SuppressWarningsHolder"/>
 
@@ -164,4 +171,5 @@
             <property name="severity" value="error"/>
         </module>
     </module>
+
 </module>

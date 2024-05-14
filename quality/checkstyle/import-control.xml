@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE import-control PUBLIC
+        "-//Checkstyle//DTD ImportControl Configuration 1.4//EN"
+        "https://checkstyle.org/dtds/import_control_1_4.dtd">
+<import-control pkg="com.mgmtp.a12.template.*" strategyOnMismatch="allowed" regex="true">
+    <allow class="com.mgmtp.a12.template(\.\w+)*\.internal(\.\w+)*" regex="true" />
+    <disallow class=".*\.internal(\.\w+)*" regex="true" />
+</import-control>

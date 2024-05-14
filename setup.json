@@ -15,6 +15,10 @@
     "current": "your-project-name",
     "alternative": "your-project-name"
   },
+  "appModelName": {
+    "current": "YourAppModel_AM",
+    "alternative": "YourAppModel_AM"
+  },
   "title": {
     "current": "Your-Project-Name",
     "alternative": "your-project-title"

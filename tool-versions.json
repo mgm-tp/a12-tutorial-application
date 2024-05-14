@@ -3,13 +3,13 @@
     "jdk": {
       "name": "JDK",
       "superscript": "",
-      "version": "17",
+      "version": "17||21",
       "note": ""
     },
     "gradle": {
       "name": "Gradle",
       "superscript": "1",
-      "version": ">=7.6.x <8",
+      "version": ">=8.5.x <9",
       "note": "Optional. Gradle Wrapper <sup>2</sup> can be used instead."
     },
     "node": {

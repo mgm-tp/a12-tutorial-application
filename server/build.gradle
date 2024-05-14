@@ -20,7 +20,7 @@ subprojects {
 
     // build server image using Paketo build pack
     ext.bootBuildImageVar = {
-        environment = ['BP_JVM_VERSION': '17.*']
+        environment = ['BP_JVM_VERSION': '21.*']
         publish = false
         builder = "${dockerRegistryForRead}/paketobuildpacks/builder:base"
         runImage = "${dockerRegistryForRead}/paketobuildpacks/run:base-cnb"
@@ -42,6 +42,7 @@ subprojects {
         checkstyle {
             toolVersion "${checkstyleVersion}"
             configFile file("$configDir/checkstyle.xml")
+            configProperties = ['importControlFile': "${configDir}/import-control.xml"]
             ignoreFailures false
         }
 
@@ -62,9 +63,10 @@ subprojects {
 
         def baseImage = "${dockerRegistryForRead}/${dockerSeverBaseImage}"
 
-        // NOTE: Mac M1 users may experience bad performance
-        if (DefaultNativePlatform.currentArchitecture.isArm()) {
-            baseImage = "--platform=linux/x86_64 $baseImage"
+        // NOTE: Apple Silicon users may experience bad performance
+        def currentArchitecture = DefaultNativePlatform.currentArchitecture
+        if (currentArchitecture.isArm() || (currentArchitecture.getName().toLowerCase() in ['aarch64','arm64'])) {
+            baseImage = "--platform=linux/amd64 $baseImage"
         }
 
         from "$baseImage as builder"
@@ -86,7 +88,7 @@ subprojects {
         copyFile "--from=builder extracted/spring-boot-loader/", "./"
         copyFile "--from=builder extracted/snapshot-dependencies/", "./"
         copyFile "--from=builder extracted/application/", "./"
-        entryPoint "java", "org.springframework.boot.loader.JarLauncher"
+        entryPoint "java", "org.springframework.boot.loader.launch.JarLauncher"
     }
 
     tasks.register('buildImagesPlain', DockerBuildImage) {

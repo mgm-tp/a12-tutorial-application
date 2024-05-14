@@ -8,9 +8,9 @@ String downstreamBuildResult = 'Not triggerred'
 // BEGIN environment specific variables
 // TODO: Adapt the following variables according to your Jenkins build environment
 String BUILD_AGENT_LABEL = 'linux-node'
-String GRADLE_VERSION = 'Gradle7'
+String GRADLE_VERSION = 'Gradle8'
 @Field
-String JDK_VERSION = 'OpenJDK17'
+String JDK_VERSION = 'OpenJDK21'
 @Field
 String NODE_JS_VERSION = 'Node18'
 @Field

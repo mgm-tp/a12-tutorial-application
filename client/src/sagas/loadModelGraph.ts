@@ -8,7 +8,7 @@ import { UaaActions } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
 
 /**
  * Custom saga for loading the model graph.
- * This saga listens for {@link UaaActions.loggedIn} actions and triggers the {@link LoadModelGraphWorker}.
+ * This saga listens for {@link UaaActions.modifiedOidcUser} actions and triggers the {@link LoadModelGraphWorker}.
  *
  * @returns An iterator for handling saga effects.
  */
@@ -23,12 +23,12 @@ export function* LoadModelGraphSaga(): SagaIterator {
  * @returns An iterator for handling saga effects.
  */
 function* LoadModelGraphWorker(): SagaIterator {
-    const serverConnecter = ConnectorLocator.getInstance().getServerConnector() as RestServerConnector;
+    const serverConnector = ConnectorLocator.getInstance().getServerConnector() as RestServerConnector;
     const modelGraphState = yield* select(ModelSelectors.modelGraph());
 
     if (!hasDocumentsInModelGraphState(modelGraphState)) {
         const modelGraph = yield* call(() =>
-            serverConnecter.fetchData(ModelGraph.build(true)).then((response) => response.json())
+            serverConnector.fetchData(ModelGraph.build()).then((response) => response.json())
         );
         yield* put(ModelActions.setModelGraph(modelGraph));
     }

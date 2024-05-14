@@ -5,7 +5,7 @@
     <option name="INCLUDE_PROVIDED_SCOPE" value="false"/>
     <module name="your-project-name.server.app.main"/>
     <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE"/>
-    <option name="SPRING_BOOT_MAIN_CLASS" value="com.mgmtp.a12.template.server.ServerApplication"/>
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.mgmtp.a12.template.server.ProjectTemplateServerApplication"/>
     <option name="WORKING_DIRECTORY" value="file://server/app"/>
     <method v="2">
       <option name="Make" enabled="true"/>

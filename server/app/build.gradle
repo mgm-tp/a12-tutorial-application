@@ -6,12 +6,18 @@ plugins {
     alias(gradlePluginLibs.plugins.test.logger)
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 ext {
     serviceName = rootProject.serverName
     imageLabels = ["name"       : "${calculateShortTag(rootProject.serverName)}".toString(),
                    "vendor"     : "mgm technology partners GmbH",
-                   "version"    : project.version,
-                   "release"    : "2023.06",
+                   "version"    : packageJsonVersion,
+                   "release"    : project.version,
                    "summary"    : "A Data Services extensible server application that provides all functionalities to facilitate A12 Application",
                    "description": "A Data Services server with API and implementations to deal with models and documents supporting creation, retrieval, update, deletion and querying"]
 }
@@ -28,6 +34,9 @@ dependencies {
     // A12 Dataservices
     implementation a12Libs.dataservices.server.app
 
+    // A12 UAA
+    implementation a12Libs.uaa.authorization.a12.extension
+
     // Virtual BOMs
     implementation(platform(a12Libs.base.bom))
 
@@ -38,7 +47,7 @@ dependencies {
 }
 
 springBoot {
-    mainClass = 'com.mgmtp.a12.template.server.ServerApplication'
+    mainClass = 'com.mgmtp.a12.template.server.ProjectTemplateServerApplication'
     buildInfo {
         properties {
             version = rootProject.version

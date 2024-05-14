@@ -1,9 +1,8 @@
 import React, { ReactElement } from "react";
 
-import { AttachmentHandler } from "@com.mgmtp.a12.dataservices/dataservices-access";
 import { FrameFactories } from "@com.mgmtp.a12.client/client-core/lib/core/frame";
 import { View } from "@com.mgmtp.a12.client/client-core/lib/core/view";
-import { CRUDViews } from "@com.mgmtp.a12.client/client-core/lib/extensions/crud";
+import { CRUDViews } from "@com.mgmtp.a12.crud/crud-core";
 import { ModuleRegistryProvider } from "@com.mgmtp.a12.client/client-core/lib/core/application";
 import { StaticPageFactories } from "@com.mgmtp.a12.client/client-core/lib/extensions/static-page";
 import { TreeEngineFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/client";
@@ -19,8 +18,8 @@ type ViewMap = Record<string, React.ComponentType<View> | undefined>;
  * following the static and default view providers from A12. The {@link Placeholder} is used as fallback in the case that
  * no view provider has been found for the 'componentName'.
  */
-export function createViewProvider(handler: AttachmentHandler): View.Provider {
-    const enginesViewMap = createEnginesViewMap(handler);
+export function createViewProvider(): View.Provider {
+    const enginesViewMap = createEnginesViewMap();
     const staticPageComponentProvider = StaticPageFactories.createViewProvider();
 
     function chainedViewProvider(componentName: string): React.ComponentType<View> {
@@ -41,16 +40,16 @@ export function createViewProvider(handler: AttachmentHandler): View.Provider {
  * Based on the view names specified in the App Model, these are mapped to React components of the respective engine.
  * These take care of rendering the content for forms and overviews.
  */
-function createEnginesViewMap(attachmentHandler?: AttachmentHandler): ViewMap {
+function createEnginesViewMap(): ViewMap {
     return {
         TreeEngine(props) {
-            return <TreeEngineFactories.ViewComponent {...props} attachmentHandler={attachmentHandler} />;
+            return <TreeEngineFactories.ViewComponent {...props} />;
         },
         FormEngine(props) {
-            return <CRUDViews.FormEngineView {...props} attachmentHandler={attachmentHandler} />;
+            return <CRUDViews.FormEngineView {...props} />;
         },
         OverviewEngine(props) {
-            return <CRUDViews.OverviewEngineView {...props} attachmentHandler={attachmentHandler} timeMode="24h" />;
+            return <CRUDViews.OverviewEngineView {...props} timeMode="24h" />;
         }
     };
 }

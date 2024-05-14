@@ -3,6 +3,8 @@ import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import com.mgmtp.a12.Utils
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+import groovy.json.JsonSlurper
 
 plugins {
     alias(gradlePluginLibs.plugins.node.gradle)
@@ -11,14 +13,15 @@ plugins {
 sonar {
     properties {
         property 'sonar.sources', 'src'
+        property 'sonar.exclusions', 'src/localization/resources/**'
     }
 }
 
 ext {
     imageLabels = ["name"       : "${calculateShortTag(clientName)}".toString(),
                    "vendor"     : "mgm technology partners GmbH",
-                   "version"    : project.version,
-                   "release"    : "2023.06",
+                   "version"    : packageJsonVersion,
+                   "release"    : project.version,
                    "summary"    : "A Nginx-based server for serving A12 Client",
                    "description": "The A12 Client is built around the established React/Redux ecosystem, integrates the A12 UI components like engines and widgets, and interact with the A12 Data Services in the backend via HTTP/REST endpoints."]
 }
@@ -96,22 +99,19 @@ tasks.register('alignNodeNpmVersions') {
     }
 }
 
+npmInstall.configure {
+    args = ['--legacy-peer-deps']
+}
+
 tasks.register('compile', NpmTask) {
     group 'build'
     dependsOn npmInstall
-    finalizedBy test
 
     if(skipESLintPrettier.toBoolean()) {
         args = ['run-script', 'compile:skipESLintPrettier']
     } else {
         args = ['run-script', 'compile']
     }
-}
-
-tasks.register('test', NpmTask) {
-    group 'build'
-    dependsOn compile
-    args = ['test']
 }
 
 tasks.register('webpack', NpmTask) {
@@ -135,7 +135,7 @@ tasks.register('stop', NodeTask) {
 tasks.register('universalizePackageLock', NodeTask) {
     description 'Removes "resolved" and "integrity" keys and values from the lockfile.'
 
-    script = file('scripts/universalize-package-lock.js');
+    script = file('scripts/universalize-package-lock.js')
 }
 
 tasks.register('update', NpmTask) {
@@ -145,6 +145,11 @@ tasks.register('update', NpmTask) {
 tasks.register('prettierFix', NpmTask) {
     description 'Fixes issues highlighted by prettier.'
     args = ['run-script','prettier:fix']
+}
+
+tasks.register('eslintFix', NpmTask) {
+    description 'Fixes issues highlighted by eslint.'
+    args = ['run-script','eslint:fix']
 }
 
 assemble.dependsOn compile
@@ -164,6 +169,12 @@ tasks.register('createDockerfile', Dockerfile) {
     destFile = file("$buildDir/Dockerfile")
 
     def baseImage = "${dockerRegistryForRead}/${dockerClientBaseImage}"
+
+    // NOTE: Apple Silicon users may experience bad performance
+    def currentArchitecture = DefaultNativePlatform.currentArchitecture
+    if (currentArchitecture.isArm() || (currentArchitecture.getName().toLowerCase() in ['aarch64','arm64'])) {
+        baseImage = "--platform=linux/amd64 $baseImage"
+    }
 
     from "$baseImage"
     copyFile 'nginx.conf.k8s', '/etc/nginx/nginx.conf'

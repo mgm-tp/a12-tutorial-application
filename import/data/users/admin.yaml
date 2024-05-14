@@ -1,5 +1,5 @@
 username: admin
-password: A12-admintest
+password: A12PT-admintest
 authorities:
   - admin
 firstname: admin

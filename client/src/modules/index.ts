@@ -1,14 +1,22 @@
-import { UaaActions, UaaExtendedUser } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
+import { UaaActions, UaaOidcModifiedUser, UaaSelectors } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
 import { ActivityActions, ActivitySelectors } from "@com.mgmtp.a12.client/client-core/lib/core/activity";
-import { Module, ModuleRegistryProvider } from "@com.mgmtp.a12.client/client-core/lib/core/application";
+import {
+    AppModelAdapterModule,
+    Module,
+    ModuleRegistryProvider
+} from "@com.mgmtp.a12.client/client-core/lib/core/application";
 import { StoreFactories } from "@com.mgmtp.a12.client/client-core/lib/core/store";
+import { ModelActions } from "@com.mgmtp.a12.client/client-core/lib/core/model";
 import { TreeEngineFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/client";
 import { TreeEngineServerConnectorFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/server-connector";
 
-import { appmodelUserPermissionFilter } from "./utils";
-import personsModule from "./person";
+import { mapModuleByPermission } from "./utils";
 
-export const ALL_MODULES = [personsModule()];
+export const ALL_MODULES = [
+    AppModelAdapterModule,
+    TreeEngineFactories.createModule(),
+    TreeEngineServerConnectorFactories.createModule()
+];
 const moduleRegistry = ModuleRegistryProvider.getInstance();
 
 /**
@@ -22,12 +30,10 @@ export const getAllModules = (): Module[] => {
  * On login, registers all modules that current user has access to.
  */
 export const registerModulesOnLoginMiddleware = StoreFactories.createMiddleware((api, next, action) => {
-    if (UaaActions.loggedIn.match(action) && !moduleRegistry.getAllModules().length) {
-        moduleRegistry.addModule(TreeEngineFactories.createModule());
-        moduleRegistry.addModule(TreeEngineServerConnectorFactories.createModule());
-        const user = action.payload?.user as UaaExtendedUser;
+    if (ModelActions.setModelGraph.match(action) && !moduleRegistry.getAllModules().length) {
+        const user = UaaSelectors.user(api.getState()) as UaaOidcModifiedUser;
         getAllModules()
-            .filter((module) => appmodelUserPermissionFilter(module, user))
+            .map((module) => mapModuleByPermission(module, user))
             .forEach((module) => moduleRegistry.addModule(module));
     }
 
@@ -62,13 +68,13 @@ export const unregisterModulesOnLogoutMiddleware = StoreFactories.createMiddlewa
  * import("./person");
  *
  * // NOT WORKING
- * const [modulePerson] = ["./person"];
- * import(modulePerson);
+ * const [person] = ["./person"];
+ * import(person);
  * ```
  */
 function initializeHMR() {
     if (module.hot) {
-        module.hot.accept(["./person"], async (updatedDependencies) => {
+        module.hot.accept([], async (updatedDependencies) => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const windowStore = window.store!;
             const state = windowStore.getState();
@@ -87,12 +93,13 @@ function initializeHMR() {
             let hotModule;
 
             switch (moduleName) {
-                case "person":
-                    hotModule = await import("./person");
+                default:
                     break;
             }
 
             if (hotModule && modules[hotIndex]) {
+                // eslint-disable-next-line
+                // @ts-ignore
                 modules[hotIndex] = hotModule.default();
 
                 modules.forEach((m) => {

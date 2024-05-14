@@ -8,12 +8,12 @@ include 'server:init'
 include 'import'
 
 dependencyResolutionManagement {
-    def springBootVersion = '3.1.6'
+    def springBootVersion = '3.2.3'
     versionCatalogs {
         gradlePluginLibs {
             version('spring-boot', springBootVersion)
             version('test-logger', '3.2.0')
-            version('docker-compose', '0.16.8')
+            version('docker-compose', '0.17.6')
             version('docker-remote-api', '9.3.1')
             version('versions-update', '0.42.0')
             version('node-gradle', '7.0.1')
@@ -29,10 +29,12 @@ dependencyResolutionManagement {
         }
 
         a12Libs {
-            version('base', '27.1.0')
-            version('kernel', '28.5.1')
-            version('uaa', '7.5.1')
-            version('dataservices', '36.3.7')
+            version('base', '28.0.0')
+            version('kernel', '29.0.0-rc.04')
+            version('uaa', '8.0.0-rc.4')
+            version('dataservices', '37.0.0-rc.3')
+
+            library('uaa-authorization-a12-extension', 'com.mgmtp.a12.uaa', 'uaa-authorization-a12-extension').versionRef('uaa')
 
             library('dataservices-server-app', 'com.mgmtp.a12.dataservices', 'dataservices-server-app').versionRef('dataservices')
             library('dataservices-server-init-app', 'com.mgmtp.a12.dataservices', 'dataservices-server-init-app').versionRef('dataservices')

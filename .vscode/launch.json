@@ -13,7 +13,7 @@
             "type": "java",
             "name": "server start (local-db)",
             "request": "launch",
-            "mainClass": "com.mgmtp.a12.template.server.ServerApplication",
+            "mainClass": "com.mgmtp.a12.template.server.ProjectTemplateServerApplication",
             "args": [
                 "--spring.profiles.active=local-db-env"
             ],
@@ -24,7 +24,7 @@
             "type": "java",
             "name": "server start (h2-in-mem)",
             "request": "launch",
-            "mainClass": "com.mgmtp.a12.template.server.ServerApplication",
+            "mainClass": "com.mgmtp.a12.template.server.ProjectTemplateServerApplication",
             "args": [
                 "--spring.profiles.active=dev-env"
             ],

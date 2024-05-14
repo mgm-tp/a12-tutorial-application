@@ -5,17 +5,25 @@
     {
       "name": "Document Read By User Created",
       "description": "User is only able to read the documents created by them",
-      "target": "hasAccessRight('DOCUMENT_READ') && containsAnyRole('user')",
+      "target": "hasAccessRight('DOCUMENT_READ') && !containsAnyRole('admin')",
       "rules": [
-        "principal.username == #resource.createdBy"
+        "principal.username == #resource.kernelDocument.__meta.creator"
       ]
     },
     {
       "name": "Document Delete By User Created",
       "description": "User is only able to delete the documents created by them",
-      "target": "hasAccessRight('DOCUMENT_DELETE') && containsAnyRole('user')",
+      "target": "hasAccessRight('DOCUMENT_DELETE') && !containsAnyRole('admin')",
       "rules": [
-        "principal.username == #resource.createdBy"
+        "principal.username == #resource.kernelDocument.__meta.creator"
+      ]
+    },
+    {
+      "name": "Document Update By User Created",
+      "description": "User is only able to update the documents created by them",
+      "target": "hasAccessRight('DOCUMENT_UPDATE') && !containsAnyRole('admin')",
+      "rules": [
+        "principal.username == #resource.oldDocument.__meta.creator"
       ]
     },
     {
@@ -24,22 +32,15 @@
       "rules": [
         "hasAccessRight('ACCESS_ACTUATOR')"
       ]
-    },
-    {
-      "name": "User Has Attachment Upload Right",
-      "description": "Check that current user has access right to upload attachment.",
-      "rules": [
-        "hasAccessRight('ATTACHMENT_UPLOAD')"
-      ]
     }
   ],
   "repositoryPolicies": [
     {
       "name": "Document List By User Created",
       "description": "User is only able to see the documents created by them",
-      "target": "hasAccessRight('DOCUMENT_LIST') && containsAnyRole('user')",
+      "target": "hasAccessRight('DOCUMENT_LIST') && !containsAnyRole('admin')",
       "templates": [
-        "'created_by:' + principal.username"
+        "'__meta.creator:' + principal.username"
       ]
     }
   ],
@@ -63,6 +64,15 @@
       ]
     },
     {
+      "name": "User Update Document Permission",
+      "policy-refs": [
+        "Document Update By User Created"
+      ],
+      "scopes": [
+        "Document Update"
+      ]
+    },
+    {
       "name": "User List Document Permission",
       "repository-refs": [
         "Document List By User Created"
@@ -79,16 +89,6 @@
       ],
       "scopes": [
         "RelativePath"
-      ]
-    },
-    {
-      "name": "Attachment Upload Access",
-      "description": "Check the current user has the correct rule, which has access right to upload Attachment.",
-      "policy-refs": [
-        "User Has Attachment Upload Right"
-      ],
-      "scopes": [
-        "Attachment Upload"
       ]
     }
   ]

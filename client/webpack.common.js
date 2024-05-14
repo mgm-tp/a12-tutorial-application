@@ -71,7 +71,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             hash: true,
             template: "./resources/html/index.html",
-            favicon: "./resources/html/images/favicon.png",
+            favicon: "./resources/html/images/favicon.svg",
             chunks: ["main"]
         }),
         new HtmlWebpackPlugin({
@@ -91,7 +91,7 @@ module.exports = {
                     from: Path.join(__dirname, "resources/html/images"),
                     to: Path.resolve(__dirname, "build/webpack/images"),
                     noErrorOnMissing: true,
-                    globOptions: { ignore: ["**/images/favicon.png"] }
+                    globOptions: { ignore: ["**/images/favicon.svg"] }
                 }
             ]
         })

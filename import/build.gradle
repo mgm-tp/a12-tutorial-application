@@ -7,7 +7,7 @@ tasks.register('importsPackage', Zip) {
 
     from importDirectory
     exclude 'build','build.gradle'
-    archiveBaseName.set('project-template-imports')
+    archiveBaseName.set(getArtifactName())
     if (hasPackableContent) {
         doLast {
             println "Content of $importDirectory packed."
@@ -22,7 +22,7 @@ if (hasPackableContent) {
         publications {
             importsZip(MavenPublication) {
                 groupId rootProject.group
-                artifactId 'project-template-imports'
+                artifactId getArtifactName()
                 artifact source: importsPackage, extension: 'zip'
                 version rootProject.version
                 pom {
@@ -46,4 +46,12 @@ boolean hasContent (File importDir) {
         println "No packable files in directory $importDir."
     }
     return hasContent
+}
+
+String getArtifactName () {
+    if (project.hasProperty("variant")) {
+        return "project-template-imports-${project.getProperty("variant")}"
+    } else {
+        return "project-template-imports"
+    }
 }

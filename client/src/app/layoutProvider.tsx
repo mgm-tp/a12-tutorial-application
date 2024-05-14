@@ -2,7 +2,7 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 
 import { FrameFactories, FrameViews } from "@com.mgmtp.a12.client/client-core/lib/core/frame";
-import { UaaClient, UaaExtendedUser, UaaSelectors } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
+import { UaaOidcModifiedUser, UaaSelectors, UserInfoHeader } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
 
 import { RESOURCE_KEYS, useLocalizer } from "../localization";
 import LocaleChooser from "../components/LocaleChooser";
@@ -25,8 +25,7 @@ export const customLayoutProvider: FrameViews.LayoutProvider = (name: string) =>
  */
 function CustomApplicationFrameLayout(props: FrameViews.ApplicationFrameLayoutProps): JSX.Element {
     const localizer = useLocalizer();
-    const user = useSelector(UaaSelectors.user) as UaaExtendedUser | undefined;
-    const uaaLocalClient = UaaClient.getLocalClient();
+    const user = useSelector(UaaSelectors.user) as UaaOidcModifiedUser;
 
     return (
         <FrameViews.ApplicationFrameLayout
@@ -39,7 +38,7 @@ function CustomApplicationFrameLayout(props: FrameViews.ApplicationFrameLayoutPr
                 },
                 {
                     item: (
-                        <uaaLocalClient.components.UserInfoHeader
+                        <UserInfoHeader
                             mobileMode={false}
                             loggedInAsLabel={localizer(RESOURCE_KEYS.application.header.userinfo.labels.loggedInAs)}
                             logoutButtonLabel={localizer(RESOURCE_KEYS.application.header.userinfo.labels.logoutButton)}

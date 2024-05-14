@@ -48,12 +48,10 @@
             "./node_modules/@types"
         ],
         "types": [
-            "jest",
             "webpack-env"
         ]
     },
     "include": [
         "./src/**/*",
-        "./test/**/*"
     ]
 }

@@ -6,12 +6,18 @@ plugins {
     alias(gradlePluginLibs.plugins.test.logger)
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 ext {
     serviceName = rootProject.serverInitName
     imageLabels = ["name"       : "${calculateShortTag(rootProject.serverInitName)}".toString(),
                    "vendor"     : "mgm technology partners GmbH",
-                   "version"    : project.version,
-                   "release"    : "2023.06",
+                   "version"    : packageJsonVersion,
+                   "release"    : project.version,
                    "summary"    : "A12 Data Services Init application for initialization and migration purposes in production environments",
                    "description": "A12 Data Services Init application to deal with models and documents initialization and migration purposes in production environments"]
 }

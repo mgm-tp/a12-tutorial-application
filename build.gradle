@@ -1,4 +1,5 @@
 import com.mgmtp.a12.Utils
+import groovy.json.JsonSlurper
 
 plugins {
     alias(gradlePluginLibs.plugins.docker.remote.api)
@@ -23,6 +24,9 @@ allprojects {
 
 project.ext {
     imageGroup = project.group
+
+    def packageJson = new JsonSlurper().parse file('package.json')
+    packageJsonVersion = packageJson.version
 }
 
 subprojects {
@@ -42,11 +46,6 @@ subprojects {
         url = dockerRegistryForRead
         username = project.repository_username
         password = project.repository_password
-    }
-
-    tasks.withType(JavaCompile) {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
     }
 
     if (dockerUseCredentials.toBoolean()) {
@@ -159,8 +158,8 @@ tasks.register('initProject') {
 
     String projectVersion = project.version.split('-')[0].trim()
     if (System.env.BUILD_NUMBER) {
-        // TODO: We currently keep it simple here to publish only SNAPSHOT version. You should update this pattern to adapt with your project's strategy.
-        projectVersion = projectVersion + "-build${String.format("%05d", Integer.parseInt(System.env.BUILD_NUMBER))}-SNAPSHOT"
+        // TODO: We currently keep it simple here to publish only current build version. You should update this pattern to adapt with your project's strategy.
+        projectVersion = projectVersion + "-build.${String.format("%05d", Integer.parseInt(System.env.BUILD_NUMBER))}"
 
         allprojects.each { project -> project.version = projectVersion
         }

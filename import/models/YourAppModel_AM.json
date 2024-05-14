@@ -1,11 +1,24 @@
 {
   "header": {
-    "id": "person-appmodel",
+    "id": "YourAppModel_AM",
     "modelType": "application",
     "modelVersion": "5.0.0",
     "locales": [
       {
         "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [
+      {
+        "locale": "en",
+        "text": "Your-Project-Name"
+      },
+      {
+        "locale": "de",
+        "text": "Your-Project-Name"
       }
     ],
     "annotations": [
@@ -13,7 +26,8 @@
         "name": "roles",
         "value": "admin,user"
       }
-    ]
+    ],
+    "modelReferences": []
   },
   "content": {
     "modules": [
@@ -24,10 +38,6 @@
           "label": [
             {
               "locale": "en",
-              "text": "Person"
-            },
-            {
-              "locale": "de",
               "text": "Person"
             }
           ],
@@ -57,10 +67,10 @@
                 "sceneChange": {
                   "onEnter": [
                     {
-                      "type": "REGION_CLEAR",
                       "layout": {
                         "name": "MasterDetail"
-                      }
+                      },
+                      "type": "REGION_CLEAR"
                     },
                     {
                       "type": "VIEW_ADD",
@@ -68,7 +78,7 @@
                       "models": [
                         {
                           "modelType": "overview",
-                          "name": "Person-overview"
+                          "name": "Person_OM"
                         }
                       ]
                     }
@@ -99,8 +109,8 @@
                       "models": [
                         {
                           "modelType": "form",
-                          "name": "Person-form",
-                          "documentModel": "Person-document"
+                          "name": "Person_FM",
+                          "documentModel": "Person_DM"
                         }
                       ]
                     }
@@ -122,6 +132,18 @@
           "name": "CONTENT",
           "layout": {
             "name": "MasterDetail"
+          }
+        },
+        {
+          "name": "SIDEBAR",
+          "layout": {
+            "name": "Null"
+          }
+        },
+        {
+          "name": "MODAL",
+          "layout": {
+            "name": "Stack"
           }
         }
       ]

@@ -4,7 +4,7 @@ import com.mgmtp.a12.dataservices.document.DataServicesDocument;
 import com.mgmtp.a12.dataservices.document.DocumentReference;
 import com.mgmtp.a12.dataservices.document.events.DocumentAfterRepositoryLoadEvent;
 import com.mgmtp.a12.dataservices.document.persistence.IDocumentRepository;
-import com.mgmtp.a12.dataservices.events.DataServicesEventListener;
+import com.mgmtp.a12.dataservices.common.events.CommonDataServicesEventListener;
 import com.mgmtp.a12.dataservices.migration.MigrationStep;
 import com.mgmtp.a12.dataservices.migration.MigrationTask;
 import com.mgmtp.a12.dataservices.search.SearchIndexLoader;
@@ -29,11 +29,10 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.Optional;
 
-
 @MigrationStep(version = "202306.1.1", name = "Data migration of Person Document")
 public class PersonMigration {
 
-    private static final String MODEL_TO_MIGRATE = "Person-document";
+    private static final String MODEL_TO_MIGRATE = "Person_DM";
     private static final String REMOVED_FIELD = "PlaceOfBirth";
     private final IDocumentRepository documentRepository;
     private final SearchIndexLoader indexLoader;
@@ -55,7 +54,7 @@ public class PersonMigration {
         List<DocumentReference> documentReferences = documentRepository.findAllDocRefsForModel(MODEL_TO_MIGRATE);
 
         documentReferences.forEach(docRef -> {
-            Optional<DataServicesDocument> optDocument = documentRepository.getByDocumentReference(docRef);
+            Optional<DataServicesDocument> optDocument = documentRepository.findByDocumentReference(docRef);
 
             optDocument.ifPresent(documentRepository::update);
         });
@@ -65,8 +64,8 @@ public class PersonMigration {
 
     }
 
-    @DataServicesEventListener(condition = "@migrationConfiguration.isEnabled() &&"
-            + "#afterRepositoryLoadEvent.documentReference.documentModelName.equalsIgnoreCase('Person-document')")
+    @CommonDataServicesEventListener(condition = "@migrationConfiguration.isEnabled() &&"
+            + "#afterRepositoryLoadEvent.documentReference.documentModelName.equalsIgnoreCase('Person_DM')")
     public void listenOnDocumentLoadFromRepository(DocumentAfterRepositoryLoadEvent afterRepositoryLoadEvent)
             throws ParserConfigurationException, IOException, SAXException, TransformerException {
         String documentContent = afterRepositoryLoadEvent.getDocumentContent();

@@ -1,8 +1,8 @@
 {
   "header": {
-    "id": "Person-document",
+    "id": "Person_DM",
     "modelType": "document",
-    "modelVersion": "27.1.0",
+    "modelVersion": "28.0.2",
     "locales": [
       {
         "code": "en"
@@ -26,7 +26,7 @@
   },
   "content": {
     "modelInfo": {
-      "name": "Person-document",
+      "name": "Person_DM",
       "immutable": false
     },
     "modelConfig": {
@@ -44,7 +44,6 @@
           "name": "Person",
           "Group": {
             "repeatability": 1,
-            "required": true,
             "elements": [
               {
                 "type": "Group",
@@ -52,7 +51,6 @@
                 "name": "PersonalData",
                 "Group": {
                   "repeatability": 1,
-                  "required": true,
                   "elements": [
                     {
                       "type": "Field",
@@ -72,7 +70,9 @@
                             "text": "Vorname"
                           }
                         ],
-                        "required": true
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
                       }
                     },
                     {
@@ -93,7 +93,9 @@
                             "text": "Last Name"
                           }
                         ],
-                        "required": true
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
                       }
                     },
                     {
@@ -240,7 +242,9 @@
                             "text": "Email"
                           }
                         ],
-                        "required": true
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
                       }
                     },
                     {
@@ -317,6 +321,16 @@
                           },
                           {
                             "type": "Field",
+                            "id": "field_932de",
+                            "name": "thumbnail",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Field",
                             "id": "field_867ef",
                             "name": "category",
                             "Field": {
@@ -340,7 +354,7 @@
                             "id": "rule_6ed58",
                             "name": "AttachmentInternalFilenameRequired",
                             "Rule": {
-                              "errorEntityId": "field_e1d6a",
+                              "errorEntityRelPath": "../internal_filename",
                               "errorCode": "Errorrule_6ed58",
                               "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(internal_filename)",
                               "severity": "ERROR",
@@ -364,7 +378,7 @@
                             "id": "rule_b4062",
                             "name": "AttachmentMimeTypeRequired",
                             "Rule": {
-                              "errorEntityId": "field_72463",
+                              "errorEntityRelPath": "../mime_type",
                               "errorCode": "Errorrule_b4062",
                               "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(mime_type)",
                               "severity": "ERROR",
@@ -388,7 +402,7 @@
                             "id": "rule_3a21c",
                             "name": "AttachmentIdOrContentFilled",
                             "Rule": {
-                              "errorEntityId": "field_9fcd3",
+                              "errorEntityRelPath": "../content",
                               "errorCode": "Errorrule_3a21c",
                               "errorCondition": "GroupFilled(RuleGroup) and NotExactlyOneFieldFilled(attachment_id, content)",
                               "severity": "ERROR",
@@ -412,7 +426,7 @@
                             "id": "rule_37050",
                             "name": "SizeOfContentFilled",
                             "Rule": {
-                              "errorEntityId": "field_9fcd3",
+                              "errorEntityRelPath": "../content",
                               "errorCode": "Errorrule_37050",
                               "errorCondition": "FieldFilled(content) and FieldNotFilled(size)",
                               "severity": "ERROR",
@@ -462,7 +476,9 @@
                             "text": "Straße"
                           }
                         ],
-                        "required": true
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
                       }
                     },
                     {
@@ -483,7 +499,9 @@
                             "text": "City"
                           }
                         ],
-                        "required": true
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
                       }
                     },
                     {
@@ -504,7 +522,9 @@
                             "text": "Land"
                           }
                         ],
-                        "required": true
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
                       }
                     },
                     {

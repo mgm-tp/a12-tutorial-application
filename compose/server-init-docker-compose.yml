@@ -1,0 +1,38 @@
+version: "2.4"
+
+services:
+  server-init:
+    image: ${SERVER_INIT_IMAGE}
+    container_name: ${PROJECT_NAME}_server-init
+    environment:
+      SPRING_PROFILES_ACTIVE: dev-env,dataservices-external_postgres
+      SPRING_DATASOURCES_DATASERVICES_URL: jdbc:postgresql://postgres:5432/your-ds-db-name
+      SPRING_DATASOURCES_DATASERVICES_USERNAME: your-ds-username
+      SPRING_DATASOURCES_DATASERVICES_PASSWORD: your-ds-password
+      SPRING_DATASOURCES_CONTENTSTORE_URL: jdbc:postgresql://postgres:5432/your-cs-db-name
+      SPRING_DATASOURCES_CONTENTSTORE_USERNAME: your-cs-username
+      SPRING_DATASOURCES_CONTENTSTORE_PASSWORD: your-cs-password
+      SPRING_DATASOURCES_CONTENTSTORE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE: postgresql
+      SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      MGMTP_A12_DATASERVICES_INITIALIZATION_SCRIPTS_JSONRPC_PATHS: file:/var/lib/a12/data/import/data/request/*.json
+      MGMTP_A12_DATASERVICES_INITIALIZATION_IMPORT_MODELS_PATH: file:/var/lib/a12/data/import/models/
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - a12_compose
+    volumes:
+      - ../import:/var/lib/a12/data/import
+
+  server:
+    depends_on:
+      postgres:
+        condition: service_healthy
+      server-init:
+        condition: service_completed_successfully
+
+networks:
+  a12_compose:
+    driver: bridge

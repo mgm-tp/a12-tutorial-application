@@ -1,13 +1,15 @@
 import { initializeKeys } from "@com.mgmtp.a12.utils/utils-localization/lib/main";
 import { DIRTY_HANDLING_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/lib/extensions/dirtyHandling";
-import { CDM_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/lib/extensions/cdm";
-import { CRUD_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/lib/extensions/crud";
 import { FRAME_RESOURCE_KEYS, LOCALE_SELECT_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/lib/core/frame";
 import { HETEROGENEITY_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/lib/extensions/heterogeneity";
 import { LOCALE_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/lib/core/locale";
-import { RELATIONSHIP_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/lib/extensions/relationship";
 import { RESOURCE_KEYS as FORMENGINE_RESOURCE_KEYS } from "@com.mgmtp.a12.formengine/formengine-core/lib/back-end/localization";
 import { RESOURCE_KEYS as OVERVIEWENGINE_RESOURCE_KEYS } from "@com.mgmtp.a12.overviewengine/overviewengine-core/lib/main/services/localization";
+import {
+    CDM_RESOURCE_KEYS,
+    RELATIONSHIP_RESOURCE_KEYS
+} from "@com.mgmtp.a12.relationshipengine/relationshipengine-core";
+import { CRUD_RESOURCE_KEYS } from "@com.mgmtp.a12.crud/crud-core";
 
 /**
  * This mapping provides the key-structure for all custom labels and texts which shall be localized.
@@ -23,8 +25,19 @@ export const RESOURCE_KEYS = {
                     logoutButton: ""
                 }
             }
+        },
+        model: {
+            appmodel: {
+                loading: {
+                    error: {
+                        title: "",
+                        message: ""
+                    }
+                }
+            }
         }
     },
+
     error: {
         security: {
             notAuthorized: {

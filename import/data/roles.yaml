@@ -9,7 +9,6 @@ roles:
       - DOCUMENT_DELETE
       - MODEL_READ
       - DOCUMENT_LIST
-      - DOCUMENT_EXPORT
       - MODEL_CREATE
       - MODEL_UPDATE
       - MODEL_DELETE

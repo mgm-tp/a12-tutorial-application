@@ -2,8 +2,8 @@ package com.mgmtp.a12.template.server.event;
 
 import com.mgmtp.a12.dataservices.attachment.DataServicesAttachment;
 import com.mgmtp.a12.dataservices.attachment.events.AttachmentBeforeCreateEvent;
-import com.mgmtp.a12.dataservices.events.DataServicesEventListener;
-import com.mgmtp.a12.dataservices.exception.UnexpectedException;
+import com.mgmtp.a12.dataservices.common.events.CommonDataServicesEventListener;
+import com.mgmtp.a12.dataservices.common.exception.UnexpectedException;
 import com.mgmtp.a12.template.server.attachment.MimeTypeValidator;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class AttachmentEventListener {
         this.mimeTypeValidator = mimeTypeValidator;
     }
 
-    @DataServicesEventListener
+    @CommonDataServicesEventListener
     public void beforeCreate(AttachmentBeforeCreateEvent attachmentBeforeCreateEvent) {
         DataServicesAttachment dataServicesAttachment = attachmentBeforeCreateEvent.getAttachment();
 
@@ -28,7 +28,7 @@ public class AttachmentEventListener {
                 .ifPresent(cs -> {
                     try {
                         byte[] buffer = IOUtils.toByteArray(cs.get());
-                        mimeTypeValidator.validateMimeType(buffer);
+                        mimeTypeValidator.validateMimeType(buffer, dataServicesAttachment.getHeader().getFilename());
                         // Create a new input stream after consuming it because input stream is NOT re-readable
                         dataServicesAttachment.setContent(() -> new ByteArrayInputStream(buffer));
                     } catch (IOException e) {

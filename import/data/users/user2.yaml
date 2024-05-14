@@ -1,5 +1,5 @@
 username: user2
-password: A12-user2test
+password: A12PT-user2test
 authorities:
   - user
 firstname: user2

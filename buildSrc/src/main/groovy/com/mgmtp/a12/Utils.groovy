@@ -93,57 +93,49 @@ class Utils {
     static void replacePlaceholders(File setupFile, ConfigurableFileTree fileTree, String projectDir) {
         def includedFiles = ['**/*.json', '**/*.gradle', '**/*.properties', '**/*.yml', '**/*.html', '**/*.ts', '**/*.java', '.run/*.xml']
         def excludedDirs = ['**/logs/**', '**/resource/**', '**/.gradle/**', '**/buildSrc/**', '**/target/**', '**/build/**', '**/node_modules/**', 'build.gradle']
-        def parameters = [
-                'serverPackage',
-                'projectProperties',
-                'projectGroup',
-                //Project name is by default a part of the package name, so it should be replaced *after* package and group strings are replaced.
-                'projectName',
-                'title',
-                'dsDatabaseName',
-                'dsDatabaseUsername',
-                'dsDatabasePassword',
-                'csDatabaseName',
-                'csDatabaseUsername',
-                'csDatabasePassword',
-                'postgresDatabasePassword'
-        ]
-        def setupJson = new JsonSlurper().parseText(setupFile.text)
-        def curProps = loadFileToMap(parameters, setupJson, 'current')
-        def altProps = loadFileToMap(parameters, setupJson, 'alternative')
+        def setupJsonMap = new JsonSlurper().parseText(setupFile.text) as Map<String, String>
+        def curProps = loadFileToMap(setupJsonMap, 'current')
+        def altProps = loadFileToMap(setupJsonMap, 'alternative')
 
-        correctPropsFormat(parameters, altProps)
-
-        updatePackageStructure(curProps.'serverPackage'.toString(), altProps.'serverPackage'.toString(), projectDir)
+        correctPropsFormat(altProps)
+        if (curProps['serverPackage'] && altProps['serverPackage']) {
+            updatePackageStructure(curProps['serverPackage'], altProps['serverPackage'], projectDir)
+        }
 
         fileTree
                 .include(includedFiles)
                 .exclude(excludedDirs)
-                .each(filterable -> {
+                .each { filterable ->
                     def file = new File(filterable.path)
                     def content = file.getText('UTF-8')
                     def isChanged = false
 
-                    parameters.each {
-                        if (content.contains(curProps.get(it).toString())) {
-                            content = content.replaceAll(curProps.get(it).toString(), altProps.get(it).toString())
-                            isChanged =  true
+                    curProps.each {
+                        if (content.contains(it.value)) {
+                            content = content.replaceAll(it.value, altProps[it.key])
+                            isChanged = true
                         }
                     }
 
                     if (isChanged) {
                         file.write(content, 'UTF-8')
                         println "Updated ${file.path}"
+
+                        def fileName = file.name
+                        if (fileName == "${curProps['appModelName']}.json" && curProps['appModelName'] != altProps['appModelName']) {
+                            def newName = file.getParent() + File.separator + altProps['appModelName'] + '.json'
+                            file.renameTo(newName)
+                            println "Renamed file \'${fileName}\' to \'${newName}\'."
+                        }
                     }
                 }
-                )
     }
 
     static void updatePackageStructure(String curGroup, String altGroup, String projectDir) {
         def packageRegex = '^([a-zA-Z_]\\w*)+([.][a-zA-Z_]\\w*)*$'
         def fs = File.separator
-        def basePath  = "${projectDir}${fs}server${fs}app${fs}src${fs}main${fs}java${fs}"
-        def curPath = "${basePath}${curGroup.replace(".","${fs}")}"
+        def basePath = "${projectDir}${fs}server${fs}app${fs}src${fs}main${fs}java${fs}"
+        def curPath = "${basePath}${curGroup.replace('.', fs)}"
         def curDir = new File(curPath)
 
         if (!curDir.exists()) {
@@ -152,44 +144,40 @@ class Utils {
 
         if (altGroup.matches(packageRegex)) {
             if (altGroup != curGroup) {
-                def altPath = "${basePath}${altGroup.replace(".","${fs}")}"
+                def altPath = "${basePath}${altGroup.replace('.', fs)}"
                 new AntBuilder().move(todir: altPath, overwrite: true, force: true, flatten: false) {
                     fileset(dir: curPath, includes: '**/*.*')
                 }
-                cleanUpDirs(basePath,curPath)
+                cleanUpDirs(basePath, curPath)
             }
         } else {
             throw new Exception("The serverPackage name \'$altGroup\' is invalid for package name. The name should follow this regular expression pattern:\'$packageRegex\', e.g., your.project.name, your.project_name or your_project_name")
         }
     }
 
-    static void correctPropsFormat(ArrayList parameters, Map altProps) {
-        def title = altProps.title.empty
-                ? altProps.projectName.split('-').collect { it.toLowerCase().capitalize() }.join('-')
-                : altProps.title
+    static void correctPropsFormat(Map<String, String> altProps) {
+        def title = altProps['title']?.empty
+                ? altProps['projectName']?.split('-').collect { it.toLowerCase().capitalize() }.join('-')
+                : altProps['title']
 
-        parameters.each {
-            if (it == 'projectName' || it == 'serverPackage' || it == 'projectGroup' || it == 'projectProperties') {
-                altProps.put(it, altProps[it].toLowerCase())
+        altProps.each {
+            def key = it.key
+            if (['projectName', 'serverPackage', 'projectGroup', 'projectProperties'].contains(key)) {
+                it.value = it.value?.toLowerCase()
             }
-            if (it == 'title') {
-                altProps.put(it, title)
+
+            if (key == 'title') {
+                it.value = title
             }
         }
     }
 
-    static Map loadFileToMap(ArrayList<String> parameters, Object setupJson, String type) {
-        def props = new LinkedHashMap()
-
-        parameters.each {
-            props.put(it, setupJson[it][type])
-        }
-
-        return props
+    static Map<String, String> loadFileToMap(Map<String, String> setupJsonMap, String type) {
+        setupJsonMap.collectEntries { [(it.key): it.value[type]] }
     }
 
     static void cleanUpDirs(String basePath, String packagePath) {
-        File targetDir = new File(packagePath)
+        def targetDir = new File(packagePath)
 
         if (targetDir.exists() && targetDir.isDirectory()) {
             deleteChildren(targetDir)
@@ -208,8 +196,8 @@ class Utils {
         }
     }
 
-    static void deleteChildren (File file) {
-        if (file.isDirectory()){
+    static void deleteChildren(File file) {
+        if (file.isDirectory()) {
             File[] files = file.listFiles()
             if (files.size() == 0) {
                 deleteFileTry(file)
@@ -224,7 +212,7 @@ class Utils {
         }
     }
 
-    static void deleteFileTry (File file) {
+    static void deleteFileTry(File file) {
         try {
             file.delete()
         }

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { HeaderTrigger } from "@com.mgmtp.a12.widgets/widgets-core/lib/button";
@@ -18,7 +18,6 @@ interface LocaleChooserProps {
 export default function LocaleChooser({ locales }: LocaleChooserProps): JSX.Element {
     const dispatch = useDispatch();
     const supportedLocales = locales && locales.length > 0 ? locales : supportedLocalesWithName;
-    const [isPopupMenuActive, setIsPopupMenuActive] = useState<boolean>(false);
     const size = useContext(SizeContext);
     const mobileMode = size.currentSize === "xs" || size.currentSize === "sm";
     const locale = useSelector(LocaleSelectors.locale());
@@ -37,14 +36,12 @@ export default function LocaleChooser({ locales }: LocaleChooserProps): JSX.Elem
         <PopUpMenu
             triggerElement={
                 <HeaderTrigger
-                    active={isPopupMenuActive}
                     graphic="public"
                     text={mobileMode ? "" : locale.language.toUpperCase()}
                     meta={mobileMode ? undefined : "arrow_drop_down"}
                     textTitle={locale.country}
                 />
-            }
-            onVisibilityChange={() => setIsPopupMenuActive(!isPopupMenuActive)}>
+            }>
             <List>
                 {supportedLocales.map((item) => (
                     <List.Item
