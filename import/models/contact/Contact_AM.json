@@ -1,0 +1,136 @@
+{
+  "header": {
+    "id": "Contact_AM",
+    "modelType": "application",
+    "modelVersion": "5.0.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "admin,user"
+      }
+    ]
+  },
+  "content": {
+    "modules": [
+      {
+        "name": "ContactModule",
+        "menu": {
+          "name": "Contact",
+          "label": [
+            {
+              "locale": "en",
+              "text": "Contact"
+            },
+            {
+              "locale": "de",
+              "text": "Kontakt"
+            }
+          ],
+          "initialActivity": {
+            "descriptor": {
+              "module": "Contact"
+            }
+          }
+        },
+        "flows": [
+          {
+            "name": "ContactFlow",
+            "scenes": [
+              {
+                "name": "ContactOverview",
+                "description": "Overview of Contact Documents",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Contact"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": false
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "REGION_CLEAR",
+                      "layout": {
+                        "name": "MasterDetail"
+                      }
+                    },
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "OverviewEngine",
+                      "models": [
+                        {
+                          "modelType": "overview",
+                          "name": "Contact_OM"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "name": "ContactForm",
+                "description": "Form showing on Contact Document",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Contact"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": true
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "FormEngine",
+                      "constraints": {
+                        "type": "MasterDetail"
+                      },
+                      "models": [
+                        {
+                          "modelType": "form",
+                          "name": "Contact_FM",
+                          "documentModel": "Contact_DM"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "region": {
+      "name": "APP",
+      "layout": {
+        "name": "ApplicationFrame"
+      },
+      "subRegions": [
+        {
+          "name": "CONTENT",
+          "layout": {
+            "name": "MasterDetail"
+          }
+        }
+      ]
+    },
+    "defaultRegion": [
+      "CONTENT"
+    ]
+  }
+}
