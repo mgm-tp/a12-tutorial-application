@@ -1,15 +1,19 @@
 {
   "serverPackage": {
     "current": "com.mgmtp.a12.template.server",
-    "alternative": "your.project.server"
+    "alternative": "com.mgmtp.a12.template.server"
+  },
+  "serverApplication": {
+    "current": "ProjectTemplateServerApplication",
+    "alternative": "ProjectTemplateServerApplication"
   },
   "projectProperties": {
     "current": "mgmtp.a12.template.server",
-    "alternative": "your.project.server"
+    "alternative": "mgmtp.a12.template.server"
   },
   "projectGroup": {
     "current": "com.mgmtp.your-project-name",
-    "alternative": "your.project.group"
+    "alternative": "com.mgmtp.your-project-name"
   },
   "projectName": {
     "current": "your-project-name",
@@ -21,7 +25,7 @@
   },
   "title": {
     "current": "Your-Project-Name",
-    "alternative": "your-project-title"
+    "alternative": "Your-Project-Name"
   },
   "dsDatabaseName": {
     "current": "your-ds-db-name",

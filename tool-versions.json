@@ -15,13 +15,13 @@
     "node": {
       "name": "Node",
       "superscript": "",
-      "version": "18.15.x",
+      "version": "18.18.x",
       "note": "Optional. Gradle node plugin <sup>3</sup> can be used instead."
     },
     "npm": {
       "name": "npm",
       "superscript": "1",
-      "version": "9.5.x",
+      "version": "9.8.x",
       "note": "Optional. Gradle node plugin <sup>3</sup> can be used instead."
     },
     "docker": {

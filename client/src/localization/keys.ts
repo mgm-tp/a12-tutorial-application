@@ -5,6 +5,7 @@ import { HETEROGENEITY_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/l
 import { LOCALE_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/lib/core/locale";
 import { RESOURCE_KEYS as FORMENGINE_RESOURCE_KEYS } from "@com.mgmtp.a12.formengine/formengine-core/lib/back-end/localization";
 import { RESOURCE_KEYS as OVERVIEWENGINE_RESOURCE_KEYS } from "@com.mgmtp.a12.overviewengine/overviewengine-core/lib/main/services/localization";
+import { RESOURCE_KEYS as TREEENGINE_RESOURCE_KEYS } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/core/services/localization";
 import {
     CDM_RESOURCE_KEYS,
     RELATIONSHIP_RESOURCE_KEYS
@@ -23,16 +24,6 @@ export const RESOURCE_KEYS = {
                 labels: {
                     loggedInAs: "",
                     logoutButton: ""
-                }
-            }
-        },
-        model: {
-            appmodel: {
-                loading: {
-                    error: {
-                        title: "",
-                        message: ""
-                    }
                 }
             }
         }
@@ -70,4 +61,5 @@ export type LocalizationKeyTreeType = typeof RESOURCE_KEYS &
     DeepPartial<typeof LOCALE_SELECT_RESOURCE_KEYS> &
     DeepPartial<typeof RELATIONSHIP_RESOURCE_KEYS> &
     DeepPartial<typeof FORMENGINE_RESOURCE_KEYS> &
+    DeepPartial<typeof TREEENGINE_RESOURCE_KEYS> &
     DeepPartial<typeof OVERVIEWENGINE_RESOURCE_KEYS>;

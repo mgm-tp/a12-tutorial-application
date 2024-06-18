@@ -13,14 +13,12 @@ import { createPlatformServerModelLoader } from "@com.mgmtp.a12.client/client-co
 import {
     createEmptyDocumentDataProvider,
     formEngineDataReducers,
-    formEngineSagas,
     FormModelProcessor,
     platformAttachmentLoader,
     platformSingleDocumentDataProvider
 } from "@com.mgmtp.a12.formengine/formengine-core/lib/client-extensions";
 import { CRUDFactories } from "@com.mgmtp.a12.crud/crud-core";
 import { DirtyHandlingFactories } from "@com.mgmtp.a12.client/client-core/lib/extensions/dirtyHandling";
-import { DeepLinkingFactories } from "@com.mgmtp.a12.client/client-core/lib/extensions/deep-linking";
 import {
     cddDataHolderReducerExtension,
     cddDataProvider,
@@ -32,9 +30,14 @@ import {
     RelationshipReducers
 } from "@com.mgmtp.a12.relationshipengine/relationshipengine-core";
 import { OverviewEngineFactories } from "@com.mgmtp.a12.overviewengine/overviewengine-core/lib/main/client-extensions";
+import { DeepLinkingFactories } from "@com.mgmtp.a12.client/client-core/lib/extensions/deep-linking";
 
-import { registerModulesOnLoginMiddleware, unregisterModulesOnLogoutMiddleware } from "./modules";
-import { setLanguageSelectedInLoginForm } from "./uaa/sagas";
+import {
+    registerAppModelModulesByPermissionMiddleware,
+    registerModulesOnSetModelGraphMiddleware,
+    unregisterModulesOnLogoutMiddleware
+} from "./modules";
+import { setLanguageSelectedInLoginForm, setRolesForUserAfterTokenRefresh } from "./uaa/sagas";
 import { isProduction } from "./config";
 import { devToolMiddleware, enableReduxDevTools } from "./config/devtools";
 import { LoadModelGraphSaga } from "./sagas/loadModelGraph";
@@ -46,10 +49,10 @@ export function setup(): {
     initialStoreActions(): Promise<void>;
 } {
     const dataHandlers: DataHandler[] = [
-        ...OverviewEngineFactories.createDataProviders(),
         cddDataProvider,
-        RelationshipFactories.createRelationshipDataProvider(),
         createEmptyDocumentDataProvider(),
+        RelationshipFactories.createRelationshipDataProvider(),
+        ...OverviewEngineFactories.createDataProviders(),
         platformSingleDocumentDataProvider
     ];
 
@@ -72,11 +75,11 @@ export function setup(): {
         ],
         customSagas: [
             ...CRUDFactories.createSagas(),
-            ...cdmSagas,
-            LoadModelGraphSaga,
             ...RelationshipFactories.createSagas({ dataHandlers }),
-            ...formEngineSagas({ attachmentLoader: platformAttachmentLoader }),
+            LoadModelGraphSaga,
+            ...cdmSagas({ attachmentLoader: platformAttachmentLoader }),
             setLanguageSelectedInLoginForm,
+            setRolesForUserAfterTokenRefresh,
             DeepLinkingFactories.createWelcomePageSaga({ applyTriggers: [ModelActions.addModulesApplicationModels] })
         ],
         preComputeNewDocuments: true,
@@ -85,15 +88,16 @@ export function setup(): {
             ...createCdmMiddlewares(),
             ...OverviewEngineFactories.createMiddlewares(),
             CRUDFactories.createCRUDMiddleware(),
-            registerModulesOnLoginMiddleware,
+            registerModulesOnSetModelGraphMiddleware,
+            registerAppModelModulesByPermissionMiddleware,
             unregisterModulesOnLogoutMiddleware,
             devToolMiddleware(),
             ...UaaMiddlewares()
         ],
         dataReducers: [
             ...formEngineDataReducers,
-            ...OverviewEngineFactories.createDataReducers(),
             ...RelationshipReducers.dataReducers,
+            ...OverviewEngineFactories.createDataReducers(),
             ...dgReducerFactory(cddDataHolderReducerExtension),
             ...cddReducers
         ],

@@ -9,7 +9,7 @@
                     "PersonalData": {
                         "FirstName": "Johny",
                         "LastName": "Smith",
-                        "Email": "johny.smith@mgm-tp.com",
+                        "EmailAddress": "johny.smith@mgm-tp.com",
                         "DateOfBirth": "1987-10-11",
                         "Nationality": "British",
                         "PlaceOfBirth": "London"

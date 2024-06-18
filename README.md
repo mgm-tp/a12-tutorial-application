@@ -31,6 +31,7 @@ By default, A12 Tutorial services are exposed on the following ports:
 |---------------------|-----------|-------------|
 | Frontend            | ``:8081`` |             |
 | A12 Tutorial Server | ``:8082`` |             |
+| Postgres                | ``:8083`` | Docker only |
 | Postgres            | ``:8083`` | Docker only |
 
 <a name="prerequisities"></a>
@@ -44,8 +45,8 @@ To wrap up, the following [tools](./tool-versions.json) are required to build th
 |----------------------|--------------|----------------------------------------------------------------|
 | [JDK]                | '17/21'      |                                                                |
 | [Gradle]<sup>1</sup> | '>=8.5.x <9' | Optional. Gradle Wrapper <sup>2</sup> can be used instead.     |
-| [Node]               | '18.15.x'    | Optional. Gradle node plugin <sup>3</sup> can be used instead. |
-| [npm]<sup>1</sup>    | '9.5.x'      | Optional. Gradle node plugin <sup>3</sup> can be used instead. |
+| [Node]               | '18.18.x'    | Optional. Gradle node plugin <sup>3</sup> can be used instead. |
+| [npm]<sup>1</sup>    | '9.8.x'      | Optional. Gradle node plugin <sup>3</sup> can be used instead. |
 | [Docker]<sup>1</sup> | '>=20.x'     |                                                                |
 <!--- VERSION_TABLE_END (Edit versions in tool-versions.json, not here. Do not delete this tag.) --->
 
@@ -61,11 +62,15 @@ Assuming you went through the documentation, your environment is set up and proj
 `gradle build`
 
 **2. Run**
-1. Run the server application with the default development Spring profile and keep it running:  
-   `gradle :server:app:bootrun --args='--spring.profiles.active=dev-env'`
-2. Run client
-    1. In another terminal window, move to client directory with `cd client`.
-    2. Then start the webpack with `npm start` and keep it running.
+1. Project Template application
+´  1. Run the server application with the default development Spring profile and keep it running:  
+      `gradle :server:app:bootrun --args='--spring.profiles.active=dev-env'`
+   2. Run client
+       1. In another terminal window, move to client directory with `cd client`.
+       2. Then start the webpack with `npm start` and keep it running.
+2. Project Template init application (for initialization and migration purposes)
+   1. Run the init application with the default development Spring profile:  
+      `gradle :server:init:bootrun --args='--spring.profiles.active=dev-env'`
 
 **3. Explore the application**  
 The frontend is, by default, running on http://localhost:8081.

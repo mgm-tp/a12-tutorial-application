@@ -39,6 +39,10 @@
             {
               "locale": "en",
               "text": "Person"
+            },
+            {
+              "locale": "de",
+              "text": "Person"
             }
           ],
           "initialActivity": {

@@ -91,11 +91,16 @@ class Utils {
      * @param projectDir The project directory path
      */
     static void replacePlaceholders(File setupFile, ConfigurableFileTree fileTree, String projectDir) {
-        def includedFiles = ['**/*.json', '**/*.gradle', '**/*.properties', '**/*.yml', '**/*.html', '**/*.ts', '**/*.java', '.run/*.xml']
+        def includedFiles = ['**/*.json', '**/*.gradle', '**/*.properties', '**/*.yml', '**/*.html', '**/*.ts', '**/*.java', '.run/*.xml', 'quality/checkstyle/*.xml']
         def excludedDirs = ['**/logs/**', '**/resource/**', '**/.gradle/**', '**/buildSrc/**', '**/target/**', '**/build/**', '**/node_modules/**', 'build.gradle']
         def setupJsonMap = new JsonSlurper().parseText(setupFile.text) as Map<String, String>
         def curProps = loadFileToMap(setupJsonMap, 'current')
         def altProps = loadFileToMap(setupJsonMap, 'alternative')
+
+        if (curProps == altProps) {
+            println "The 'Current' map and the 'Alternative' map have the same keys and values. This task has no changes applied."
+            return
+        }
 
         correctPropsFormat(altProps)
         if (curProps['serverPackage'] && altProps['serverPackage']) {
@@ -122,10 +127,16 @@ class Utils {
                         println "Updated ${file.path}"
 
                         def fileName = file.name
-                        if (fileName == "${curProps['appModelName']}.json" && curProps['appModelName'] != altProps['appModelName']) {
-                            def newName = file.getParent() + File.separator + altProps['appModelName'] + '.json'
-                            file.renameTo(newName)
-                            println "Renamed file \'${fileName}\' to \'${newName}\'."
+
+                        def propsToFileChange = ['appModelName', 'serverApplication']
+                        propsToFileChange.each {
+                            def fileType = ''
+                            if (it == "appModelName") fileType = '.json'
+                            if (it == "serverApplication") fileType = '.java'
+
+                            if (fileName == "${curProps[it]}${fileType}" && curProps[it] != altProps[it]) {
+                                renameFile(file, altProps[it], fileType)
+                            }
                         }
                     }
                 }
@@ -134,24 +145,28 @@ class Utils {
     static void updatePackageStructure(String curGroup, String altGroup, String projectDir) {
         def packageRegex = '^([a-zA-Z_]\\w*)+([.][a-zA-Z_]\\w*)*$'
         def fs = File.separator
-        def basePath = "${projectDir}${fs}server${fs}app${fs}src${fs}main${fs}java${fs}"
-        def curPath = "${basePath}${curGroup.replace('.', fs)}"
-        def curDir = new File(curPath)
+        def serverModules = ['app', 'init']
 
-        if (!curDir.exists()) {
-            throw new Exception("Path \'$curDir.path\' does not exist.")
-        }
+        serverModules.each { module ->
+            def basePath = "${projectDir}${fs}server${fs}${module}${fs}src${fs}main${fs}java${fs}"
+            def curPath = "${basePath}${curGroup.replace('.', fs)}"
+            def curDir = new File(curPath)
 
-        if (altGroup.matches(packageRegex)) {
-            if (altGroup != curGroup) {
-                def altPath = "${basePath}${altGroup.replace('.', fs)}"
-                new AntBuilder().move(todir: altPath, overwrite: true, force: true, flatten: false) {
-                    fileset(dir: curPath, includes: '**/*.*')
-                }
-                cleanUpDirs(basePath, curPath)
+            if (!curDir.exists()) {
+                throw new Exception("Path \'$curDir.path\' does not exist.")
             }
-        } else {
-            throw new Exception("The serverPackage name \'$altGroup\' is invalid for package name. The name should follow this regular expression pattern:\'$packageRegex\', e.g., your.project.name, your.project_name or your_project_name")
+
+            if (altGroup.matches(packageRegex)) {
+                if (altGroup != curGroup) {
+                    def altPath = "${basePath}${altGroup.replace('.', fs)}"
+                    new AntBuilder().move(todir: altPath, overwrite: true, force: true, flatten: false) {
+                        fileset(dir: curPath, includes: '**/*.*')
+                    }
+                    cleanUpDirs(basePath, curPath)
+                }
+            } else {
+                throw new Exception("The serverPackage name \'$altGroup\' is invalid for package name. The name should follow this regular expression pattern:\'$packageRegex\', e.g., your.project.name, your.project_name or your_project_name")
+            }
         }
     }
 
@@ -174,6 +189,12 @@ class Utils {
 
     static Map<String, String> loadFileToMap(Map<String, String> setupJsonMap, String type) {
         setupJsonMap.collectEntries { [(it.key): it.value[type]] }
+    }
+
+    static void renameFile(File file, String fileName, String fileType) {
+        def newName = file.getParent() + File.separator + fileName + fileType
+        file.renameTo(newName)
+        println "Renamed file \'${file}\' to \'${newName}\'."
     }
 
     static void cleanUpDirs(String basePath, String packagePath) {

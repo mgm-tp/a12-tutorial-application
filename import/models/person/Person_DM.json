@@ -27,7 +27,8 @@
   "content": {
     "modelInfo": {
       "name": "Person_DM",
-      "immutable": false
+      "immutable": false,
+      "joinedModelsInfo": "Person_DM-document-meta-data+Add"
     },
     "modelConfig": {
       "decimalSeparator": ".",
@@ -161,12 +162,12 @@
                         },
                         "label": [
                           {
-                            "locale": "de",
-                            "text": "Geburtstag"
+                            "locale": "en",
+                            "text": "Date of Birth"
                           },
                           {
-                            "locale": "en",
-                            "text": "Date of birth"
+                            "locale": "de",
+                            "text": "Geburtstag"
                           }
                         ]
                       }
@@ -182,7 +183,7 @@
                         "label": [
                           {
                             "locale": "en",
-                            "text": "Place of birth"
+                            "text": "Place of Birth"
                           },
                           {
                             "locale": "de",
@@ -214,7 +215,7 @@
                     {
                       "type": "Field",
                       "id": "field_8d972",
-                      "name": "Email",
+                      "name": "EmailAddress",
                       "Field": {
                         "fieldType": {
                           "type": "StringType",
@@ -222,11 +223,11 @@
                             "errorMessage": [
                               {
                                 "locale": "en",
-                                "text": "Email must be email"
+                                "text": "Please enter a valid email address."
                               },
                               {
                                 "locale": "de",
-                                "text": "TODO"
+                                "text": "Bitte geben Sie eine valide E-Mail-Adresse an."
                               }
                             ],
                             "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
@@ -235,11 +236,11 @@
                         "label": [
                           {
                             "locale": "en",
-                            "text": "Email"
+                            "text": "Email Address"
                           },
                           {
                             "locale": "de",
-                            "text": "Email"
+                            "text": "E-Mail-Adresse"
                           }
                         ],
                         "requirednessConfig": {
@@ -369,7 +370,7 @@
                                 }
                               ],
                               "guiPatterns": {
-                                "dynamicEnumerationRule": "false"
+                                "dynamicEnumeration": "false"
                               }
                             }
                           },
@@ -393,7 +394,7 @@
                                 }
                               ],
                               "guiPatterns": {
-                                "dynamicEnumerationRule": "false"
+                                "dynamicEnumeration": "false"
                               }
                             }
                           },
@@ -417,7 +418,7 @@
                                 }
                               ],
                               "guiPatterns": {
-                                "dynamicEnumerationRule": "false"
+                                "dynamicEnumeration": "false"
                               }
                             }
                           },
@@ -441,7 +442,7 @@
                                 }
                               ],
                               "guiPatterns": {
-                                "dynamicEnumerationRule": "false"
+                                "dynamicEnumeration": "false"
                               }
                             }
                           }
@@ -540,12 +541,12 @@
                         },
                         "label": [
                           {
-                            "locale": "de",
-                            "text": "Postleitzahl"
+                            "locale": "en",
+                            "text": "Post Code"
                           },
                           {
-                            "locale": "en",
-                            "text": "Post code"
+                            "locale": "de",
+                            "text": "Postleitzahl"
                           }
                         ]
                       }
@@ -570,12 +571,12 @@
                         },
                         "label": [
                           {
-                            "locale": "de",
-                            "text": "Telefonnummer"
+                            "locale": "en",
+                            "text": "Phone Number"
                           },
                           {
-                            "locale": "en",
-                            "text": "Phone number"
+                            "locale": "de",
+                            "text": "Telefonnummer"
                           }
                         ]
                       }

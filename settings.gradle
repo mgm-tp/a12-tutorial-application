@@ -30,12 +30,11 @@ dependencyResolutionManagement {
 
         a12Libs {
             version('base', '28.0.0')
-            version('kernel', '29.0.0-rc.04')
-            version('uaa', '8.0.0-rc.4')
-            version('dataservices', '37.0.0-rc.3')
+            version('kernel', '29.1.0')
+            version('uaa', '8.0.1')
+            version('dataservices', '37.0.0')
 
             library('uaa-authorization-a12-extension', 'com.mgmtp.a12.uaa', 'uaa-authorization-a12-extension').versionRef('uaa')
-
             library('dataservices-server-app', 'com.mgmtp.a12.dataservices', 'dataservices-server-app').versionRef('dataservices')
             library('dataservices-server-init-app', 'com.mgmtp.a12.dataservices', 'dataservices-server-init-app').versionRef('dataservices')
 

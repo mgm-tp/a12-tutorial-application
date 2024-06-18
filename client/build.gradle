@@ -99,10 +99,6 @@ tasks.register('alignNodeNpmVersions') {
     }
 }
 
-npmInstall.configure {
-    args = ['--legacy-peer-deps']
-}
-
 tasks.register('compile', NpmTask) {
     group 'build'
     dependsOn npmInstall

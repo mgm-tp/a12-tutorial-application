@@ -24,7 +24,6 @@ import { GlobalStyles } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/base
 import { flatTheme } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/flat/flat-theme";
 import { DragAndDropUtils } from "@com.mgmtp.a12.widgets/widgets-core/lib/common";
 import { SizeContext, useWindowSize } from "@com.mgmtp.a12.widgets/widgets-core/lib/layout/size-detector";
-import "@com.mgmtp.a12.widgets/widgets-core/lib/global-message-box";
 
 import { DEFAULT_TRANSLATIONS } from "../../localization";
 

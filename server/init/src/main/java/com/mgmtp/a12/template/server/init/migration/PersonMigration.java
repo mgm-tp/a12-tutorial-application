@@ -1,5 +1,9 @@
-package com.mgmtp.a12.template.server.migration;
+package com.mgmtp.a12.template.server.init.migration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mgmtp.a12.dataservices.document.DataServicesDocument;
 import com.mgmtp.a12.dataservices.document.DocumentReference;
 import com.mgmtp.a12.dataservices.document.events.DocumentAfterRepositoryLoadEvent;
@@ -9,34 +13,22 @@ import com.mgmtp.a12.dataservices.migration.MigrationStep;
 import com.mgmtp.a12.dataservices.migration.MigrationTask;
 import com.mgmtp.a12.dataservices.search.SearchIndexLoader;
 import com.mgmtp.a12.uaa.authentication.backend.Authenticated;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.List;
 import java.util.Optional;
 
 @MigrationStep(version = "202306.1.1", name = "Data migration of Person Document")
+@Component
 public class PersonMigration {
 
     private static final String MODEL_TO_MIGRATE = "Person_DM";
-    private static final String REMOVED_FIELD = "PlaceOfBirth";
+    private static final String REMOVED_FIELD_PATH = "/Person/PersonalData/PlaceOfBirth";
     private final IDocumentRepository documentRepository;
     private final SearchIndexLoader indexLoader;
     private final MigrationConfiguration config;
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public PersonMigration(final IDocumentRepository documentRepository,
                            final SearchIndexLoader indexLoader,
@@ -60,14 +52,14 @@ public class PersonMigration {
         });
 
         config.setEnabled(false);
-        indexLoader.rebuildIndexForModel(MODEL_TO_MIGRATE, 500);
+        indexLoader.rebuildIndexForModel(MODEL_TO_MIGRATE, 500, true);
 
     }
 
     @CommonDataServicesEventListener(condition = "@migrationConfiguration.isEnabled() &&"
             + "#afterRepositoryLoadEvent.documentReference.documentModelName.equalsIgnoreCase('Person_DM')")
     public void listenOnDocumentLoadFromRepository(DocumentAfterRepositoryLoadEvent afterRepositoryLoadEvent)
-            throws ParserConfigurationException, IOException, SAXException, TransformerException {
+            throws IllegalArgumentException, JsonProcessingException {
         String documentContent = afterRepositoryLoadEvent.getDocumentContent();
 
         documentContent = migrateDocument(documentContent);
@@ -76,28 +68,16 @@ public class PersonMigration {
     }
 
     private String migrateDocument(String documentContent)
-            throws ParserConfigurationException, IOException, SAXException, TransformerException {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        Document document = db.parse(new InputSource(new StringReader(documentContent)));
-
-        if (document.getElementsByTagName(REMOVED_FIELD).getLength() == 1) {
-            Node placeOfBirthNode = document.getElementsByTagName(REMOVED_FIELD).item(0);
-            placeOfBirthNode.getParentNode().removeChild(placeOfBirthNode);
-            return convertXMLDocumentToString(document);
+            throws IllegalArgumentException, JsonProcessingException {
+        JsonNode rootJsonNode = mapper.readTree(documentContent);
+        ObjectNode rootObjNode = (ObjectNode) rootJsonNode;
+        JsonNode parentNode = rootJsonNode.at(REMOVED_FIELD_PATH.substring(0, REMOVED_FIELD_PATH.lastIndexOf("/")));
+        String nodeName = REMOVED_FIELD_PATH.substring(REMOVED_FIELD_PATH.lastIndexOf("/") + 1);
+        if (parentNode.get(nodeName) != null) {
+            ((ObjectNode) parentNode).remove(nodeName);
+            return rootObjNode.toString();
         }
 
         return documentContent;
-    }
-
-    private String convertXMLDocumentToString(Node document) throws TransformerException {
-        DOMSource domSource = new DOMSource(document);
-        StringWriter writer = new StringWriter();
-        StreamResult result = new StreamResult(writer);
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer transformer = tf.newTransformer();
-
-        transformer.transform(domSource, result);
-        return writer.toString();
     }
 }

@@ -2,7 +2,7 @@
   "header": {
     "id": "Person_FM",
     "modelType": "form",
-    "modelVersion": "37.0.0-pre.6",
+    "modelVersion": "37.0.0",
     "locales": [
       {
         "code": "en"

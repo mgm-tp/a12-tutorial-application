@@ -1,8 +1,5 @@
-import { Module } from "@com.mgmtp.a12.client/client-core/lib/core/application";
-import { ApplicationModel, ModelSelectors } from "@com.mgmtp.a12.client/client-core/lib/core/model";
+import { ApplicationModel } from "@com.mgmtp.a12.client/client-core/lib/core/model";
 import { Role, UaaOidcModifiedUser } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
-
-import applicationModel = ModelSelectors.applicationModel;
 
 /**
  * Returns user roles concatenated with the access rights.
@@ -20,24 +17,6 @@ export function getUserPermissions(user: UaaOidcModifiedUser) {
     }
 
     return permissions;
-}
-
-/**
- * Map the given {@link Module} based on the permissions of the {@link ApplicationModel.Module}
- * and the user's permissions.
- *
- * @param currentModule The module for which permissions are being checked.
- * @param currentUser The user whose permissions are being checked.
- * @return A new {@link Module} with filtered module of application model based on user permissions.
- */
-export function mapModuleByPermission(currentModule: Module, currentUser: UaaOidcModifiedUser): Module {
-    if (currentModule.model) {
-        const currentAppModel = currentModule.model(applicationModel());
-        const mappedAppModel: ApplicationModel = mapAppModelByPermission(currentAppModel, currentUser);
-        return { ...currentModule, model: () => mappedAppModel };
-    }
-
-    return currentModule;
 }
 
 /**

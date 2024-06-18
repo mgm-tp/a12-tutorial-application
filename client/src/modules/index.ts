@@ -10,7 +10,7 @@ import { ModelActions } from "@com.mgmtp.a12.client/client-core/lib/core/model";
 import { TreeEngineFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/client";
 import { TreeEngineServerConnectorFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/server-connector";
 
-import { mapModuleByPermission } from "./utils";
+import { mapAppModelByPermission } from "./utils";
 
 export const ALL_MODULES = [
     AppModelAdapterModule,
@@ -27,14 +27,32 @@ export const getAllModules = (): Module[] => {
 };
 
 /**
- * On login, registers all modules that current user has access to.
+ * Initializes module registry on `setModelGraph` action.
  */
-export const registerModulesOnLoginMiddleware = StoreFactories.createMiddleware((api, next, action) => {
+export const registerModulesOnSetModelGraphMiddleware = StoreFactories.createMiddleware((api, next, action) => {
     if (ModelActions.setModelGraph.match(action) && !moduleRegistry.getAllModules().length) {
+        getAllModules().forEach((module) => moduleRegistry.addModule(module));
+    }
+
+    return next(action);
+});
+
+/**
+ * Middleware that filters and registers application model modules based on the logged-in user's permissions.
+ */
+export const registerAppModelModulesByPermissionMiddleware = StoreFactories.createMiddleware((api, next, action) => {
+    if (ModelActions.addModulesApplicationModels.match(action)) {
         const user = UaaSelectors.user(api.getState()) as UaaOidcModifiedUser;
-        getAllModules()
-            .map((module) => mapModuleByPermission(module, user))
-            .forEach((module) => moduleRegistry.addModule(module));
+        const applicationModels = action.payload.models;
+
+        const userAuthorizedAppModels = applicationModels.map((model) => mapAppModelByPermission(model, user));
+
+        return next({
+            ...action,
+            payload: {
+                models: userAuthorizedAppModels
+            }
+        });
     }
 
     return next(action);

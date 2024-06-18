@@ -10,6 +10,17 @@
             "cwd": "${workspaceFolder}/client"
         },
         {
+            "type": "chrome",
+            "name": "client start [debug]",
+            "request": "launch",
+            "url": "http://localhost:8081",
+            "runtimeExecutable": "stable",
+            "webRoot": "${workspaceFolder}/client",
+            "preLaunchTask": "start client",
+            "postDebugTask": "stop client",
+            "sourceMaps": true
+        },
+        {
             "type": "java",
             "name": "server start (local-db)",
             "request": "launch",
@@ -30,6 +41,28 @@
             ],
             "cwd": "${workspaceFolder}/server/app",
             "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "init app start (local-db)",
+            "request": "launch",
+            "mainClass": "com.mgmtp.a12.template.server.init.ProjectTemplateInitApplication",
+            "args": [
+                "--spring.profiles.active=local-db-env"
+            ],
+            "cwd": "${workspaceFolder}/server/init",
+            "projectName": "init"
+        },
+        {
+            "type": "java",
+            "name": "init app start (h2-in-mem)",
+            "request": "launch",
+            "mainClass": "com.mgmtp.a12.template.server.init.ProjectTemplateInitApplication",
+            "args": [
+                "--spring.profiles.active=dev-env"
+            ],
+            "cwd": "${workspaceFolder}/server/init",
+            "projectName": "init"
         }
     ]
 }

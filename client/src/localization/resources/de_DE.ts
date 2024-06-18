@@ -10,16 +10,6 @@ export const de_DE: LocalizationKeyTreeType = {
                     logoutButton: "Ausloggen"
                 }
             }
-        },
-        model: {
-            appmodel: {
-                loading: {
-                    error: {
-                        title: "Application Model Fehler",
-                        message: "Beim Laden des Application Models ist ein Fehler aufgetreten."
-                    }
-                }
-            }
         }
     },
 

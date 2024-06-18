@@ -40,7 +40,7 @@ pipeline {
         GRADLE_USER_HOME = "${WORKSPACE}/.gradle"
     }
     options {
-        disableConcurrentBuilds()
+        disableConcurrentBuilds(abortPrevious: true)
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
 
     }
