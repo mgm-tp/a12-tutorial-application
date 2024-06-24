@@ -15,26 +15,6 @@ ext {
                    "description": "A Data Services server with API and implementations to deal with models and documents supporting creation, retrieval, update, deletion and querying"]
 }
 
-configurations {
-    runTypedAccessorGeneratorConfig
-}
-
-def generatedTypingsOutputDir = layout.buildDirectory.dir("generatedTypings").get().asFile
-
-sourceSets {
-    generatedTypings {
-        java {
-            srcDir(generatedTypingsOutputDir)
-        }
-    }
-    main {
-        java {
-            compileClasspath += sourceSets.generatedTypings.output
-            runtimeClasspath += sourceSets.generatedTypings.output
-        }
-    }
-}
-
 dependencies {
     //Open rewrite analysis
     rewrite libs.rewrite.static.analysis
@@ -62,35 +42,13 @@ dependencies {
     implementation(libs.logstash)
     implementation(libs.logback.classic)
 
-    runTypedAccessorGeneratorConfig group: 'com.mgmtp.a12.kernel', name: 'kernel-md-typed-accessor-gen', version: a12Libs.versions.kernel.get(), classifier: 'TypedAccessorGenerator-CLI'
-    generatedTypingsImplementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-document-v2', version: a12Libs.versions.kernel.get()
-    implementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-util', version: a12Libs.versions.kernel.get()
-    implementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-facade', version: a12Libs.versions.kernel.get()
+    // Lombok
+    implementation libs.lombok
+    annotationProcessor libs.lombok
+
+    // OpenCage
+    implementation libs.jopencage
 }
-
-
-tasks.register('runTypedAccessorGenerator', JavaExec) {
-    classpath = configurations.runTypedAccessorGeneratorConfig
-    mainClass = 'com.mgmtp.a12.kernel.md.document.typed_accessor_gen.TypedAccessorGenerator'
-
-    def modelPath = "${rootProject.projectDir.path}/import/models";
-    def packagePrefix = "com.mgmtp.a12.tutorial.server.typings"
-    def documentModels = fileTree(dir: "${modelPath}", include: '**/*_DM.json')
-
-    if (!documentModels || documentModels.isEmpty()) {
-        throw new GradleException("No model definition files found in ${modelPath}")
-    }
-    def argsList = []
-    argsList += ['--document-model-file', documentModels.first().absolutePath]
-    argsList += ['--package-prefix', packagePrefix]
-    argsList += ['--output-dir', generatedTypingsOutputDir]
-    documentModels.each { File jsonFile ->
-        argsList += ['-i', jsonFile.absolutePath]
-    }
-    args argsList
-}
-
-tasks.compileGeneratedTypingsJava.dependsOn(runTypedAccessorGenerator)
 
 springBoot {
     mainClass = 'com.mgmtp.a12.tutorial.server.TutorialServerApplication'
