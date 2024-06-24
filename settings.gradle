@@ -82,11 +82,16 @@ dependencyResolutionManagement {
             version('spring-boot', springBootVersion)
             version('logstash','7.4')
             version('logback-classic','1.5.6')
+            version('lombok', '1.18.42')
+            version('opencage', '2.2.2')
 
             library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('spring-boot')
             library('spring-boot-devtools', 'org.springframework.boot', 'spring-boot-devtools').versionRef('spring-boot')
             library('logstash', 'net.logstash.logback', 'logstash-logback-encoder').versionRef('logstash')
             library('logback-classic', 'ch.qos.logback', 'logback-classic').versionRef('logback-classic')
+
+            library('lombok', 'org.projectlombok', 'lombok').versionRef('lombok')
+            library('jopencage', 'com.opencagedata', 'jopencage').versionRef('opencage')
         }
 
         testCatalogLibs {

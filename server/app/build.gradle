@@ -94,6 +94,13 @@ dependencies {
     generatedTypingsImplementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-document-v2', version: a12Libs.versions.kernel.get()
     implementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-util', version: a12Libs.versions.kernel.get()
     implementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-facade', version: a12Libs.versions.kernel.get()
+
+    // Lombok
+    implementation libs.lombok
+    annotationProcessor libs.lombok
+
+    // OpenCage
+    implementation libs.jopencage
 }
 
 
