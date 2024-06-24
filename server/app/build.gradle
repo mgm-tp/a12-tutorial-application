@@ -41,6 +41,13 @@ dependencies {
 	//implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
     implementation(libs.logstash)
     implementation(libs.logback.classic)
+
+    // Lombok
+    implementation libs.lombok
+    annotationProcessor libs.lombok
+
+    // OpenCage
+    implementation libs.jopencage
 }
 
 springBoot {
