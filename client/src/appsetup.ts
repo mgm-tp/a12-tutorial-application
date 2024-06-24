@@ -60,6 +60,7 @@ import { DefaultElementLibrary } from "@com.mgmtp.a12.contentengine/contentengin
 import { withUaa } from "@com.mgmtp.a12.uaa/uaa-authentication-a12-client";
 
 import { registerModulesOnSetModelGraphMiddleware, unregisterModulesOnLogoutMiddleware } from "./modules";
+import { normalizeSavingErrorMiddleware } from "./middlewares/normalizeSavingError";
 import { isProduction } from "./config";
 import { enableReduxDevTools } from "./config/devtools";
 import { LoadModelGraphSaga } from "./sagas/loadModelGraph";
@@ -133,7 +134,11 @@ export function setup() {
 
     const applicationFeatures = combineFeatures(
         viewAndLayoutFeatures,
-        addAdditionalMiddlewares(registerModulesOnSetModelGraphMiddleware, unregisterModulesOnLogoutMiddleware),
+        addAdditionalMiddlewares(
+            registerModulesOnSetModelGraphMiddleware,
+            unregisterModulesOnLogoutMiddleware,
+            normalizeSavingErrorMiddleware
+        ),
         addCustomSagas(LoadModelGraphSaga)
     );
 
