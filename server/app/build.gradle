@@ -44,6 +44,13 @@ dependencies {
     implementation(platform(a12Libs.kernel.bom))
     implementation(platform(a12Libs.uaa.bom))
     implementation(platform(a12Libs.dataservices.bom))
+
+    // Lombok
+    implementation libs.lombok
+    annotationProcessor libs.lombok
+
+    // OpenCage
+    implementation libs.jopencage
 }
 
 springBoot {
