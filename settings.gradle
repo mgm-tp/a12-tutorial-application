@@ -46,9 +46,14 @@ dependencyResolutionManagement {
 
         libs {
             version('spring-boot', springBootVersion)
+            version('lombok', '1.18.32')
+            version('opencage', '1.4.0')
 
             library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('spring-boot')
             library('spring-boot-devtools', 'org.springframework.boot', 'spring-boot-devtools').versionRef('spring-boot')
+
+            library('lombok', 'org.projectlombok', 'lombok').versionRef('lombok')
+            library('jopencage', 'com.byteowls', 'jopencage').versionRef('opencage')
         }
 
         testCatalogLibs {
