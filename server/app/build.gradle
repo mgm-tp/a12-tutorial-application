@@ -77,6 +77,14 @@ dependencies {
     // Generation of typed accessors
     generatedTypingsImplementation a12Libs.kernel.md.document.v2
     runTypedAccessorGeneratorConfig group: 'com.mgmtp.a12.kernel', name: 'kernel-md-typed-accessor-gen', version: a12Libs.versions.getKernel().get(), classifier: 'TypedAccessorGenerator-CLI'
+
+    // Test
+    testImplementation libs.junit.api
+    testRuntimeOnly libs.junit.engine
+    testImplementation libs.mockito
+    testImplementation libs.mockito.junit
+    testImplementation libs.lombok
+    testAnnotationProcessor libs.lombok
 }
 
 tasks.register('runTypedAccessorGenerator', JavaExec) {
@@ -96,6 +104,10 @@ springBoot {
             version = project.version
         }
     }
+}
+
+test {
+    useJUnitPlatform()
 }
 
 artifacts artifactsVar
