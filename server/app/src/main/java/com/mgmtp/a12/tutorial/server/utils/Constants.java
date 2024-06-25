@@ -49,6 +49,10 @@ import java.time.Instant;
 public final class Constants {
 
     public static final String CONTACT_MODEL_NAME = "Contact_Dc";
+    public static final String CONTACT_PERSONALDATA_GENDER_PATH = "/Contact/PersonalData/Gender";
+    public static final String CONTACT_PERSONALDATA_NATIONALITY_PATH = "/Contact/PersonalData/Nationality";
+    public static final String CONTACT_PERSONALDATA_CUSTOMER_TYPE_PATH = "/Contact/PersonalData/CustomerType";
+    public static final String CONTACT_PHONES_PHONE_TYPE_PATH = "/Contact/Phones/Type";
     public static final String CONTACT_ADDRESS_PATH = "/Contact/Address";
 
     public static final String CONTACT_CHANGED_PROPERTY_PATH =
