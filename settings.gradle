@@ -84,6 +84,8 @@ dependencyResolutionManagement {
             version('logback-classic','1.5.6')
             version('lombok', '1.18.42')
             version('opencage', '2.2.2')
+            version('junit', '6.0.1')
+            version('mockito', '5.20.0')
 
             library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('spring-boot')
             library('spring-boot-devtools', 'org.springframework.boot', 'spring-boot-devtools').versionRef('spring-boot')
@@ -92,6 +94,13 @@ dependencyResolutionManagement {
 
             library('lombok', 'org.projectlombok', 'lombok').versionRef('lombok')
             library('jopencage', 'com.opencagedata', 'jopencage').versionRef('opencage')
+
+            library('junit-api', 'org.junit.jupiter', 'junit-jupiter-api').versionRef('junit')
+            library('junit-engine', 'org.junit.jupiter', 'junit-jupiter-engine').versionRef('junit')
+            library('junit-platform-launcher', 'org.junit.platform', 'junit-platform-launcher').versionRef('junit')
+
+            library('mockito', 'org.mockito', 'mockito-core').versionRef('mockito')
+            library('mockito-junit', 'org.mockito', 'mockito-junit-jupiter').versionRef('mockito')
         }
 
         testCatalogLibs {
