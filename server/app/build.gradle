@@ -102,6 +102,15 @@ dependencies {
 
     // OpenCage
     implementation libs.jopencage
+
+    // Test
+    testImplementation libs.junit.api
+    testRuntimeOnly libs.junit.engine
+    testRuntimeOnly libs.junit.platform.launcher
+    testImplementation libs.mockito
+    testImplementation libs.mockito.junit
+    testImplementation libs.lombok
+    testAnnotationProcessor libs.lombok
 }
 
 
@@ -150,6 +159,10 @@ springBoot {
 }
 
 bootRun bootRunVar
+
+test {
+    useJUnitPlatform()
+}
 
 artifacts artifactsVar
 
