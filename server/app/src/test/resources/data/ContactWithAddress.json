@@ -1,0 +1,25 @@
+{
+  "id" : "1",
+  "Contact" : {
+    "PersonalData" : {
+      "FirstName" : "John",
+      "LastName" : "Smith",
+      "Email" : "johnsmith@mgm-tp.com",
+      "DateOfBirth" : "1987-10-13",
+      "Nationality" : "British"
+    },
+    "Address" : [ {
+      "Street" : "Trierer Straße",
+      "Housenumber" : "15",
+      "City" : "Weimar",
+      "Zip" : "99423",
+      "Country" : "Deutschland"
+    } ],
+    "Phones": [
+      {
+        "PhoneNumber": "+49 89 / 358 680-0",
+        "Type": "WORK"
+      }
+    ]
+  }
+}
