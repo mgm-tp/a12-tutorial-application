@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.mgmtp.a12.tutorial.server.report.ContactReportOperation.GET_CONTACT_REPORT;
@@ -45,7 +44,10 @@ public class ContactReportOperation {
                 localeLanguage
         );
 
-        // Put your code here ...
-        return new ArrayList<>();
+        if (!localeLanguage.equals("en") && !localeLanguage.equals("de")) {
+            throw new IllegalArgumentException("localeLanguage must be either 'en' or 'de'");
+        }
+
+        return contactReportService.getContacts(customerType, nationality, localeLanguage);
     }
 }
