@@ -1,0 +1,35 @@
+{
+  "id" : "1",
+  "Contact" : {
+    "PersonalData" : {
+      "FirstName" : "John",
+      "LastName" : "Smith",
+      "Email" : "johnsmith@mgm-tp.com",
+      "DateOfBirth" : "1987-10-13",
+      "Nationality" : "British"
+    },
+    "Phones" : [ {
+      "PhoneNumber" : "+49 89 / 358 680-0",
+      "Type" : "WORK"
+    } ],
+    "Address" : [ {
+      "Street" : "Vordere Cramergasse",
+      "Housenumber" : "11",
+      "City" : "Nürnberg",
+      "Zip" : "90478",
+      "Country" : "#Deutschland"
+    }, {
+      "Street" : "Taunusstraße",
+      "Housenumber" : "23",
+      "City" : "München",
+      "Zip" : "123456789",
+      "Country" : "Deutschland"
+    }, {
+      "Street" : "Samplestreet",
+      "Housenumber" : "1",
+      "City" : "Samplecity",
+      "Zip" : "12345",
+      "Country" : "Samplecountry"
+    } ]
+  }
+}
