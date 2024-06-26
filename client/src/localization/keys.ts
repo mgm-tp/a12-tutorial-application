@@ -26,9 +26,22 @@ export const RESOURCE_KEYS = {
                     logoutButton: ""
                 }
             }
+        },
+        model: {
+            appmodel: {
+                loading: {
+                    error: {
+                        title: "",
+                        message: ""
+                    }
+                }
+            }
+        },
+        footer: {
+            help: "",
+            faq: ""
         }
     },
-
     error: {
         security: {
             notAuthorized: {
