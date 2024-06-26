@@ -34,5 +34,6 @@
 import type { Module } from "@com.mgmtp.a12.client/client-core";
 
 import contact from "./contact";
+import help from "./help";
 
-export const modules: Module[] = [contact];
+export const modules: Module[] = [contact, help];

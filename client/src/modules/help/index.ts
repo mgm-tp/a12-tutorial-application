@@ -30,48 +30,21 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-import type { LocalizationKeyTreeType } from "../keys";
+import type { Module, View } from "@com.mgmtp.a12.client/client-core";
 
-export const en_US: LocalizationKeyTreeType = {
-    application: {
-        title: "Customer Relationship Management",
-        header: {
-            userinfo: {
-                labels: {
-                    loggedInAs: "Logged in as",
-                    logoutButton: "Logout"
-                }
-            }
-        },
-        footer: {
-            help: "Help",
-            faq: "FAQ"
-        }
-    },
+import MarkdownPage from "./components/MarkdownPage";
 
-    locale: {
-        en: "English (EN)",
-        de: "German (DE)"
-    },
-
-    error: {
-        security: {
-            notAuthorized: {
-                description: "You are not allowed to perform the requested operation."
-            }
-        },
-        attachment: {
-            invalidType: "Invalid MIME type."
-        },
-        "content-store": {
-            content: {
-                invalidSize: "The attachment content exceeds the maximum permitted size."
-            }
-        },
-        serverUnavailable: {
-            title: "Server Unavailable",
-            message: "The server is currently unavailable. Please try again.",
-            retry: "Retry"
-        }
-    }
+const VIEWS: { [name: string]: View.ViewComponent | undefined } = {
+    HelpPage: MarkdownPage
 };
+
+function viewComponentProvider(name: string) {
+    return VIEWS[name];
+}
+
+const module: Module = {
+    id: "HelpModule",
+    views: () => viewComponentProvider
+};
+
+export default module;

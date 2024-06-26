@@ -34,7 +34,7 @@ import type { LocalizationKeyTreeType } from "../keys";
 
 export const de_DE: LocalizationKeyTreeType = {
     application: {
-        title: "A12 Tutorial Application",
+        title: "Kundenbeziehungsmanagement",
         header: {
             userinfo: {
                 labels: {
@@ -42,6 +42,10 @@ export const de_DE: LocalizationKeyTreeType = {
                     logoutButton: "Ausloggen"
                 }
             }
+        },
+        footer: {
+            help: "Hilfe",
+            faq: "FAQ"
         }
     },
 

@@ -30,48 +30,41 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-import type { LocalizationKeyTreeType } from "../keys";
+interface PageContent {
+    [pageName: string]: {
+        [locale: string]: string;
+    };
+}
 
-export const en_US: LocalizationKeyTreeType = {
-    application: {
-        title: "Customer Relationship Management",
-        header: {
-            userinfo: {
-                labels: {
-                    loggedInAs: "Logged in as",
-                    logoutButton: "Logout"
-                }
-            }
-        },
-        footer: {
-            help: "Help",
-            faq: "FAQ"
-        }
+export const defaultPage = "help";
+
+export const pages: PageContent = {
+    help: {
+        en: `
+![ Help page](/images/help_image.jpg)
+# Help Page
+This is a help page.
+`,
+        de: `
+![Hilfeseite](/images/help_image.jpg)
+# Hilfeseite
+Dies ist eine Hilfeseite.
+`
     },
+    faq: {
+        en: `
+![FAQ page](/images/faq_image.jpg)
+# FAQ Page
+***Is this an FAQ page?***
 
-    locale: {
-        en: "English (EN)",
-        de: "German (DE)"
-    },
+Yes.
+`,
+        de: `
+![FAQ-Seite](/images/faq_image.jpg)
+# FAQ-Seite
+***Ist das eine FAQ-Seite?***
 
-    error: {
-        security: {
-            notAuthorized: {
-                description: "You are not allowed to perform the requested operation."
-            }
-        },
-        attachment: {
-            invalidType: "Invalid MIME type."
-        },
-        "content-store": {
-            content: {
-                invalidSize: "The attachment content exceeds the maximum permitted size."
-            }
-        },
-        serverUnavailable: {
-            title: "Server Unavailable",
-            message: "The server is currently unavailable. Please try again.",
-            retry: "Retry"
-        }
+Ja.
+`
     }
 };
