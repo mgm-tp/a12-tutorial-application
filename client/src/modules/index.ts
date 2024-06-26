@@ -17,6 +17,7 @@ import {
 import { LoggerFactory } from "@com.mgmtp.a12.utils/utils-logging";
 
 import ContactModule from "./contact";
+import HelpModule from "./help";
 
 const logger = LoggerFactory.getLogger("PT/modules");
 
@@ -30,7 +31,8 @@ export const ALL_MODULES = [
             modules: [...DefaultElementLibrary.get().modules, ...FormElementsLibrary.modules]
         }
     }),
-    ContactModule
+    ContactModule,
+    HelpModule
 ];
 const moduleRegistry = ModuleRegistryProvider.getInstance();
 
