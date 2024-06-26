@@ -118,6 +118,57 @@
             ]
           }
         ]
+      },
+      {
+        "name": "HelpModule",
+        "menu": {
+          "name": "Help",
+          "label": [
+            {
+              "locale": "en",
+              "text": "Help"
+            },
+            {
+              "locale": "de",
+              "text": "Hilfe"
+            }
+          ],
+          "initialActivity": {
+            "descriptor": {
+              "module": "Help"
+            }
+          }
+        },
+        "flows": [
+          {
+            "name": "HelpFlow",
+            "scenes": [
+              {
+                "name": "HelpScene",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Help"
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "REGION_CLEAR",
+                      "layout": {
+                        "name": "Null"
+                      }
+                    },
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "HelpPage"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       }
     ],
     "region": {

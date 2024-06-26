@@ -10,9 +10,22 @@ export const en_US: LocalizationKeyTreeType = {
                     logoutButton: "Logout"
                 }
             }
+        },
+        model: {
+            appmodel: {
+                loading: {
+                    error: {
+                        title: "Application Model error",
+                        message: "An error occurred while loading application model."
+                    }
+                }
+            }
+        },
+        footer: {
+            help: "Help",
+            faq: "FAQ"
         }
     },
-
     error: {
         security: {
             notAuthorized: {
