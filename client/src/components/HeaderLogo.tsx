@@ -30,48 +30,8 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-import type { LocalizationKeyTreeType } from "../keys";
+import type { ReactElement } from "react";
 
-export const en_US: LocalizationKeyTreeType = {
-    application: {
-        title: "Customer Relationship Management",
-        header: {
-            userinfo: {
-                labels: {
-                    loggedInAs: "Logged in as",
-                    logoutButton: "Logout"
-                }
-            }
-        },
-        footer: {
-            help: "Help",
-            faq: "FAQ"
-        }
-    },
-
-    locale: {
-        en: "English (EN)",
-        de: "German (DE)"
-    },
-
-    error: {
-        security: {
-            notAuthorized: {
-                description: "You are not allowed to perform the requested operation."
-            }
-        },
-        attachment: {
-            invalidType: "Invalid MIME type."
-        },
-        "content-store": {
-            content: {
-                invalidSize: "The attachment content exceeds the maximum permitted size."
-            }
-        },
-        serverUnavailable: {
-            title: "Server Unavailable",
-            message: "The server is currently unavailable. Please try again.",
-            retry: "Retry"
-        }
-    }
-};
+export default function HeaderLogo(): ReactElement {
+    return <img style={{ height: 40 }} src="/images/mgm-Logo.svg" alt="mgm technology partners logo" />;
+}

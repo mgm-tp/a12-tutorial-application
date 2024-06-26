@@ -30,48 +30,35 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-import type { LocalizationKeyTreeType } from "../keys";
+import type { ReactElement } from "react";
+import ReactMarkdown from "react-markdown";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
 
-export const en_US: LocalizationKeyTreeType = {
-    application: {
-        title: "Customer Relationship Management",
-        header: {
-            userinfo: {
-                labels: {
-                    loggedInAs: "Logged in as",
-                    logoutButton: "Logout"
-                }
-            }
-        },
-        footer: {
-            help: "Help",
-            faq: "FAQ"
-        }
-    },
+import { ActivitySelectors, LocaleSelectors, type View } from "@com.mgmtp.a12.client/client-core";
 
-    locale: {
-        en: "English (EN)",
-        de: "German (DE)"
-    },
+import { defaultPage, pages } from "../pages";
 
-    error: {
-        security: {
-            notAuthorized: {
-                description: "You are not allowed to perform the requested operation."
-            }
-        },
-        attachment: {
-            invalidType: "Invalid MIME type."
-        },
-        "content-store": {
-            content: {
-                invalidSize: "The attachment content exceeds the maximum permitted size."
-            }
-        },
-        serverUnavailable: {
-            title: "Server Unavailable",
-            message: "The server is currently unavailable. Please try again.",
-            retry: "Retry"
-        }
+const ContentPage = styled.div`
+    max-width: 900px;
+    display: block;
+    margin: 0 auto;
+    img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
     }
-};
+`;
+
+export default function MarkdownPage(props: View): ReactElement | null {
+    const locale = useSelector(LocaleSelectors.locale());
+
+    const { activityId } = props;
+    const page = useSelector(ActivitySelectors.activityPropById(activityId, (a) => a.descriptor.page)) ?? defaultPage;
+
+    return (
+        <ContentPage>
+            <ReactMarkdown>{pages[page]?.[locale.language]}</ReactMarkdown>
+        </ContentPage>
+    );
+}
