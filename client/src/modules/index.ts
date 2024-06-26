@@ -12,12 +12,14 @@ import { TreeEngineServerConnectorFactories } from "@com.mgmtp.a12.treeengine/tr
 
 import { mapAppModelByPermission } from "./utils";
 import contactModule from "./contact";
+import helpModule from "./help";
 
 export const ALL_MODULES = [
     AppModelAdapterModule,
     TreeEngineFactories.createModule(),
     TreeEngineServerConnectorFactories.createModule(),
-    contactModule()
+    contactModule(),
+    helpModule()
 ];
 const moduleRegistry = ModuleRegistryProvider.getInstance();
 

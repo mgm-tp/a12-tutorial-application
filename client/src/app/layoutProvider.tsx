@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import { FrameFactories, FrameViews } from "@com.mgmtp.a12.client/client-core/lib/core/frame";
 import { UaaOidcModifiedUser, UaaSelectors, UserInfoHeader } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
 
-import { RESOURCE_KEYS, useLocalizer } from "../localization";
+import Footer from "../components/Footer";
+import HeaderLogo from "../components/HeaderLogo";
 import LocaleChooser from "../components/LocaleChooser";
+import { RESOURCE_KEYS, useLocalizer } from "../localization";
 import { getUserPermissions } from "../modules/utils";
 
 export const customLayoutProvider: FrameViews.LayoutProvider = (name: string) => {
@@ -30,6 +32,7 @@ function CustomApplicationFrameLayout(props: FrameViews.ApplicationFrameLayoutPr
     return (
         <FrameViews.ApplicationFrameLayout
             {...props}
+            logo={<HeaderLogo />}
             permissions={getUserPermissions(user)}
             additionalHeaderItems={[
                 {
@@ -47,6 +50,7 @@ function CustomApplicationFrameLayout(props: FrameViews.ApplicationFrameLayoutPr
                     orientation: "rightSlots-left"
                 }
             ]}
+            footer={<Footer />}
         />
     );
 }
