@@ -29,6 +29,10 @@ export const RESOURCE_KEYS = {
                     logoutButton: ""
                 }
             }
+        },
+        footer: {
+            help: "",
+            faq: ""
         }
     },
 

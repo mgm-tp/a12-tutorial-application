@@ -4,6 +4,8 @@ import type { ReactElement } from "react";
 import { FrameViews } from "@com.mgmtp.a12.client/client-core";
 import { UaaSelectors, UserInfoHeader } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
 
+import Footer from "../components/Footer";
+import HeaderLogo from "../components/HeaderLogo";
 import { RESOURCE_KEYS, useLocalizer } from "../localization";
 import ThemeChooser from "../components/ThemeChooser";
 
@@ -22,6 +24,7 @@ export function CustomApplicationFrameLayout(props: FrameViews.ApplicationFrameL
     return (
         <FrameViews.ApplicationFrameLayout
             {...props}
+            logo={<HeaderLogo />}
             permissions={roles}
             additionalHeaderItems={[
                 ...(props.additionalHeaderItems ?? []),
@@ -40,6 +43,7 @@ export function CustomApplicationFrameLayout(props: FrameViews.ApplicationFrameL
                     orientation: "rightSlots-left"
                 }
             ]}
+            footer={<Footer />}
         />
     );
 }
