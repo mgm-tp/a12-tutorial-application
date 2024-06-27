@@ -100,7 +100,7 @@
                   "onEnter": [
                     {
                       "type": "VIEW_ADD",
-                      "name": "FormEngine",
+                      "name": "CustomContactForm",
                       "constraints": {
                         "type": "MasterDetail"
                       },

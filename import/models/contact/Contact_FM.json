@@ -198,9 +198,12 @@
                       {
                         "type": "Control",
                         "id": "control-65fe4",
-                        "offset": {
-                          "lg": 0
-                        },
+                        "annotations": [
+                          {
+                            "name": "contact-dob-field",
+                            "value": "true"
+                          }
+                        ],
                         "datePickerConfig": {
                           "minYear": -70,
                           "maxYear": -18,
