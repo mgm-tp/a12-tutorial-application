@@ -30,23 +30,18 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-import type { Module, View } from "@com.mgmtp.a12.client/client-core";
+import { type ReactElement, createContext } from "react";
 
-import HighlightedDateOverview from "./components/HighlightedDateOverview";
-import CustomContactForm from "./components/CustomContactForm";
+import { DefaultFormModelMap, type FormModel, type FormModelMap } from "@com.mgmtp.a12.formengine/formengine-core";
 
-const VIEWS: { [name: string]: View.ViewComponent | undefined } = {
-    HighlightedDateOverview,
-    CustomContactForm
-};
+export const ContactFormControlContext = createContext<{ modelElement: FormModel.Control } | undefined>(undefined);
 
-function viewComponentProvider(name: string) {
-    return VIEWS[name];
+export default function ContactFormControl(
+    props: FormModelMap.FormModelComponentProps<FormModel.Control>
+): ReactElement {
+    return (
+        <ContactFormControlContext.Provider value={{ modelElement: props.modelElement }}>
+            <DefaultFormModelMap.Control.component {...props} />
+        </ContactFormControlContext.Provider>
+    );
 }
-
-const module: Module = {
-    id: "ContactModule",
-    views: () => viewComponentProvider
-};
-
-export default module;
