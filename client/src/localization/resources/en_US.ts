@@ -33,6 +33,21 @@
 import type { LocalizationKeyTreeType } from "../keys";
 
 export const en_US: LocalizationKeyTreeType = {
+    customerType: {
+        lead: "Lead",
+        inactive: "Inactive",
+        vip: "VIP",
+        suspended: "Suspended",
+        partner: "Partner",
+        null: "Unspecified"
+    },
+
+    dashboard: {
+        title: "Customers by type",
+        chart: "Customers",
+        noData: "No data"
+    },
+
     application: {
         title: "Customer Relationship Management",
         header: {
