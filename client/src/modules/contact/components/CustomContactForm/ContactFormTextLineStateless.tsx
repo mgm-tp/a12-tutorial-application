@@ -30,23 +30,28 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-import type { Module, View } from "@com.mgmtp.a12.client/client-core";
+import { type ReactElement, useContext } from "react";
 
-import HighlightedDateOverview from "./components/HighlightedDateOverview";
-import CustomContactForm from "./components/CustomContactForm";
+import { DefaultWidgetMap, FormModel } from "@com.mgmtp.a12.formengine/formengine-core";
+import type { TextLineStatelessProps } from "@com.mgmtp.a12.widgets/widgets-core";
 
-const VIEWS: { [name: string]: View.ViewComponent | undefined } = {
-    HighlightedDateOverview,
-    CustomContactForm
-};
+import BirthdayTextLineStateless from "./BirthdayTextLineStateless";
+import { ContactFormControlContext } from "./ContactFormControl";
 
-function viewComponentProvider(name: string) {
-    return VIEWS[name];
+const AnnotationBirthdayAddon = "contact-dob-field";
+
+export default function ContactFormTextLineStateless(props: TextLineStatelessProps): ReactElement {
+    // Get the model element of the current control from custom context
+    const modelElement = useContext(ContactFormControlContext)?.modelElement;
+
+    // Check if Model Element is of type Control and has a birthday annotation
+    if (
+        modelElement &&
+        FormModel.Control.isInstance(modelElement) &&
+        modelElement.annotations?.some((annot) => annot.name === AnnotationBirthdayAddon)
+    ) {
+        return <BirthdayTextLineStateless {...props} />;
+    }
+
+    return <DefaultWidgetMap.TextLineStateless {...props} />;
 }
-
-const module: Module = {
-    id: "ContactModule",
-    views: () => viewComponentProvider
-};
-
-export default module;

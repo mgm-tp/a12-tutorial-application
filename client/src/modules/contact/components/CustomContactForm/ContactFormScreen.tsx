@@ -30,23 +30,17 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-import type { Module, View } from "@com.mgmtp.a12.client/client-core";
+import type { ReactElement } from "react";
 
-import HighlightedDateOverview from "./components/HighlightedDateOverview";
-import CustomContactForm from "./components/CustomContactForm";
+import { DefaultFormModelMap, type FormModel, type FormModelMap } from "@com.mgmtp.a12.formengine/formengine-core";
 
-const VIEWS: { [name: string]: View.ViewComponent | undefined } = {
-    HighlightedDateOverview,
-    CustomContactForm
-};
+import { BirthdayReminderBox } from "./BirthdayReminderBox";
 
-function viewComponentProvider(name: string) {
-    return VIEWS[name];
+export default function ContactFormScreen(props: FormModelMap.FormModelComponentProps<FormModel.Screen>): ReactElement {
+    return (
+        <>
+            <BirthdayReminderBox />
+            <DefaultFormModelMap.Screen.component {...props} />
+        </>
+    );
 }
-
-const module: Module = {
-    id: "ContactModule",
-    views: () => viewComponentProvider
-};
-
-export default module;
