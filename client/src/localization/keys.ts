@@ -42,6 +42,14 @@ export const RESOURCE_KEYS = {
             faq: ""
         }
     },
+    contact: {
+        form: {
+            screen: {
+                daysUntilBirthday: "",
+                birthdayToday: ""
+            }
+        }
+    },
     error: {
         security: {
             notAuthorized: {
