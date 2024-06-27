@@ -41,6 +41,15 @@ export const RESOURCE_KEYS = {
         de: ""
     },
 
+    contact: {
+        form: {
+            screen: {
+                daysUntilBirthday: "",
+                birthdayToday: ""
+            }
+        }
+    },
+
     error: {
         security: {
             notAuthorized: {

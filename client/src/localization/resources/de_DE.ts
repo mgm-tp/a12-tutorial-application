@@ -22,6 +22,15 @@ export const de_DE: LocalizationKeyTreeType = {
         de: "Deutsch (DE)"
     },
 
+    contact: {
+        form: {
+            screen: {
+                daysUntilBirthday: "Der Geburtstag des Kontakts ist in $daysNum$ Tag(en).",
+                birthdayToday: "Der Geburtstag des Kontakts ist heute!"
+            }
+        }
+    },
+
     error: {
         security: {
             notAuthorized: {
