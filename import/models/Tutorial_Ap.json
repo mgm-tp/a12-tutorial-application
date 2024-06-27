@@ -78,7 +78,7 @@
                     },
                     {
                       "type": "VIEW_ADD",
-                      "name": "OverviewEngine",
+                      "name": "HighlightedDateOverview",
                       "models": [
                         {
                           "modelType": "overview",
