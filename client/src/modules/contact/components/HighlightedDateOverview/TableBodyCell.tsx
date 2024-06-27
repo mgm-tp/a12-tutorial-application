@@ -31,7 +31,6 @@
  */
 
 import type { ReactElement, PropsWithChildren } from "react";
-import { addDays, endOfMonth, getYear, isToday, isValid, isWithinInterval, setYear, startOfTomorrow } from "date-fns";
 
 import { DocumentServiceFactory, type GroupInstance } from "@com.mgmtp.a12.kernel/kernel-md-facade";
 import {
@@ -41,32 +40,11 @@ import {
     useOverviewEngineContext
 } from "@com.mgmtp.a12.overviewengine/overviewengine-core";
 
+import { isBirthdayTodayOrNextWeek } from "../../utils/dateUtils";
+
 import HighlightedDateCell from "./HighlightedDateCell";
 
 const documentService = new DocumentServiceFactory().getDocumentService();
-
-function isBirthdayTodayOrNextWeek(birthday: Date): {
-    isBirthdayToday: boolean;
-    isBirthdayNextWeek: boolean;
-} {
-    const today = new Date();
-    let birthdayCurrentYear = setYear(birthday, getYear(today));
-    // Handle leap year
-    if (!isValid(birthdayCurrentYear)) {
-        // Move the date to the end of February
-        birthdayCurrentYear = endOfMonth(new Date(getYear(today), 1));
-    }
-
-    // DoB is today
-    const isBirthdayToday = isToday(birthdayCurrentYear);
-    // DoB is greater than today but less than today plus one week
-    const isBirthdayNextWeek = isWithinInterval(birthdayCurrentYear, {
-        start: startOfTomorrow(),
-        end: addDays(today, 7)
-    });
-
-    return { isBirthdayToday, isBirthdayNextWeek };
-}
 
 export default function TableBodyCell(props: PropsWithChildren<TableBodyCell.Props>): ReactElement {
     const documentModel = useOverviewEngineContext((context) => context.documentModel);
