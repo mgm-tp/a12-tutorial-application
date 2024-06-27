@@ -18,6 +18,18 @@ import { CRUD_RESOURCE_KEYS } from "@com.mgmtp.a12.crud/crud-core";
  * The key-value pairs for each locale can be found under the 'resources' folder.
  */
 export const RESOURCE_KEYS = {
+    customerType: {
+        lead: "",
+        inactive: "",
+        vip: "",
+        suspended: "",
+        partner: ""
+    },
+    dashboard: {
+        title: "",
+        chart: "",
+        noData: ""
+    },
     application: {
         header: {
             userinfo: {
