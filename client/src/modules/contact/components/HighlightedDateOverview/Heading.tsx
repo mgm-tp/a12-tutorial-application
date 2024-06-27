@@ -30,21 +30,31 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-import type { Module, View } from "@com.mgmtp.a12.client/client-core";
+import type { ReactElement, PropsWithChildren, Dispatch, SetStateAction } from "react";
 
-import HighlightedDateOverview from "./components/HighlightedDateOverview";
+import { DefaultComponentMap, type Heading } from "@com.mgmtp.a12.overviewengine/overviewengine-core";
+import { Button, Icon } from "@com.mgmtp.a12.widgets/widgets-core";
 
-const VIEWS: { [name: string]: View.ViewComponent | undefined } = {
-    HighlightedDateOverview
-};
-
-function viewComponentProvider(name: string) {
-    return VIEWS[name];
+interface HeadingProps extends PropsWithChildren<Heading.PropsType> {
+    isHighlighted: boolean;
+    setIsHighlighted: Dispatch<SetStateAction<boolean>>;
 }
 
-const module: Module = {
-    id: "ContactModule",
-    views: () => viewComponentProvider
-};
+export default function Heading({ isHighlighted, setIsHighlighted, ...headingProps }: HeadingProps): ReactElement {
+    const handleClick = () => {
+        setIsHighlighted((prevIsHighlighted) => !prevIsHighlighted);
+    };
 
-export default module;
+    return (
+        <>
+            <DefaultComponentMap.Heading {...headingProps} />
+            <div className="-u-flex -u-items-center -u-justify-end -u-padding-x-xl -u-margin-y-sm">
+                <Button
+                    onClick={handleClick}
+                    primary
+                    icon={<Icon size="big">{!isHighlighted ? "highlight" : "highlight_off"}</Icon>}
+                />
+            </div>
+        </>
+    );
+}

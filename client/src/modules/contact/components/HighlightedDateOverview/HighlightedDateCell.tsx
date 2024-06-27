@@ -30,21 +30,21 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-import type { Module, View } from "@com.mgmtp.a12.client/client-core";
+import type { ReactElement, PropsWithChildren } from "react";
 
-import HighlightedDateOverview from "./components/HighlightedDateOverview";
+import { DefaultComponentMap, type TableBodyCell } from "@com.mgmtp.a12.overviewengine/overviewengine-core";
 
-const VIEWS: { [name: string]: View.ViewComponent | undefined } = {
-    HighlightedDateOverview
-};
-
-function viewComponentProvider(name: string) {
-    return VIEWS[name];
+interface HighlightedDateCellProps extends PropsWithChildren<TableBodyCell.Props> {
+    textColor: "red" | "orange" | "green";
 }
 
-const module: Module = {
-    id: "ContactModule",
-    views: () => viewComponentProvider
-};
-
-export default module;
+export default function HighlightedDateCell({
+    textColor,
+    ...tableBodyCellProps
+}: HighlightedDateCellProps): ReactElement {
+    return (
+        <div className={`-u-text-${textColor} -u-font-semibold`}>
+            <DefaultComponentMap.TableBodyCell {...tableBodyCellProps} />
+        </div>
+    );
+}
