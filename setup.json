@@ -1,31 +1,31 @@
 {
   "serverPackage": {
-    "current": "com.mgmtp.a12.template.server",
-    "alternative": "com.mgmtp.a12.template.server"
+    "current": "com.mgmtp.a12.tutorial.server",
+    "alternative": "com.mgmtp.a12.tutorial.server"
   },
   "serverApplication": {
-    "current": "ProjectTemplateServerApplication",
-    "alternative": "ProjectTemplateServerApplication"
+    "current": "TutorialServerApplication",
+    "alternative": "TutorialServerApplication"
   },
   "projectProperties": {
-    "current": "mgmtp.a12.template.server",
-    "alternative": "mgmtp.a12.template.server"
+    "current": "mgmtp.a12.tutorial.server",
+    "alternative": "mgmtp.a12.tutorial.server"
   },
   "projectGroup": {
-    "current": "com.mgmtp.your-project-name",
-    "alternative": "com.mgmtp.your-project-name"
+    "current": "com.mgmtp.a12-tutorial-application",
+    "alternative": "com.mgmtp.a12-tutorial-application"
   },
   "projectName": {
-    "current": "your-project-name",
-    "alternative": "your-project-name"
+    "current": "a12-tutorial-application",
+    "alternative": "a12-tutorial-application"
   },
   "appModelName": {
-    "current": "YourAppModel_AM",
-    "alternative": "YourAppModel_AM"
+    "current": "Tutorial_AM",
+    "alternative": "Tutorial_AM"
   },
   "title": {
-    "current": "Your-Project-Name",
-    "alternative": "Your-Project-Name"
+    "current": "A12 Tutorial Application",
+    "alternative": "A12 Tutorial Application"
   },
   "dsDatabaseName": {
     "current": "your-ds-db-name",

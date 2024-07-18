@@ -1,4 +1,4 @@
-package com.mgmtp.a12.template.server.attachment;
+package com.mgmtp.a12.tutorial.server.attachment;
 
 import com.mgmtp.a12.dataservices.common.exception.InvalidInputException;
 import org.apache.tika.Tika;
@@ -12,7 +12,7 @@ import static com.mgmtp.a12.dataservices.exception.ExceptionKeys.ATTACHMENT_INVA
 
 @Component
 public class MimeTypeValidator {
-    @Value("${mgmtp.a12.template.server.attachment.allowedMimeTypes:*}")
+    @Value("${mgmtp.a12.tutorial.server.attachment.allowedMimeTypes:*}")
     private String[] allowedMimeTypes;
 
     public void validateMimeType(byte[] bytes, String filename) {

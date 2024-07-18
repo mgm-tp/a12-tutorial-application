@@ -24,7 +24,7 @@
             "type": "java",
             "name": "server start (local-db)",
             "request": "launch",
-            "mainClass": "com.mgmtp.a12.template.server.ProjectTemplateServerApplication",
+            "mainClass": "com.mgmtp.a12.tutorial.server.TutorialServerApplication",
             "args": [
                 "--spring.profiles.active=local-db-env"
             ],
@@ -35,7 +35,7 @@
             "type": "java",
             "name": "server start (h2-in-mem)",
             "request": "launch",
-            "mainClass": "com.mgmtp.a12.template.server.ProjectTemplateServerApplication",
+            "mainClass": "com.mgmtp.a12.tutorial.server.TutorialServerApplication",
             "args": [
                 "--spring.profiles.active=dev-env"
             ],
@@ -46,7 +46,7 @@
             "type": "java",
             "name": "init app start (local-db)",
             "request": "launch",
-            "mainClass": "com.mgmtp.a12.template.server.init.ProjectTemplateInitApplication",
+            "mainClass": "com.mgmtp.a12.tutorial.server.init.ProjectTemplateInitApplication",
             "args": [
                 "--spring.profiles.active=local-db-env"
             ],
@@ -57,7 +57,7 @@
             "type": "java",
             "name": "init app start (h2-in-mem)",
             "request": "launch",
-            "mainClass": "com.mgmtp.a12.template.server.init.ProjectTemplateInitApplication",
+            "mainClass": "com.mgmtp.a12.tutorial.server.init.ProjectTemplateInitApplication",
             "args": [
                 "--spring.profiles.active=dev-env"
             ],

@@ -1,10 +1,10 @@
-package com.mgmtp.a12.template.server.event;
+package com.mgmtp.a12.tutorial.server.event;
 
 import com.mgmtp.a12.dataservices.attachment.DataServicesAttachment;
 import com.mgmtp.a12.dataservices.attachment.events.AttachmentBeforeCreateEvent;
 import com.mgmtp.a12.dataservices.common.events.CommonDataServicesEventListener;
 import com.mgmtp.a12.dataservices.common.exception.UnexpectedException;
-import com.mgmtp.a12.template.server.attachment.MimeTypeValidator;
+import com.mgmtp.a12.tutorial.server.attachment.MimeTypeValidator;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 
