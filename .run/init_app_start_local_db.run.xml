@@ -2,9 +2,9 @@
   <configuration default="false" name="init app start (local-db)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="local-db-env" />
     <option name="INCLUDE_PROVIDED_SCOPE" value="false"/>
-    <module name="com.mgmtp.your-project-name.your-project-name.server.init.main" />
+    <module name="com.mgmtp.a12-tutorial-application.a12-tutorial-application.server.init.main" />
     <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="com.mgmtp.a12.template.server.init.ProjectTemplateInitApplication" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.mgmtp.a12.tutorial.server.init.ProjectTemplateInitApplication" />
     <option name="WORKING_DIRECTORY" value="file://server/init" />
     <method v="2">
       <option name="Make" enabled="true" />

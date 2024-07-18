@@ -1,8 +1,8 @@
 {
-  "name": "@com.mgmtp.your-project-name/client",
-  "description": "Your-Project-Name",
+  "name": "@com.mgmtp.a12-tutorial-application/client",
+  "description": "A12 Tutorial Application",
   "publishConfig": {
-    "registry": "https://artifacts.mgm-tp.com/artifactory/api/npm/your-project-name-npm-local"
+    "registry": "https://artifacts.mgm-tp.com/artifactory/api/npm/a12-tutorial-application-npm-local"
   },
   "author": "mgm technology partners",
   "license": "UNLICENSED",

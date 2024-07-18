@@ -1,6 +1,6 @@
 {
   "header": {
-    "id": "YourAppModel_AM",
+    "id": "Tutorial_AM",
     "modelType": "application",
     "modelVersion": "5.0.0",
     "locales": [
@@ -14,11 +14,11 @@
     "labels": [
       {
         "locale": "en",
-        "text": "Your-Project-Name"
+        "text": "A12 Tutorial Application"
       },
       {
         "locale": "de",
-        "text": "Your-Project-Name"
+        "text": "A12 Tutorial Application"
       }
     ],
     "annotations": [
@@ -32,36 +32,36 @@
   "content": {
     "modules": [
       {
-        "name": "PersonModule",
+        "name": "ContactModule",
         "menu": {
-          "name": "Person",
+          "name": "Contact",
           "label": [
             {
               "locale": "en",
-              "text": "Person"
+              "text": "Contact"
             },
             {
               "locale": "de",
-              "text": "Person"
+              "text": "Kontakt"
             }
           ],
           "initialActivity": {
             "descriptor": {
-              "module": "Person"
+              "module": "Contact"
             }
           }
         },
         "flows": [
           {
-            "name": "PersonFlow",
+            "name": "ContactFlow",
             "scenes": [
               {
-                "name": "PersonOverview",
-                "description": "Overview of Person Documents",
+                "name": "ContactOverview",
+                "description": "Overview of Contact Documents",
                 "matchConditions": [
                   {
                     "key": "module",
-                    "mustEqual": "Person"
+                    "mustEqual": "Contact"
                   },
                   {
                     "key": "instance",
@@ -71,18 +71,12 @@
                 "sceneChange": {
                   "onEnter": [
                     {
-                      "layout": {
-                        "name": "MasterDetail"
-                      },
-                      "type": "REGION_CLEAR"
-                    },
-                    {
                       "type": "VIEW_ADD",
                       "name": "OverviewEngine",
                       "models": [
                         {
                           "modelType": "overview",
-                          "name": "Person_OM"
+                          "name": "Contact_OM"
                         }
                       ]
                     }
@@ -90,12 +84,12 @@
                 }
               },
               {
-                "name": "PersonForm",
-                "description": "Form showing on Person Document",
+                "name": "ContactForm",
+                "description": "Form showing on Contact Document",
                 "matchConditions": [
                   {
                     "key": "module",
-                    "mustEqual": "Person"
+                    "mustEqual": "Contact"
                   },
                   {
                     "key": "instance",
@@ -113,8 +107,8 @@
                       "models": [
                         {
                           "modelType": "form",
-                          "name": "Person_FM",
-                          "documentModel": "Person_DM"
+                          "name": "Contact_FM",
+                          "documentModel": "Contact_DM"
                         }
                       ]
                     }
@@ -157,7 +151,7 @@
     ],
     "initialActivity": {
       "descriptor": {
-        "module": "Person"
+        "module": "Contact"
       }
     }
   }

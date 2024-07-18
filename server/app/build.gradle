@@ -47,7 +47,7 @@ dependencies {
 }
 
 springBoot {
-    mainClass = 'com.mgmtp.a12.template.server.ProjectTemplateServerApplication'
+    mainClass = 'com.mgmtp.a12.tutorial.server.TutorialServerApplication'
     buildInfo {
         properties {
             version = rootProject.version

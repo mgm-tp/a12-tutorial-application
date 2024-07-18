@@ -1,0 +1,43 @@
+[
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContact1",
+    "params": {
+      "document": {
+        "Contact": {
+          "PersonalData": {
+            "FirstName":"Johny",
+            "LastName":"Smith",
+            "EmailAddress":"johny.smith@mgm-tp.com",
+            "DateOfBirth":"1987-10-11",
+            "Nationality":"British",
+            "Gender":"MALE",
+            "CustomerType":"lead"
+          },
+          "Phones": [
+            {
+              "PhoneNumber":"123456",
+              "Type":"WORK"
+            },
+            {
+              "PhoneNumber":"7891011",
+              "Type":"MOBILE"
+            }
+          ],
+          "Address": [
+            {
+              "Street":"Vordere Cramergasse",
+              "Housenumber":"11",
+              "City":"Nürnberg",
+              "Zip":"90478",
+              "Country":"Germany"
+            }
+          ]
+        }
+      },
+      "documentModelName": "Contact_DM",
+      "locale": "en"
+    }
+  }
+]
