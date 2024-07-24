@@ -4,12 +4,11 @@ plugins {
     id 'java'
     alias(gradlePluginLibs.plugins.spring.boot)
     alias(gradlePluginLibs.plugins.test.logger)
+    alias(gradlePluginLibs.plugins.rewrite)
 }
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
+    sourceCompatibility = JavaLanguageVersion.of(17)
 }
 
 ext {
@@ -23,6 +22,8 @@ ext {
 }
 
 dependencies {
+    //Open rewrite analysis
+    rewrite libs.rewrite.static.analysis
 
     // Spring
     annotationProcessor libs.spring.boot.configuration.processor
@@ -44,6 +45,11 @@ dependencies {
     implementation(platform(a12Libs.kernel.bom))
     implementation(platform(a12Libs.uaa.bom))
     implementation(platform(a12Libs.dataservices.bom))
+
+    // for logback.xml configurations
+	//implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+    implementation(libs.logstash)
+    implementation(libs.logback.classic)
 }
 
 springBoot {
@@ -59,5 +65,4 @@ artifacts artifactsVar
 
 publishing publishingVar
 
-// Docker builds
-bootBuildImage bootBuildImageVar
+rewrite rewriteVar

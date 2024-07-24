@@ -2,8 +2,6 @@
 <!--- Project Template getA12 documentation links --->
 [getA12]: https://docs.geta12.com/docs/#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM
 [Artifactory access]: https://docs.geta12.com/docs/?release=2023.06#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM,anchor:_artifactory_access
-[Gradle Wrapper]: https://docs.geta12.com/docs/?release=2023.06#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM,anchor:_gradle_wrapper
-[Gradle Node plugin]: https://docs.geta12.com/docs/?release=2023.06#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM,anchor:_gradle_node_plugin
 [Environment and Tools Setup]: https://docs.geta12.com/docs/?release=2023.06#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM,anchor:_environment_and_tools_setup
 [mgm-tp]: https://mgm-tp.com
 [getA12.com]: https://geta12.com
@@ -45,18 +43,16 @@ Proper environment setup is crucial for the successful build and run of this pro
 To wrap up, the following [tools](./tool-versions.json) are required to build this project. Versions are maintained in `./tool-versions.json` file and follow [npm semver] versioning patterns.
 
 <!--- VERSION_TABLE_START (Edit versions in tool-versions.json, not here. Do not delete this tag.) --->
-| Tool                 | Version      | Note                                                           |
-|----------------------|--------------|----------------------------------------------------------------|
-| [JDK]                | '17/21'      |                                                                |
-| [Gradle]<sup>1</sup> | '>=8.5.x <9' | Optional. Gradle Wrapper <sup>2</sup> can be used instead.     |
-| [Node]               | '18.18.x'    | Optional. Gradle node plugin <sup>3</sup> can be used instead. |
-| [npm]<sup>1</sup>    | '9.8.x'      | Optional. Gradle node plugin <sup>3</sup> can be used instead. |
-| [Docker]<sup>1</sup> | '>=20.x'     |                                                                |
+| Tool                 | Version      | Note |
+|----------------------|--------------|------|
+| [JDK]                | '17 - 21'    |      |
+| [Gradle]<sup>1</sup> | '>=8.5.x <9' |      |
+| [Node]               | '18.18.x'    |      |
+| [npm]<sup>1</sup>    | '9.8.x'      |      |
+| [Docker]<sup>1</sup> | '>=20.x'     |      |
 <!--- VERSION_TABLE_END (Edit versions in tool-versions.json, not here. Do not delete this tag.) --->
 
-<sup>1</sup>) These tools have to be configured to use proper Artifactory. Please, follow [Artifactory access] documentation to set it up.  
-<sup>2</sup>) [Gradle Wrapper] allows you to skip the Gradle installation. Follow the linked documentation to learn more.  
-<sup>3</sup>) [Gradle Node plugin] allows you to skip the Node and npm installation. Follow the linked documentation to learn more.
+<sup>1</sup>) These tools have to be configured to use proper Artifactory. Please, follow [Artifactory access] documentation to set it up.
 
 <a name="quickstart"></a>
 ## Quickstart

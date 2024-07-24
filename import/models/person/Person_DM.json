@@ -2,7 +2,7 @@
   "header": {
     "id": "Person_DM",
     "modelType": "document",
-    "modelVersion": "28.0.2",
+    "modelVersion": "28.1.0",
     "locales": [
       {
         "code": "en"

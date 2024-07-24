@@ -18,20 +18,9 @@ subprojects {
         }
     }
 
-    // build server image using Paketo build pack
-    ext.bootBuildImageVar = {
-        environment = ['BP_JVM_VERSION': '21.*']
-        publish = false
-        builder = "${dockerRegistryForRead}/paketobuildpacks/builder:base"
-        runImage = "${dockerRegistryForRead}/paketobuildpacks/run:base-cnb"
-        imageName = calculateFullTag(serviceName)
-        if (dockerUseCredentials.toBoolean()) {
-            docker {
-                host = project.findProperty('dockerHost')
-                builderRegistry registryCredentialsForReadVar
-                publishRegistry registryCredentialsForPublishVar
-            }
-        }
+    ext.rewriteVar = {
+        configFile = file("${project.rootDir}/quality/rewrite/recipes.yaml")
+        activeRecipe 'com.mgmtp.a12.template.server.Checkstyle'
     }
 
     if (!skipCheckstyle.toBoolean()) {
@@ -65,7 +54,7 @@ subprojects {
 
         // NOTE: Apple Silicon users may experience bad performance
         def currentArchitecture = DefaultNativePlatform.currentArchitecture
-        if (currentArchitecture.isArm() || (currentArchitecture.getName().toLowerCase() in ['aarch64','arm64'])) {
+        if (currentArchitecture.isArm() || (currentArchitecture.getName().toLowerCase() in ['aarch64', 'arm64'])) {
             baseImage = "--platform=linux/amd64 $baseImage"
         }
 
@@ -80,7 +69,7 @@ subprojects {
         runCommand "set -eux; " +
             "groupadd -r -g 1001 a12; " +
             "useradd -r -m -d /home/a12 -u 1001 -g 1001 a12; " +
-            "mkdir -p /var/lib/a12; " +
+            "mkdir -p /var/lib/a12/application/logs; " +
             "chown -R a12:a12 /var/lib/a12;"
         user "a12"
         workingDir "/var/lib/a12/application"
@@ -91,7 +80,7 @@ subprojects {
         entryPoint "java", "org.springframework.boot.loader.launch.JarLauncher"
     }
 
-    tasks.register('buildImagesPlain', DockerBuildImage) {
+    tasks.register('buildImages', DockerBuildImage) {
         group 'docker'
         dependsOn createDockerfile
 
@@ -102,33 +91,12 @@ subprojects {
         }
     }
 
-    tasks.register('pushImagesPlain', DockerPushImage) {
+    tasks.register('pushImages', DockerPushImage) {
         group 'docker'
-        dependsOn buildImagesPlain
+        dependsOn buildImages, ':import:publish'
         images.add(calculateFullTag(serviceName))
     }
 
-
-    tasks.register('buildImages') {
-        group 'docker'
-        if (usePaketoBuildPack.toBoolean()) {
-            bootBuildImage.publish = false
-            dependsOn bootBuildImage
-        } else {
-            dependsOn buildImagesPlain
-        }
-    }
-
-    tasks.register('pushImages') {
-        group 'docker'
-        dependsOn ':import:publish'
-        if (usePaketoBuildPack.toBoolean()) {
-            bootBuildImage.publish = true
-            dependsOn bootBuildImage
-        } else {
-            dependsOn pushImagesPlain
-        }
-    }
 
     tasks.register('removeTagFull', DockerRemoveImage) {
         group 'clean'
@@ -138,5 +106,19 @@ subprojects {
     tasks.register('cleanImages') {
         group 'clean'
         dependsOn removeTagFull
+    }
+}
+
+tasks.register('checkstyleFix') {
+    description 'Fixes issues highlighted by Checkstyle.'
+    dependsOn subprojects.collect { "${it.name}:rewriteRun" }
+
+    // The following logic to force `rewriteRun` from subprojects to be executed in a sequence. Otherwise, parallel processing will cause errors.
+    subprojects.eachWithIndex { project, index ->
+        if (index > 0) {
+            subprojects[index - 1].tasks.named('rewriteRun').configure {
+                finalizedBy subprojects[index].tasks.named('rewriteRun')
+            }
+        }
     }
 }

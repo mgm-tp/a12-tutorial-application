@@ -3,26 +3,26 @@
     "jdk": {
       "name": "JDK",
       "superscript": "",
-      "version": "17||21",
+      "version": "17 - 21",
       "note": ""
     },
     "gradle": {
       "name": "Gradle",
       "superscript": "1",
       "version": ">=8.5.x <9",
-      "note": "Optional. Gradle Wrapper <sup>2</sup> can be used instead."
+      "note": ""
     },
     "node": {
       "name": "Node",
       "superscript": "",
       "version": "18.18.x",
-      "note": "Optional. Gradle node plugin <sup>3</sup> can be used instead."
+      "note": ""
     },
     "npm": {
       "name": "npm",
       "superscript": "1",
       "version": "9.8.x",
-      "note": "Optional. Gradle node plugin <sup>3</sup> can be used instead."
+      "note": ""
     },
     "docker": {
       "name": "Docker",

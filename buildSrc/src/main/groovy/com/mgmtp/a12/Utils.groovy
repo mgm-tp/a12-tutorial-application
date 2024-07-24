@@ -8,6 +8,8 @@ import org.gradle.util.GradleVersion
 import org.semver4j.Semver
 
 class Utils {
+    static final String FS = File.separator
+
     /**
      * Compares tool version installed on OS with recommended version in version file.
      *
@@ -26,23 +28,23 @@ class Utils {
         switch(checkedTool) {
             case 'node':
                 toolProperties.versionCommand ='node -v'
-                break;
+                break
             case 'npm':
                 toolProperties.versionCommand = "${isWindows ? 'npm.cmd -v' : 'npm -v'}"
-                break;
+                break
             case 'jdk':
                 toolSystemVersion = System.getProperty("java.version")
-                break;
+                break
             case 'gradle':
                 toolSystemVersion = GradleVersion.current().toString()
-                break;
+                break
             case 'docker':
                 toolProperties.versionCommand = "docker version --format {{.Server.Version}}"
                 issueMessage = "\nCheck if Docker daemon is running properly, for example by running 'docker version'."
-                break;
+                break
             default:
-                throw new Exception("Tool '$tool' is unknown for 'checkToolVersion' method");
-                break;
+                throw new Exception("Tool '$tool' is unknown for 'checkToolVersion' method")
+                break
         }
 
         //Catch the exception when command fails if the tool does not exist in the system.
@@ -91,20 +93,22 @@ class Utils {
      * @param projectDir The project directory path
      */
     static void replacePlaceholders(File setupFile, ConfigurableFileTree fileTree, String projectDir) {
-        def includedFiles = ['**/*.json', '**/*.gradle', '**/*.properties', '**/*.yml', '**/*.html', '**/*.ts', '**/*.java', '.run/*.xml', 'quality/checkstyle/*.xml']
-        def excludedDirs = ['**/logs/**', '**/resource/**', '**/.gradle/**', '**/buildSrc/**', '**/target/**', '**/build/**', '**/node_modules/**', 'build.gradle']
-        def setupJsonMap = new JsonSlurper().parseText(setupFile.text) as Map<String, String>
+        def includedFiles = ['**/*.json', '**/*.gradle', '**/*.properties', '**/*.yml', '**/*.html', '**/*.ts', '**/*.java', '.run/*.xml', 'quality/checkstyle/*.xml', '**/.env']
+        def excludedDirs = ['**/logs/**', '**/resource/**', '**/.gradle/**', '**/buildSrc/**', '**/target/**', '**/build/**', '**/node_modules/**', 'build.gradle', "**/internal/**"]
+        // Backslashes in a text have to be escaped for JsonSlurper parsing
+        def escapedText = setupFile.text.replace("\\", "\\\\")
+        def setupJsonMap = new JsonSlurper().parseText(escapedText) as Map<String, String>
+
+        String[] serverModules = ["server${FS}app", "server${FS}init"]
+
         def curProps = loadFileToMap(setupJsonMap, 'current')
         def altProps = loadFileToMap(setupJsonMap, 'alternative')
 
-        if (curProps == altProps) {
-            println "The 'Current' map and the 'Alternative' map have the same keys and values. This task has no changes applied."
-            return
-        }
+        validateSetupFile(curProps, altProps)
 
         correctPropsFormat(altProps)
-        if (curProps['serverPackage'] && altProps['serverPackage']) {
-            updatePackageStructure(curProps['serverPackage'], altProps['serverPackage'], projectDir)
+        if (curProps['serverPackage'] && altProps['serverPackage'] && (curProps['serverPackage'] != altProps['serverPackage'])) {
+            updatePackageStructure(serverModules, curProps['serverPackage'], altProps['serverPackage'], projectDir)
         }
 
         fileTree
@@ -116,8 +120,8 @@ class Utils {
                     def isChanged = false
 
                     curProps.each {
-                        if (content.contains(it.value)) {
-                            content = content.replaceAll(it.value, altProps[it.key])
+                        if ((curProps[it.key] != altProps[it.key]) && content.contains(curProps[it.key])) {
+                            content = content.replace(it.value,altProps[it.key])
                             isChanged = true
                         }
                     }
@@ -128,11 +132,12 @@ class Utils {
 
                         def fileName = file.name
 
-                        def propsToFileChange = ['appModelName', 'serverApplication']
+                        def propsToFileChange = ['appModelName', 'serverApplication', 'initApplication']
                         propsToFileChange.each {
                             def fileType = ''
                             if (it == "appModelName") fileType = '.json'
                             if (it == "serverApplication") fileType = '.java'
+                            if (it == "initApplication") fileType = '.java'
 
                             if (fileName == "${curProps[it]}${fileType}" && curProps[it] != altProps[it]) {
                                 renameFile(file, altProps[it], fileType)
@@ -142,13 +147,12 @@ class Utils {
                 }
     }
 
-    static void updatePackageStructure(String curGroup, String altGroup, String projectDir) {
+    static void updatePackageStructure(String[] modules, String curGroup, String altGroup, String projectDir) {
         def packageRegex = '^([a-zA-Z_]\\w*)+([.][a-zA-Z_]\\w*)*$'
         def fs = File.separator
-        def serverModules = ['app', 'init']
 
-        serverModules.each { module ->
-            def basePath = "${projectDir}${fs}server${fs}${module}${fs}src${fs}main${fs}java${fs}"
+        modules.each { module ->
+            def basePath = "${projectDir}${fs}${module}${fs}src${fs}main${fs}java${fs}"
             def curPath = "${basePath}${curGroup.replace('.', fs)}"
             def curDir = new File(curPath)
 
@@ -157,38 +161,64 @@ class Utils {
             }
 
             if (altGroup.matches(packageRegex)) {
-                if (altGroup != curGroup) {
                     def altPath = "${basePath}${altGroup.replace('.', fs)}"
                     new AntBuilder().move(todir: altPath, overwrite: true, force: true, flatten: false) {
                         fileset(dir: curPath, includes: '**/*.*')
                     }
                     cleanUpDirs(basePath, curPath)
-                }
             } else {
                 throw new Exception("The serverPackage name \'$altGroup\' is invalid for package name. The name should follow this regular expression pattern:\'$packageRegex\', e.g., your.project.name, your.project_name or your_project_name")
             }
         }
     }
 
-    static void correctPropsFormat(Map<String, String> altProps) {
-        def title = altProps['title']?.empty
-                ? altProps['projectName']?.split('-').collect { it.toLowerCase().capitalize() }.join('-')
-                : altProps['title']
+    static boolean hasEmptyValues(Map<String, String> map) {
+        return map.values().any { it == null || it.toString().trim().empty}
+    }
 
+    static void correctPropsFormat(Map<String, String> altProps) {
         altProps.each {
             def key = it.key
             if (['projectName', 'serverPackage', 'projectGroup', 'projectProperties'].contains(key)) {
                 it.value = it.value?.toLowerCase()
-            }
-
-            if (key == 'title') {
-                it.value = title
             }
         }
     }
 
     static Map<String, String> loadFileToMap(Map<String, String> setupJsonMap, String type) {
         setupJsonMap.collectEntries { [(it.key): it.value[type]] }
+    }
+
+    static void validateSetupFile(Map<String, String> curProps, Map<String, String> altProps) {
+        if (hasEmptyValues(curProps) || hasEmptyValues(altProps)) {
+            throw new Exception("The 'current' or the 'alternative' mappings contain empty values. Please check your setup.json file for these values.")
+        }
+
+        if (curProps == altProps) {
+            throw new Exception("The 'Current' map and the 'Alternative' map have the same keys and values. This task has no changes applied.")
+        }
+
+        // not allow to use the same database name for Keycloak, Dataservice, and Contentstore
+        def dbNames = [altProps['keycloakDatabaseName'], altProps['dsDatabaseName'], altProps['csDatabaseName']]
+        if (dbNames.toSet().size() != dbNames.size()) {
+            throw new Exception("The database names for Keycloak, Dataservice, and Contentstore should be different: " + dbNames)
+        }
+
+        // not allow to use the same db username with different passwords
+        def dbUsernames = [altProps['keycloakDatabaseUsername'], altProps['dsDatabaseUsername'], altProps['csDatabaseUsername']]
+        def dbPasswords = [altProps['keycloakDatabasePassword'], altProps['dsDatabasePassword'], altProps['csDatabasePassword']]
+        def dbCredentials = [:]
+        dbUsernames.eachWithIndex { username, i ->
+            def password = dbPasswords[i]
+            if (dbCredentials.containsKey(username)) {
+                if (dbCredentials[username] != password) {
+                    throw new Exception("Username '${username}' is used with different passwords '${password}' & '${dbCredentials[username]}'." +
+                            " Please make sure that the database usernames are unique or have consistent passwords.")
+                }
+            } else {
+                dbCredentials[username] = password
+            }
+        }
     }
 
     static void renameFile(File file, String fileName, String fileType) {

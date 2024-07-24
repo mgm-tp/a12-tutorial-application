@@ -61,7 +61,7 @@ pipeline {
             steps {
                 script {
                     withBuildConfiguration {
-                        sh 'gradle test'
+                        sh 'gradle build'
                         String projectVersion = sh script: 'gradle getVersion -q', returnStdout: true
                         currentBuild.displayName += ': ' + projectVersion
                     }

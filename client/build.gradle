@@ -4,7 +4,6 @@ import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import com.mgmtp.a12.Utils
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
-import groovy.json.JsonSlurper
 
 plugins {
     alias(gradlePluginLibs.plugins.node.gradle)
@@ -34,22 +33,6 @@ node {
 //    npmInstallCommand = System.env.BUILD_NUMBER ? "ci" : "install"
 }
 
-nodeSetup.configure {
-    mustRunAfter 'checkNodeNpmVersions'
-    if (downloadNode.toBoolean()) {
-        //necessary to initiate up node plugin extension in configuration phase
-        project.node.download = true
-        dependsOn 'alignNodeNpmVersions'
-    }
-}
-
-npmSetup.configure {
-    mustRunAfter 'checkNodeNpmVersions'
-    if (downloadNode.toBoolean()) {
-        dependsOn 'alignNodeNpmVersions'
-    }
-}
-
 tasks.register('checkNodeNpmVersions') {
     group 'Config'
     description 'Checks if system Node and npm versions satisfy required versions in \'./tool-versions.json\' file.'
@@ -59,43 +42,7 @@ tasks.register('checkNodeNpmVersions') {
     checkedVersions.npm = Utils.checkToolVersion(versionsFile, 'npm')
 
     if (!checkedVersions.node.versionSatisfies || !checkedVersions.npm.versionSatisfies) {
-        if (downloadNode.toBoolean()) {
-            println "Parameter 'downloadNode' set to 'true', versions will be aligned with requirements."
-        } else {
-            logger.warn("""\
-            WARNING: If tools do not satisfy recommended versions, the process can finish unexpectedly.
-            Please consider changing the versions or use '-PdownloadNode=true' parameter.
-            """.stripIndent())
-        }
-    }
-}
-
-tasks.register('alignNodeNpmVersions') {
-    group 'Config'
-    description "Aligns Node and npm versions with project requirements if initiated by parameter " +
-        "'-PdownloadNode=true'. Should not run separately."
-    mustRunAfter 'checkNodeNpmVersions'
-
-    doLast {
-        if (downloadNode.toBoolean()) {
-            project.node.version = checkedVersions.node.versionsFileVersion
-            if (checkedVersions.npm.versionSatisfies) {
-                if (checkedVersions.node.versionSatisfies) {
-                    project.node.download = false
-                    println "Versions aligned already, nothing to download."
-                } else {
-                    //avoid downloading npm if unnecessary
-                    project.node.npmVersion = ""
-                    println "Required Node version will be downloaded if necessary."
-                }
-            } else {
-                project.node.npmVersion = checkedVersions.npm.versionsFileVersion
-                println "Required Node and npm versions will be downloaded if necessary."
-            }
-        } else {
-            //if someone runs this task manually
-            throw new Exception ("Task 'alignNodeNpmVersions' should not run if property 'downloadNode' is set to false.")
-        }
+        logger.warn("WARNING: If tools do not satisfy recommended versions, the process can finish unexpectedly.")
     }
 }
 

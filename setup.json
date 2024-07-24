@@ -7,6 +7,10 @@
     "current": "ProjectTemplateServerApplication",
     "alternative": "ProjectTemplateServerApplication"
   },
+  "initApplication": {
+    "current": "ProjectTemplateInitApplication",
+    "alternative": "ProjectTemplateInitApplication"
+  },
   "projectProperties": {
     "current": "mgmtp.a12.template.server",
     "alternative": "mgmtp.a12.template.server"
@@ -54,5 +58,17 @@
   "postgresDatabasePassword": {
     "current": "your-postgres-password",
     "alternative": "your-postgres-password"
+  },
+  "keycloakDatabaseName": {
+    "current": "your-keycloak-db-name",
+    "alternative": "your-keycloak-db-name"
+  },
+  "keycloakDatabaseUsername": {
+    "current": "your-keycloak-db-username",
+    "alternative": "your-keycloak-db-username"
+  },
+  "keycloakDatabasePassword": {
+    "current": "your-keycloak-db-password",
+    "alternative": "your-keycloak-db-password"
   }
 }

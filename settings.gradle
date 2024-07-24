@@ -18,6 +18,7 @@ dependencyResolutionManagement {
             version('versions-update', '0.42.0')
             version('node-gradle', '7.0.1')
             version('sonarqube-scanner','4.4.1.3373')
+            version('rewrite', '6.23.1')
 
             plugin('spring-boot', 'org.springframework.boot').versionRef('spring-boot')
             plugin('test-logger', 'com.adarshr.test-logger').versionRef('test-logger')
@@ -26,13 +27,14 @@ dependencyResolutionManagement {
             plugin('versions-update', 'com.github.ben-manes.versions').versionRef('versions-update')
             plugin('node-gradle', 'com.github.node-gradle.node').versionRef('node-gradle')
             plugin('sonarqube', 'org.sonarqube').versionRef('sonarqube-scanner')
+            plugin('rewrite', 'org.openrewrite.rewrite').versionRef('rewrite')
         }
 
         a12Libs {
             version('base', '28.0.0')
-            version('kernel', '29.1.0')
-            version('uaa', '8.0.1')
-            version('dataservices', '37.0.0')
+            version('kernel', '29.3.0')
+            version('uaa', '8.1.0')
+            version('dataservices', '37.1.0')
 
             library('uaa-authorization-a12-extension', 'com.mgmtp.a12.uaa', 'uaa-authorization-a12-extension').versionRef('uaa')
             library('dataservices-server-app', 'com.mgmtp.a12.dataservices', 'dataservices-server-app').versionRef('dataservices')
@@ -46,9 +48,15 @@ dependencyResolutionManagement {
 
         libs {
             version('spring-boot', springBootVersion)
+            version('rewrite-static-analysis', '1.16.0')
+            version('logstash','7.4')
+            version('logback-classic','1.5.6')
 
+            library('rewrite-static-analysis', 'org.openrewrite.recipe', 'rewrite-static-analysis').versionRef('rewrite-static-analysis')
             library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('spring-boot')
             library('spring-boot-devtools', 'org.springframework.boot', 'spring-boot-devtools').versionRef('spring-boot')
+            library('logstash', 'net.logstash.logback', 'logstash-logback-encoder').versionRef('logstash')
+            library('logback-classic', 'ch.qos.logback', 'logback-classic').versionRef('logback-classic')
         }
 
         testCatalogLibs {

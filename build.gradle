@@ -36,6 +36,43 @@ subprojects {
         plugin 'org.sonarqube'
     }
 
+    //Adjusted from https://docs.gradle.org/current/userguide/dependency_locking.html#lock_all_configurations_in_one_build_execution
+    tasks.register('resolveAndLockDependencies') {
+        notCompatibleWithConfigurationCache("Filters configurations at execution time")
+        doFirst {
+            assert gradle.startParameter.writeDependencyLocks: "$path must be run from the command line with the `--write-locks` flag"
+            dependencyLocking.lockAllConfigurations()
+        }
+        doLast {
+            configurations.findAll {
+                // Add any custom filtering on the configurations to be resolved
+                it.canBeResolved
+            }.each {
+                it.resolve()
+            }
+        }
+    }
+
+    tasks.register('unlockAndDeleteLockfiles') {
+        notCompatibleWithConfigurationCache("Filters configurations at execution time")
+        doFirst {
+            dependencyLocking.unlockAllConfigurations()
+        }
+        doLast {
+            configurations.findAll {
+                // Add any custom filtering on the configurations to be resolved
+                it.canBeResolved
+            }.each {
+                it.resolve()
+            }
+            def lockfile = new File(project.projectDir, 'gradle.lockfile')
+            if (lockfile.exists()) {
+                println "Deleting ${lockfile.absolutePath}"
+                lockfile.delete()
+            }
+        }
+    }
+
     ext.registryCredentialsForPublishVar = {
         url = dockerRegistryForPublish
         username = project.repository_username
@@ -116,11 +153,7 @@ tasks.register('checkToolVersions') {
     def jdkSatisfies = Utils.checkToolVersion(versionsFile, 'jdk').versionSatisfies
     def gradleSatisfies = Utils.checkToolVersion(versionsFile, 'gradle').versionSatisfies
     if (!dockerSatisfies || !jdkSatisfies || !gradleSatisfies) {
-        def gradleWarn = ""
-        if (!gradleSatisfies) {
-            gradleWarn = "\nPlease consider using 'gradlew' wrapper instead of locally installed 'gradle'."
-        }
-        logger.warn("WARNING: If tools do not satisfy recommended versions, the process can finish unexpectedly." + gradleWarn + "\n")
+        logger.warn("WARNING: If tools do not satisfy recommended versions, the process can finish unexpectedly.")
     }
 }
 
@@ -184,6 +217,7 @@ subprojects.each {
 
 tasks.register("replacePlaceholders") {
     doLast {
+        logger.warn("WARNING: There should not be data persisted, when running 'replacePlaceholders', find more details in the documentation.")
         def filesContainingDocs = fileTree("${project.projectDir}")
         def setupFile = new File("setup.json")
         Utils.replacePlaceholders(setupFile, filesContainingDocs, project.projectDir.path)

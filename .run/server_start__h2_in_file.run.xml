@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="server start (h2-in-mem)" type="SpringBootApplicationConfigurationType"
+  <configuration default="false" name="server start (h2-in-file)" type="SpringBootApplicationConfigurationType"
                  factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="dev-env"/>
     <option name="INCLUDE_PROVIDED_SCOPE" value="false"/>

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  **/
 @Configuration
 public class MigrationConfiguration {
-    private boolean isEnabled = false;
+    private boolean isEnabled;
 
     public boolean isEnabled() {
         return isEnabled;

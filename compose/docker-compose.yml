@@ -21,12 +21,12 @@ services:
       SERVER_PORT: 8080
       SERVER_ADDRESS: 0.0.0.0
 
-      SPRING_DATASOURCES_DATASERVICES_URL: jdbc:postgresql://postgres:5432/your-ds-db-name
-      SPRING_DATASOURCES_DATASERVICES_USERNAME: your-ds-username
-      SPRING_DATASOURCES_DATASERVICES_PASSWORD: your-ds-password
-      SPRING_DATASOURCES_CONTENTSTORE_URL: jdbc:postgresql://postgres:5432/your-cs-db-name
-      SPRING_DATASOURCES_CONTENTSTORE_USERNAME: your-cs-username
-      SPRING_DATASOURCES_CONTENTSTORE_PASSWORD: your-cs-password
+      SPRING_DATASOURCES_DATASERVICES_URL: jdbc:postgresql://postgres:5432/${DATASERVICES_DB}
+      SPRING_DATASOURCES_DATASERVICES_USERNAME: ${DATASERVICES_USERNAME}
+      SPRING_DATASOURCES_DATASERVICES_PASSWORD: ${DATASERVICES_PASSWORD}
+      SPRING_DATASOURCES_CONTENTSTORE_URL: jdbc:postgresql://postgres:5432/${CONTENTSTORE_DB}
+      SPRING_DATASOURCES_CONTENTSTORE_USERNAME: ${CONTENTSTORE_USERNAME}
+      SPRING_DATASOURCES_CONTENTSTORE_PASSWORD: ${CONTENTSTORE_PASSWORD}
       SPRING_DATASOURCES_CONTENTSTORE_DRIVER_CLASS_NAME: org.postgresql.Driver
       SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE: postgresql
       SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
@@ -54,13 +54,13 @@ services:
     ports:
       - 8083:5432
     environment:
-      POSTGRES_PASSWORD: your-postgres-password
-      DATA_SERVICES_USER: your-ds-username
-      DATA_SERVICES_PASSWORD: your-ds-password
-      DATA_SERVICES_DB: your-ds-db-name
-      CONTENT_STORE_USER: your-cs-username
-      CONTENT_STORE_PASSWORD: your-cs-password
-      CONTENT_STORE_DB: your-cs-db-name
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DATASERVICES_USER: ${DATASERVICES_USERNAME}
+      DATASERVICES_PASSWORD: ${DATASERVICES_PASSWORD}
+      DATASERVICES_DB: ${DATASERVICES_DB}
+      CONTENTSTORE_USER: ${CONTENTSTORE_USERNAME}
+      CONTENTSTORE_PASSWORD: ${CONTENTSTORE_PASSWORD}
+      CONTENTSTORE_DB: ${CONTENTSTORE_DB}
     healthcheck:
       #       Checks whether Postgres is ready.
       test:
@@ -72,6 +72,7 @@ services:
       timeout: 5s
       retries: 60
     volumes:
+      - postgres_data:/var/lib/postgresql/data
       - ./postgres/db-init.sh:/docker-entrypoint-initdb.d/db-init.sh
     networks:
       - a12_compose
@@ -79,3 +80,6 @@ services:
 networks:
   a12_compose:
     driver: bridge
+
+volumes:
+  postgres_data:
