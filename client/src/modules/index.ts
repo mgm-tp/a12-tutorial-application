@@ -14,6 +14,7 @@ import { DefaultElementLibraryFactories } from "@com.mgmtp.a12.contentengine/con
 import { mapAppModelByPermission } from "./utils";
 import contactModule from "./contact";
 import helpModule from "./help";
+import dashboardModule from "./dashboard";
 
 export const ALL_MODULES = [
     AppModelAdapterModule,
@@ -21,7 +22,8 @@ export const ALL_MODULES = [
     TreeEngineServerConnectorFactories.createModule(),
     DefaultElementLibraryFactories.createModule(),
     contactModule(),
-    helpModule()
+    helpModule(),
+    dashboardModule()
 ];
 const moduleRegistry = ModuleRegistryProvider.getInstance();
 
