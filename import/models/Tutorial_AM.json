@@ -169,6 +169,59 @@
             ]
           }
         ]
+      },
+      {
+        "name": "DashboardModule",
+        "menu": {
+          "name": "Dashboard",
+          "label": [
+            {
+              "locale": "en",
+              "text": "Dashboard"
+            },
+            {
+              "locale": "de",
+              "text": "Dashboard"
+            }
+          ],
+          "initialActivity": {
+            "descriptor": {
+              "module": "Dashboard"
+            }
+          }
+        },
+        "flows": [
+          {
+            "name": "DashboardFlow",
+            "scenes": [
+              {
+                "name": "ShowChart",
+                "description": "Show pie chart with customer types",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Dashboard"
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "REGION_CLEAR",
+                      "layout": {
+                        "name": "Null"
+                      }
+                    },
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "PieChartContainer",
+                      "loadData": true
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       }
     ],
     "region": {

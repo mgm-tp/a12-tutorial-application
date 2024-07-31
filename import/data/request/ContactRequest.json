@@ -7,13 +7,13 @@
       "document": {
         "Contact": {
           "PersonalData": {
-            "FirstName":"Johny",
-            "LastName":"Smith",
-            "EmailAddress":"johny.smith@mgm-tp.com",
-            "DateOfBirth":"1987-10-11",
-            "Nationality":"British",
-            "Gender":"MALE",
-            "CustomerType":"lead"
+            "FirstName": "Johny",
+            "LastName": "Smith",
+            "EmailAddress": "johny.smith@mgm-tp.com",
+            "DateOfBirth": "1987-10-11",
+            "Nationality": "British",
+            "Gender": "MALE",
+            "CustomerType": "lead"
           },
           "Phones": [
             {
@@ -32,6 +32,192 @@
               "City":"Nürnberg",
               "Zip":"90478",
               "Country":"Germany"
+            }
+          ]
+        }
+      },
+      "documentModelName": "Contact_DM",
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContact2",
+    "params": {
+      "document": {
+        "Contact": {
+          "PersonalData": {
+            "FirstName": "Lucas",
+            "LastName": "Müller",
+            "EmailAddress": "lucas.mueller@mgm-tp.com",
+            "DateOfBirth": "1990-02-04",
+            "Nationality": "German",
+            "Gender": "MALE",
+            "CustomerType": "lead"
+          },
+          "Phones": [
+            {
+              "PhoneNumber": "+49 89 / 358 680-0",
+              "Type": "WORK"
+            }
+          ],
+          "Address": [
+            {
+              "Street":"Taunusstraße",
+              "Housenumber":"23",
+              "City":"München",
+              "Zip":"80807",
+              "Country":"Germany"
+            }
+          ]
+        }
+      },
+      "documentModelName": "Contact_DM",
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContact3",
+    "params": {
+      "document": {
+        "Contact": {
+          "PersonalData": {
+            "FirstName": "Alice",
+            "LastName": "Johnson",
+            "EmailAddress": "alice.johnson@mgm-tp.com",
+            "DateOfBirth": "1995-03-22",
+            "Nationality": "American",
+            "Gender": "FEMALE",
+            "CustomerType": "vip"
+          },
+          "Phones": [
+            {
+              "PhoneNumber": "987654",
+              "Type": "WORK"
+            }
+          ],
+          "Address": [
+            {
+              "Street":"Letenské náměstí",
+              "Housenumber":"4/157",
+              "City":"Prague",
+              "Zip":"17000",
+              "Country":"Czech Republic"
+            }
+          ]
+        }
+      },
+      "documentModelName": "Contact_DM",
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContact4",
+    "params": {
+      "document": {
+        "Contact": {
+          "PersonalData": {
+            "FirstName": "Michael",
+            "LastName": "Brown",
+            "EmailAddress": "michael.brown@example.com",
+            "DateOfBirth": "1990-08-05",
+            "Nationality": "Canadian",
+            "Gender": "MALE",
+            "CustomerType": "inactive"
+          },
+          "Phones": [
+            {
+              "PhoneNumber": "567890",
+              "Type": "MOBILE"
+            }
+          ]
+        }
+      },
+      "documentModelName": "Contact_DM",
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContact5",
+    "params": {
+      "document": {
+        "Contact": {
+          "PersonalData": {
+            "FirstName": "Sophia",
+            "LastName": "Miller",
+            "EmailAddress": "sophia.miller@example.com",
+            "DateOfBirth": "1984-01-17",
+            "Nationality": "Australian",
+            "Gender": "FEMALE",
+            "CustomerType": "vip"
+          },
+          "Phones": [
+            {
+              "PhoneNumber": "345678",
+              "Type": "WORK"
+            }
+          ]
+        }
+      },
+      "documentModelName": "Contact_DM",
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContact6",
+    "params": {
+      "document": {
+        "Contact": {
+          "PersonalData": {
+            "FirstName": "Daniel",
+            "LastName": "Lee",
+            "EmailAddress": "daniel.lee@example.com",
+            "DateOfBirth": "1992-06-30",
+            "Nationality": "Korean",
+            "Gender": "MALE",
+            "CustomerType": "partner"
+          },
+          "Phones": [
+            {
+              "PhoneNumber": "456789",
+              "Type": "WORK"
+            }
+          ]
+        }
+      },
+      "documentModelName": "Contact_DM",
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContact7",
+    "params": {
+      "document": {
+        "Contact": {
+          "PersonalData": {
+            "FirstName": "Isabella",
+            "LastName": "Garcia",
+            "EmailAddress": "isabella.garcia@example.com",
+            "DateOfBirth": "1989-11-25",
+            "Nationality": "Mexican",
+            "Gender": "FEMALE",
+            "CustomerType": "partner"
+          },
+          "Phones": [
+            {
+              "PhoneNumber": "234567",
+              "Type": "MOBILE"
             }
           ]
         }
