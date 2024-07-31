@@ -41,6 +41,7 @@ import { setRolesForUserAfterTokenRefresh } from "./uaa/sagas";
 import { isProduction } from "./config";
 import { enableReduxDevTools } from "./config/devtools";
 import { LoadModelGraphSaga } from "./sagas/loadModelGraph";
+import { PieChartDataLoader } from "./modules/dashboard/dataLoader/pieChart";
 
 let config: ApplicationSetup;
 
@@ -49,6 +50,7 @@ export function setup(): {
     initialStoreActions(): Promise<void>;
 } {
     const dataHandlers: DataHandler[] = [
+        new PieChartDataLoader(),
         cddDataProvider,
         createEmptyDocumentDataProvider(),
         RelationshipFactories.createRelationshipDataProvider(),
