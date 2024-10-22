@@ -1,10 +1,12 @@
 <!--- References --->
 <!--- Project Template getA12 documentation links --->
-[getA12]: https://docs.geta12.com/docs/?release=2023.06#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM
+[getA12]: https://docs.geta12.com/docs/#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM
 [Artifactory access]: https://docs.geta12.com/docs/?release=2023.06#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM,anchor:_artifactory_access
 [Gradle Wrapper]: https://docs.geta12.com/docs/?release=2023.06#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM,anchor:_gradle_wrapper
 [Gradle Node plugin]: https://docs.geta12.com/docs/?release=2023.06#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM,anchor:_gradle_node_plugin
 [Environment and Tools Setup]: https://docs.geta12.com/docs/?release=2023.06#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM,anchor:_environment_and_tools_setup
+[mgm-tp]: https://mgm-tp.com
+[getA12.com]: https://geta12.com
 
 <!--- other links --->
 [JDK]: https://adoptopenjdk.net/
@@ -16,7 +18,9 @@
 <!--- End of References --->
 
 # A12 Tutorial Application
-An introduction into development with A12, based on the Project Template. For more information about the Project Template and how to get started, check out the detailed documentation on [getA12].
+A12 is an Enterprise Low Code Platform developed by [mgm-tp]. To be able to work with it, you need access to [getA12.com]. You can get it by reaching out to [mgm-tp].
+
+A12 Tutorial Application is an introduction into development with A12, based on the Project Template. For more information about the Project Template and how to get started, check out the detailed documentation on [getA12].
 
 ## Content
 - [Introduction](#introduction)
@@ -82,3 +86,5 @@ There are three test users with credentials:
 - `user2` / `A12PT-user2test` for User role
 
 Log in with one of these credentials and take a look over the content.
+
+Copyright (c) 2024 mgm technology partners GmbH
