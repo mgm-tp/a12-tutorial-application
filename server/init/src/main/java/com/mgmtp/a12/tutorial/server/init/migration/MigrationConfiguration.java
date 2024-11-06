@@ -1,4 +1,4 @@
-package com.mgmtp.a12.template.server.init.migration;
+package com.mgmtp.a12.tutorial.server.init.migration;
 
 import com.mgmtp.a12.dataservices.common.events.CommonDataServicesEventListener;
 import org.springframework.context.annotation.Configuration;
