@@ -11,7 +11,7 @@ subprojects {
             serverBootJar(MavenPublication) {
                 groupId = rootProject.group
                 artifactId = serviceName
-                version = rootProject.version
+                version = project.version
 
                 artifact bootJar
             }
@@ -48,7 +48,7 @@ subprojects {
         group 'docker'
         dependsOn build
 
-        destFile = file("${buildDir}/Dockerfile")
+        destFile = layout.buildDirectory.file("Dockerfile")
 
         def baseImage = "${dockerRegistryForRead}/${dockerSeverBaseImage}"
 
@@ -85,7 +85,7 @@ subprojects {
         dependsOn createDockerfile
 
         images.add(calculateFullTag(serviceName))
-        inputDir.set(file(buildDir))
+        inputDir.set(file(layout.buildDirectory)) 
         if (dockerUseCredentials.toBoolean()) {
             dockerRegistryCredentialsForRead
         }

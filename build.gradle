@@ -11,7 +11,7 @@ sonar {
     properties {
         property 'sonar.projectKey', 'Project-Template'
         property 'sonar.projectName', 'Project Template'
-        property 'sonar.projectVersion', "${rootProject.version}"
+        property 'sonar.projectVersion', "${project.version}"
         property 'sonar.log.level', 'TRACE'
         property 'sonar.scm.provider', 'git'
         property 'sonar.qualitygate.wait', true
@@ -24,9 +24,6 @@ allprojects {
 
 project.ext {
     imageGroup = project.group
-
-    def packageJson = new JsonSlurper().parse file('package.json')
-    packageJsonVersion = packageJson.version
 }
 
 subprojects {
@@ -100,9 +97,9 @@ subprojects {
     ext.calculateFullTag = { String name ->
         if (project.hasProperty("variant")) {
             String variant = project.getProperty("variant")
-            "${dockerRegistryForPublish}/${imageGroup}/${name}/${variant}:${version}"
+            "${dockerRegistryForPublish}/${imageGroup}/${name}/${variant}:${project.version}".toString()
         } else {
-            "${dockerRegistryForPublish}/${imageGroup}/${name}:${version}"
+            "${dockerRegistryForPublish}/${imageGroup}/${name}:${project.version}".toString()
         }
     }
 }
@@ -119,12 +116,13 @@ tasks.register('updateReadmeToolsVersions') {
     group 'Config'
     description "Checks if './tool-versions.json' file was changed and updates tool versions table in README accordingly."
 
-    def toolFileDiff
     def diffExitCode
     try {
         println "\nChecking diff of '$versionsFile.name'."
-        toolFileDiff = ("git diff --ignore-cr-at-eol --exit-code HEAD $versionsFile").execute()
-        diffExitCode = toolFileDiff.waitFor()
+        diffExitCode = providers.exec {
+            commandLine("git diff --ignore-cr-at-eol --exit-code HEAD $versionsFile".split(" "))
+            ignoreExitValue = true
+        }.getResult().get().rethrowFailure().getExitValue()
     } catch (Exception e) {
         logger.warn("""\
                 There is probably no git installed on the system. Diff for '$versionsFile.name' finished with error:
@@ -146,21 +144,7 @@ check.dependsOn('checkToolVersions')
 tasks.register('checkToolVersions') {
     group 'Config'
     description 'Checks if tool system versions satisfy required versions in \'./tool-versions.json\' file.'
-
-    dependsOn ':client:checkNodeNpmVersions'
-    println "\nChecking tool versions..."
-    def dockerSatisfies = Utils.checkToolVersion(versionsFile, 'docker').versionSatisfies
-    def jdkSatisfies = Utils.checkToolVersion(versionsFile, 'jdk').versionSatisfies
-    def gradleSatisfies = Utils.checkToolVersion(versionsFile, 'gradle').versionSatisfies
-    if (!dockerSatisfies || !jdkSatisfies || !gradleSatisfies) {
-        logger.warn("WARNING: If tools do not satisfy recommended versions, the process can finish unexpectedly.")
-    }
-}
-
-tasks.register('getJiraTicket') {
-    if (project.findProperty('jiraTicket')) {
-        println project.jiraTicket
-    }
+    Utils.checkAllToolVersions(providers, versionsFile)
 }
 
 tasks.register('initProject') {
@@ -182,24 +166,18 @@ tasks.register('initProject') {
         String projectVersion = project.getProperty("releaseVersion")
         allprojects.each { project -> project.version = projectVersion
         }
-        ant.propertyfile(file: 'gradle.properties') {
-            entry(key: 'version', value: projectVersion)
-        }
         return
     }
-    // END
 
-    String projectVersion = project.version.split('-')[0].trim()
+    def packageJson = new JsonSlurper().parse file('package.json')
+    String projectVersion = packageJson.version.split('-')[0].trim()
     if (System.env.BUILD_NUMBER) {
         // TODO: We currently keep it simple here to publish only current build version. You should update this pattern to adapt with your project's strategy.
         projectVersion = projectVersion + "-build.${String.format("%05d", Integer.parseInt(System.env.BUILD_NUMBER))}"
-
-        allprojects.each { project -> project.version = projectVersion
-        }
-        ant.propertyfile(file: 'gradle.properties') {
-            entry(key: 'version', value: projectVersion)
-        }
     }
+    allprojects.each { project -> project.version = projectVersion
+    }
+    // END
 }
 
 tasks.register('test') {

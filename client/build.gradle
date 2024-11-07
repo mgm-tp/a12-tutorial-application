@@ -19,8 +19,8 @@ sonar {
 ext {
     imageLabels = ["name"       : "${calculateShortTag(clientName)}".toString(),
                    "vendor"     : "mgm technology partners GmbH",
-                   "version"    : packageJsonVersion,
-                   "release"    : project.version,
+                   "version"    : project.version,
+                   "release"    : rootProject.a12ReleaseVersion,
                    "summary"    : "A Nginx-based server for serving A12 Client",
                    "description": "The A12 Client is built around the established React/Redux ecosystem, integrates the A12 UI components like engines and widgets, and interact with the A12 Data Services in the backend via HTTP/REST endpoints."]
 }
@@ -33,17 +33,8 @@ node {
 //    npmInstallCommand = System.env.BUILD_NUMBER ? "ci" : "install"
 }
 
-tasks.register('checkNodeNpmVersions') {
-    group 'Config'
-    description 'Checks if system Node and npm versions satisfy required versions in \'./tool-versions.json\' file.'
-
-    println "\nChecking Node and npm versions..."
-    checkedVersions.node = Utils.checkToolVersion(versionsFile, 'node')
-    checkedVersions.npm = Utils.checkToolVersion(versionsFile, 'npm')
-
-    if (!checkedVersions.node.versionSatisfies || !checkedVersions.npm.versionSatisfies) {
-        logger.warn("WARNING: If tools do not satisfy recommended versions, the process can finish unexpectedly.")
-    }
+npmInstall.configure {
+    args = ['--legacy-peer-deps']
 }
 
 tasks.register('compile', NpmTask) {
@@ -109,8 +100,7 @@ tasks.register('createDockerfile', Dockerfile) {
     group 'docker'
     dependsOn webpack, copyNginxConf
 
-    destFile = file("$buildDir/Dockerfile")
-
+    destFile = layout.buildDirectory.file("Dockerfile")
     def baseImage = "${dockerRegistryForRead}/${dockerClientBaseImage}"
 
     // NOTE: Apple Silicon users may experience bad performance
@@ -144,7 +134,7 @@ tasks.register('buildImages', DockerBuildImage) {
     dependsOn createDockerfile
 
     images.add(calculateFullTag(clientName))
-    inputDir.set(file(buildDir))
+    inputDir.set(file(layout.buildDirectory)) 
     if (dockerUseCredentials.toBoolean()) {
         dockerRegistryCredentialsForRead
     }

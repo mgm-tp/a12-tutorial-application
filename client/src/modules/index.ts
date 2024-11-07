@@ -1,4 +1,4 @@
-import { UaaActions, UaaOidcModifiedUser, UaaSelectors } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
+import { UaaActions, UaaSelectors } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
 import { ActivityActions, ActivitySelectors } from "@com.mgmtp.a12.client/client-core/lib/core/activity";
 import {
     AppModelAdapterModule,
@@ -42,10 +42,9 @@ export const registerModulesOnSetModelGraphMiddleware = StoreFactories.createMid
  */
 export const registerAppModelModulesByPermissionMiddleware = StoreFactories.createMiddleware((api, next, action) => {
     if (ModelActions.addModulesApplicationModels.match(action)) {
-        const user = UaaSelectors.user(api.getState()) as UaaOidcModifiedUser;
+        const roles = UaaSelectors.roles(api.getState()) || [];
         const applicationModels = action.payload.models;
-
-        const userAuthorizedAppModels = applicationModels.map((model) => mapAppModelByPermission(model, user));
+        const userAuthorizedAppModels = applicationModels.map((model) => mapAppModelByPermission(model, roles));
 
         return next({
             ...action,

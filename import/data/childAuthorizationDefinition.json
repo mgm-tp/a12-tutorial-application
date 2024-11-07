@@ -32,6 +32,13 @@
       "rules": [
         "hasAccessRight('ACCESS_ACTUATOR')"
       ]
+    },
+    {
+      "name": "Reload Authorization Rules by System-Admin",
+      "description": "Users with access right RELOAD_AUTH_RULES are allowed to access /uaa-authorization/reloadRules path",
+      "rules": [
+        "hasAccessRight('RELOAD_AUTH_RULES')"
+      ]
     }
   ],
   "repositoryPolicies": [
@@ -89,6 +96,15 @@
       ],
       "scopes": [
         "RelativePath"
+      ]
+    },
+    {
+      "name": "Reload Authorization Rules",
+      "policy-refs": [
+        "Reload Authorization Rules by System-Admin"
+      ],
+      "scopes": [
+        "Reload Rules"
       ]
     }
   ]

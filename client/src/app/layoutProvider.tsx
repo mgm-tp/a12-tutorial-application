@@ -2,11 +2,10 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 
 import { FrameFactories, FrameViews } from "@com.mgmtp.a12.client/client-core/lib/core/frame";
-import { UaaOidcModifiedUser, UaaSelectors, UserInfoHeader } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
+import { UaaSelectors, UserInfoHeader } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
 
 import { RESOURCE_KEYS, useLocalizer } from "../localization";
 import LocaleChooser from "../components/LocaleChooser";
-import { getUserPermissions } from "../modules/utils";
 
 export const customLayoutProvider: FrameViews.LayoutProvider = (name: string) => {
     // "ApplicationFrame" is the hardcoded layout name taken from the App Model and is the default for the Client.
@@ -25,12 +24,12 @@ export const customLayoutProvider: FrameViews.LayoutProvider = (name: string) =>
  */
 function CustomApplicationFrameLayout(props: FrameViews.ApplicationFrameLayoutProps): JSX.Element {
     const localizer = useLocalizer();
-    const user = useSelector(UaaSelectors.user) as UaaOidcModifiedUser;
+    const roles = useSelector(UaaSelectors.roles)?.map((role) => role.name);
 
     return (
         <FrameViews.ApplicationFrameLayout
             {...props}
-            permissions={getUserPermissions(user)}
+            permissions={roles}
             additionalHeaderItems={[
                 {
                     item: <LocaleChooser />,

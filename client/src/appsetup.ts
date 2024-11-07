@@ -37,9 +37,9 @@ import {
     registerModulesOnSetModelGraphMiddleware,
     unregisterModulesOnLogoutMiddleware
 } from "./modules";
-import { setLanguageSelectedInLoginForm, setRolesForUserAfterTokenRefresh } from "./uaa/sagas";
+import { setRolesForUserAfterTokenRefresh } from "./uaa/sagas";
 import { isProduction } from "./config";
-import { devToolMiddleware, enableReduxDevTools } from "./config/devtools";
+import { enableReduxDevTools } from "./config/devtools";
 import { LoadModelGraphSaga } from "./sagas/loadModelGraph";
 
 let config: ApplicationSetup;
@@ -78,7 +78,6 @@ export function setup(): {
             ...RelationshipFactories.createSagas({ dataHandlers }),
             LoadModelGraphSaga,
             ...cdmSagas({ attachmentLoader: platformAttachmentLoader }),
-            setLanguageSelectedInLoginForm,
             setRolesForUserAfterTokenRefresh,
             DeepLinkingFactories.createWelcomePageSaga({ applyTriggers: [ModelActions.addModulesApplicationModels] })
         ],
@@ -91,7 +90,6 @@ export function setup(): {
             registerModulesOnSetModelGraphMiddleware,
             registerAppModelModulesByPermissionMiddleware,
             unregisterModulesOnLogoutMiddleware,
-            devToolMiddleware(),
             ...UaaMiddlewares()
         ],
         dataReducers: [

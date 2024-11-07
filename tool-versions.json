@@ -29,6 +29,12 @@
       "superscript": "1",
       "version": ">=20.x",
       "note": ""
+    },
+    "docker compose": {
+      "name": "Docker Compose",
+      "superscript": "",
+      "version": ">=2.20.3",
+      "note": ""
     }
   }
 }

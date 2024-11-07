@@ -24,7 +24,7 @@ if (hasPackableContent) {
                 groupId rootProject.group
                 artifactId getArtifactName()
                 artifact source: importsPackage, extension: 'zip'
-                version rootProject.version
+                version project.version
                 pom {
                     name = 'Project Template Imports'
                     description = 'Packed resources to be imported to Project Template.'

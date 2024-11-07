@@ -15,8 +15,8 @@ ext {
     serviceName = rootProject.serverInitName
     imageLabels = ["name"       : "${calculateShortTag(rootProject.serverInitName)}".toString(),
                    "vendor"     : "mgm technology partners GmbH",
-                   "version"    : packageJsonVersion,
-                   "release"    : project.version,
+                   "version"    : project.version,
+                   "release"    : rootProject.a12ReleaseVersion,
                    "summary"    : "A12 Data Services Init application for initialization and migration purposes in production environments",
                    "description": "A12 Data Services Init application to deal with models and documents initialization and migration purposes in production environments"]
 }

@@ -4,8 +4,16 @@ import groovy.ant.AntBuilder
 import groovy.json.JsonSlurper
 import org.apache.commons.lang3.SystemUtils
 import org.gradle.api.file.ConfigurableFileTree
+import org.gradle.api.provider.ProviderFactory
 import org.gradle.util.GradleVersion
 import org.semver4j.Semver
+
+class ToolProperties {
+    String tool
+    String toolSystemVersion
+    String versionsFileVersion
+    boolean versionSatisfies
+}
 
 class Utils {
     static final String FS = File.separator
@@ -13,24 +21,52 @@ class Utils {
     /**
      * Compares tool version installed on OS with recommended version in version file.
      *
+     * @param providers ProviderFactory instance.
      * @param versionFile File with the list of tools and recommended versions.
-     * @param tool Name of the tool to be compared with versionFile.
      *
      * @return Map of tool properties after the comparison.
      */
-    static Map checkToolVersion(File versionFile, String tool) {
+    static Map checkAllToolVersions(ProviderFactory providers, File versionFile) {
+        def tools = new JsonSlurper().parseText(versionFile.text).tools.keySet()
+        println "Checking preresiquite tools versions for ${tools.join(', ')}"
+        def toolProperties = new HashMap<String, ToolProperties>()
+        tools.each { tool -> toolProperties[tool] = getToolVersion(providers, versionFile, tool) }
+
+        if (toolProperties.values().any { !it.versionSatisfies }) {
+            println "WARNING: If tools do not satisfy recommended versions, the process can finish unexpectedly."
+        }
+
+        return toolProperties
+    }
+
+    private static Map executeVersionCheckCommand(ProviderFactory providers, String command) {
+        def args = command.split(" ")
+
+        def versionCommandExec = providers.exec {
+            commandLine(args)
+            ignoreExitValue = true
+        }
+        def toolInstalled = versionCommandExec.getResult().get().getExitValue() == 0
+
+        def versionText = toolInstalled ? versionCommandExec.getStandardOutput().asText.get().strip() : "N/A"
+
+        return [toolInstalled: toolInstalled, toolVersion: versionText]
+    }
+
+    private static ToolProperties getToolVersion(ProviderFactory providers, File versionFile, String tool) {
         def isWindows = SystemUtils.IS_OS_WINDOWS
         def checkedTool = tool.toLowerCase()
-        def toolProperties = [tool:"$tool"]
         def toolSystemVersion = 'N/A'
+        def versionCommand = ""
         //additional issue message specific for the tool
         def issueMessage = ""
+
         switch(checkedTool) {
             case 'node':
-                toolProperties.versionCommand ='node -v'
+                versionCommand = 'node -v'
                 break
             case 'npm':
-                toolProperties.versionCommand = "${isWindows ? 'npm.cmd -v' : 'npm -v'}"
+                versionCommand = "${isWindows ? 'npm.cmd -v' : 'npm -v'}"
                 break
             case 'jdk':
                 toolSystemVersion = System.getProperty("java.version")
@@ -39,40 +75,39 @@ class Utils {
                 toolSystemVersion = GradleVersion.current().toString()
                 break
             case 'docker':
-                toolProperties.versionCommand = "docker version --format {{.Server.Version}}"
+                versionCommand = "docker version --format {{.Server.Version}}"
                 issueMessage = "\nCheck if Docker daemon is running properly, for example by running 'docker version'."
+                break
+            case 'docker compose':
+                versionCommand = "docker compose version --short"
+                issueMessage = "\nCheck if Docker compose is installed, for example by running 'docker compose version'."
                 break
             default:
                 throw new Exception("Tool '$tool' is unknown for 'checkToolVersion' method")
-                break
         }
 
         //Catch the exception when command fails if the tool does not exist in the system.
         try {
-            if (toolProperties.versionCommand) {
-                def versionCommandProcess = toolProperties.versionCommand.execute()
-                def exitValue = versionCommandProcess.waitFor()
-                if (exitValue == 0) {
-                    toolSystemVersion = versionCommandProcess.text.trim()
+            if (versionCommand) {
+                def versionCheckResult = executeVersionCheckCommand(providers, versionCommand)
+                if (versionCheckResult.toolInstalled) {
+                    toolSystemVersion = versionCheckResult.toolVersion
                 } else {
-                    println "[X] There is probably no '$tool' running on the system. Tool version check for '$tool' finished with exit value: " +exitValue +issueMessage
+                    println "[X] There is probably no '$tool' running on the system. Tool version check for '$tool' finished with non-zero exit value: " + issueMessage
                 }
             }
         } catch (Exception e) {
             println "[X] There is probably no '$tool' installed on the system. Tool version check for '$tool' finished with error:\n"+e
         }
 
-        toolProperties.toolSystemVersion = toolSystemVersion
-
         def parsedVersionsJson = new JsonSlurper().parseText(versionFile.text)
-        def versionsFileVersion = parsedVersionsJson.tools."$checkedTool".version
+        def versionsFileVersion = String.valueOf(parsedVersionsJson.tools."$checkedTool".version)
         //format the version to semver style if necessary
-        toolProperties.versionsFileVersion = "${Semver.coerce(versionsFileVersion)}"
+        def coercedVersionsFileVersion = Semver.coerce(versionsFileVersion)
 
-        boolean versionSatisfies = false
         //Semver.satisfies allows to make loose comparison of different version formats
-        versionSatisfies = toolSystemVersion.equals('N/A') ? false : Semver.coerce(toolSystemVersion).satisfies(versionsFileVersion)
-        toolProperties.versionSatisfies = versionSatisfies
+        boolean versionSatisfies = toolSystemVersion.equals('N/A') ? false : Semver.coerce(toolSystemVersion).satisfies(versionsFileVersion)
+
 
         if (!toolSystemVersion.equals('N/A')) {
             //Windows commandline cannot handle the 'checkmark' character properly
@@ -82,7 +117,7 @@ class Utils {
             println checkMessage
         }
 
-        return toolProperties
+        return new ToolProperties(tool: checkedTool, toolSystemVersion: toolSystemVersion, versionsFileVersion: coercedVersionsFileVersion, versionSatisfies: versionSatisfies)
     }
 
     /**

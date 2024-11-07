@@ -7,17 +7,15 @@ roles:
       - DOCUMENT_UPDATE
       - DOCUMENT_PARTIAL_UPDATE
       - DOCUMENT_DELETE
-      - MODEL_READ
       - DOCUMENT_LIST
-      - MODEL_CREATE
-      - MODEL_UPDATE
-      - MODEL_DELETE
       - ATTACHMENT_UPLOAD
+      - MODEL_MANAGE
   - name: systemAdmin
     description: system admin role
     accessRights:
       - ACCESS_ACTUATOR
       - MANAGE_CACHES
+      - RELOAD_AUTH_RULES
   - name: user
     description: user role
     accessRights:
@@ -25,6 +23,7 @@ roles:
       - DOCUMENT_LIST
       - DOCUMENT_CREATE
       - DOCUMENT_UPDATE
+      - DOCUMENT_PARTIAL_UPDATE
       - DOCUMENT_DELETE
       - MODEL_READ
       - ATTACHMENT_UPLOAD

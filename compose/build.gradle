@@ -9,6 +9,7 @@ dockerCompose {
     environment.put 'PROJECT_NAME', "${rootProject.name}"
     environment.put 'FRONTEND_IMAGE', "${project.calculateFullTag(rootProject.clientName)}"
     environment.put 'SERVER_IMAGE', "${project.calculateFullTag(rootProject.serverName)}"
+    environment.put 'SERVER_INIT_IMAGE', "${project.calculateFullTag(rootProject.serverInitName)}"
     environment.put 'DOCKER_REGISTRY_FOR_READ', "${dockerRegistryForRead}"
     environment.put 'DOCKER_REGISTRY_FOR_PUBLISH', "${dockerRegistryForPublish}"
 
@@ -20,5 +21,10 @@ dockerCompose {
     noclient {
         projectName = "${rootProject.name}"
         startedServices = ['server', 'postgres']
+    }
+
+    serverInit {
+        projectName = "${rootProject.name}"
+        composeAdditionalArgs = ["--profile", "server-init"]
     }
 }

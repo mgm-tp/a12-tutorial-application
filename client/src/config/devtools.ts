@@ -1,27 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Middleware } from "redux";
 import { composeWithDevTools, EnhancerOptions } from "@redux-devtools/extension";
 
 import { ComposeEnhancer } from "@com.mgmtp.a12.client/client-core/lib/core/application";
 import { GeneratedCodeAccessorFactory } from "@com.mgmtp.a12.kernel/kernel-md-facade/lib/main/js/facade";
-import { StoreFactories } from "@com.mgmtp.a12.client/client-core/lib/core/store";
-
-declare let window: Window & {
-    _sampleDevToolMiddleware?: Middleware;
-};
-
-/**
- * The Client Chrome Extension is an experimental development tool to inspect the current state of the application.
- * With this tool you can do some low level interactions with the application which are not possible via the UI.
- * For example, you can always dispatch a commit or cancel action for an activity.
- */
-export const devToolMiddleware = (): Middleware => {
-    return window._sampleDevToolMiddleware === undefined
-        ? (window._sampleDevToolMiddleware = StoreFactories.createMiddleware((_, next, action) => {
-              return next(action);
-          }))
-        : window._sampleDevToolMiddleware;
-};
 
 export const enableReduxDevTools = (): ComposeEnhancer | undefined => {
     return composeWithDevTools(enhancerOptions());
