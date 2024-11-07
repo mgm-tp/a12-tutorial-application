@@ -45,11 +45,6 @@ dependencies {
     implementation(platform(a12Libs.kernel.bom))
     implementation(platform(a12Libs.uaa.bom))
     implementation(platform(a12Libs.dataservices.bom))
-
-    // for logback.xml configurations
-	//implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
-    implementation(libs.logstash)
-    implementation(libs.logback.classic)
 }
 
 springBoot {
