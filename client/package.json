@@ -24,7 +24,7 @@
   "webpackPort": "8081",
   "dependencies": {
     "@com.mgmtp.a12.base/base-model-api": "28.0.0",
-    "@com.mgmtp.a12.client/client-core": "15.0.3",
+    "@com.mgmtp.a12.client/client-core": "15.1.0",
     "@com.mgmtp.a12.crud/crud-core": "1.1.0",
     "@com.mgmtp.a12.dataservices/dataservices-access": "37.1.0",
     "@com.mgmtp.a12.expression/expression-core": "1.0.2",

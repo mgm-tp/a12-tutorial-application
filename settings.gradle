@@ -8,7 +8,7 @@ include 'server:init'
 include 'import'
 
 dependencyResolutionManagement {
-    def springBootVersion = '3.2.3'
+    def springBootVersion = '3.3.4'
     versionCatalogs {
         gradlePluginLibs {
             version('spring-boot', springBootVersion)
@@ -49,10 +49,14 @@ dependencyResolutionManagement {
         libs {
             version('spring-boot', springBootVersion)
             version('rewrite-static-analysis', '1.16.0')
+            version('logstash','7.4')
+            version('logback-classic','1.5.6')
 
             library('rewrite-static-analysis', 'org.openrewrite.recipe', 'rewrite-static-analysis').versionRef('rewrite-static-analysis')
             library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('spring-boot')
             library('spring-boot-devtools', 'org.springframework.boot', 'spring-boot-devtools').versionRef('spring-boot')
+            library('logstash', 'net.logstash.logback', 'logstash-logback-encoder').versionRef('logstash')
+            library('logback-classic', 'ch.qos.logback', 'logback-classic').versionRef('logback-classic')
         }
 
         testCatalogLibs {
