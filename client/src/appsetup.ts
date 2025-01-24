@@ -15,6 +15,7 @@ import {
 import { withPlatformModelLoader } from "@com.mgmtp.a12.client/client-core/modelLoader";
 import { withDirtyHandling } from "@com.mgmtp.a12.client/client-core/dirtyHandling";
 import { withLocalization } from "@com.mgmtp.a12.client/client-core/localization";
+import { withNotifications } from "@com.mgmtp.a12.client/client-core/notification";
 import { platformAttachmentLoader } from "@com.mgmtp.a12.formengine/formengine-core";
 import { withRelationshipFormEngine } from "@com.mgmtp.a12.relationshipengine/relationshipengine-core";
 import { withOverviewEngine } from "@com.mgmtp.a12.overviewengine/overviewengine-core";
@@ -87,7 +88,7 @@ export function setup() {
         withPlatformModelLoader
     );
 
-    const a12ExtensionFeatures = combineFeatures(withLocalization, withDirtyHandling, withDeepLinking);
+    const a12ExtensionFeatures = combineFeatures(withDirtyHandling, withDeepLinking);
 
     const viewAndLayoutFeatures = combineFeatures(
         addView("TreeEngine", enginesViewMap.TreeEngine),
@@ -105,7 +106,13 @@ export function setup() {
         addCustomSagas(LoadModelGraphSaga)
     );
 
-    const configured = combineFeatures(a12Features, a12ExtensionFeatures, applicationFeatures)(initialConfig);
+    const configured = combineFeatures(
+        withLocalization,
+        withNotifications,
+        a12Features,
+        a12ExtensionFeatures,
+        applicationFeatures
+    )(initialConfig);
     assertFullyConfigured(configured);
 
     const { store, initialActions, Component } = createA12ApplicationSetup(configured);

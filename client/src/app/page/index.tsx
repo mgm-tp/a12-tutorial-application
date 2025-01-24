@@ -4,13 +4,14 @@ import { useSelector } from "react-redux";
 import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { DndProvider } from "react-dnd";
 
-import { ApplicationSelectors } from "@com.mgmtp.a12.client/client-core";
-import { NotificationViews } from "@com.mgmtp.a12.client/client-core";
-import { ViewViews } from "@com.mgmtp.a12.client/client-core";
-import { GlobalStyles } from "@com.mgmtp.a12.widgets/widgets-core";
-import { DragAndDropUtils } from "@com.mgmtp.a12.widgets/widgets-core";
-import { SizeContext, useWindowSize } from "@com.mgmtp.a12.widgets/widgets-core";
-import { shouldForwardProp } from "@com.mgmtp.a12.widgets/widgets-core";
+import { ApplicationSelectors, ViewViews } from "@com.mgmtp.a12.client/client-core";
+import {
+    DragAndDropUtils,
+    GlobalStyles,
+    SizeContext,
+    shouldForwardProp,
+    useWindowSize
+} from "@com.mgmtp.a12.widgets/widgets-core";
 
 import { ThemeContextProvider, THEMES, useThemeContext } from "../themeContext";
 
@@ -27,11 +28,9 @@ const BasePage = ({ children }: PropsWithChildren): ReactElement => {
             <DndProvider
                 backend={DragAndDropUtils.DefaultDndBackend}
                 options={DragAndDropUtils.DefaultDndBackendOptions}>
-                <NotificationViews.Frame>
-                    <ViewViews.ProgressIndicator progress={busyState ? "loading" : "none"} global>
-                        {children}
-                    </ViewViews.ProgressIndicator>
-                </NotificationViews.Frame>
+                <ViewViews.ProgressIndicator progress={busyState ? "loading" : "none"} global>
+                    {children}
+                </ViewViews.ProgressIndicator>
             </DndProvider>
         </SizeContext.Provider>
     );
