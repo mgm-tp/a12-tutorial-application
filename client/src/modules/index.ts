@@ -12,12 +12,14 @@ import { TreeEngineServerConnectorFactories } from "@com.mgmtp.a12.treeengine/tr
 import { DefaultElementLibraryFactories } from "@com.mgmtp.a12.contentengine/contentengine-default-element-library";
 
 import { mapAppModelByPermission } from "./utils";
+import contactModule from "./contact";
 
 export const ALL_MODULES = [
     AppModelAdapterModule,
     TreeEngineFactories.createModule(),
     TreeEngineServerConnectorFactories.createModule(),
-    DefaultElementLibraryFactories.createModule()
+    DefaultElementLibraryFactories.createModule(),
+    contactModule()
 ];
 const moduleRegistry = ModuleRegistryProvider.getInstance();
 
