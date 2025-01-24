@@ -24,7 +24,7 @@ subprojects {
 
     ext.rewriteVar = {
         configFile = file("${project.rootDir}/quality/rewrite/recipes.yaml")
-        activeRecipe 'com.mgmtp.a12.template.server.Checkstyle'
+        activeRecipe 'com.mgmtp.a12.tutorial.server.Checkstyle'
     }
 
     if (!skipCheckstyle.toBoolean()) {

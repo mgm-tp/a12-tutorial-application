@@ -1,6 +1,6 @@
 ---
 type: specs.openrewrite.org/v1beta/recipe
-name: com.mgmtp.a12.template.server.Checkstyle
+name: com.mgmtp.a12.tutorial.server.Checkstyle
 displayName: Code cleanup
 description: Automatically cleanup code, apply checkstyle suggestions.
 recipeList:

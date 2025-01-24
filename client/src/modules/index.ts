@@ -16,6 +16,8 @@ import {
 } from "@com.mgmtp.a12.contentengine/contentengine-default-element-library";
 import { LoggerFactory } from "@com.mgmtp.a12.utils/utils-logging";
 
+import ContactModule from "./contact";
+
 const logger = LoggerFactory.getLogger("PT/modules");
 
 export const ALL_MODULES = [
@@ -27,7 +29,8 @@ export const ALL_MODULES = [
             ...DefaultElementLibrary.get(),
             modules: [...DefaultElementLibrary.get().modules, ...FormElementsLibrary.modules]
         }
-    })
+    }),
+    ContactModule
 ];
 const moduleRegistry = ModuleRegistryProvider.getInstance();
 
