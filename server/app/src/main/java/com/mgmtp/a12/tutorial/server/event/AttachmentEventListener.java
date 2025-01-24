@@ -1,8 +1,8 @@
-package com.mgmtp.a12.template.server.event;
+package com.mgmtp.a12.tutorial.server.event;
 
 import com.mgmtp.a12.dataservices.common.events.CommonDataServicesEventListener;
 import com.mgmtp.a12.dataservices.common.events.ContentTypeDetectedEvent;
-import com.mgmtp.a12.template.server.attachment.MimeTypeValidator;
+import com.mgmtp.a12.tutorial.server.attachment.MimeTypeValidator;
 import org.springframework.stereotype.Service;
 
 @Service
