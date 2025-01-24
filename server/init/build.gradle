@@ -45,7 +45,7 @@ dependencies {
 }
 
 springBoot {
-    mainClass = 'com.mgmtp.a12.template.server.init.ProjectTemplateInitApplication'
+    mainClass = 'com.mgmtp.a12.tutorial.server.init.TutorialInitApplication'
 }
 
 artifacts artifactsVar
