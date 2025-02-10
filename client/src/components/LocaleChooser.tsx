@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { HeaderTrigger } from "@com.mgmtp.a12.widgets/widgets-core/lib/button";

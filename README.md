@@ -84,4 +84,4 @@ There are three test users with credentials:
 
 Log in with one of these credentials and take a look over the content.
 
-Copyright (c) 2024 mgm technology partners GmbH
+Copyright (c) 2025 mgm technology partners GmbH

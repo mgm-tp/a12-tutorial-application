@@ -71,12 +71,6 @@
                 "sceneChange": {
                   "onEnter": [
                     {
-                      "layout": {
-                        "name": "MasterDetail"
-                      },
-                      "type": "REGION_CLEAR"
-                    },
-                    {
                       "type": "VIEW_ADD",
                       "name": "OverviewEngine",
                       "models": [

@@ -92,7 +92,6 @@ export const unregisterModulesOnLogoutMiddleware = StoreFactories.createMiddlewa
 function initializeHMR() {
     if (module.hot) {
         module.hot.accept([], async (updatedDependencies) => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const windowStore = window.store!;
             const state = windowStore.getState();
             const dispatch = windowStore.dispatch;
@@ -125,7 +124,6 @@ function initializeHMR() {
                 });
             }
 
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             Object.keys(activities).forEach((key) => dispatch(ActivityActions.push({ activity: activities[key]! })));
         });
     }

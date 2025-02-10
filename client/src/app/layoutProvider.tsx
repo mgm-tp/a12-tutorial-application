@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useSelector } from "react-redux";
 
 import { FrameFactories, FrameViews } from "@com.mgmtp.a12.client/client-core/lib/core/frame";

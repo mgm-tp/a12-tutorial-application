@@ -6,7 +6,7 @@
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "incremental": true,
-        "jsx": "react",
+        "jsx": "react-jsx",
         "lib": [
             "DOM",
             "ES2016",
@@ -31,6 +31,7 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "newLine": "LF",
+        "noEmit": true,
         "noEmitOnError": true,
         "noErrorTruncation": true,
         "noFallthroughCasesInSwitch": true,

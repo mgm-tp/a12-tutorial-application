@@ -2,7 +2,6 @@ import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
-import com.mgmtp.a12.Utils
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 plugins {
@@ -25,16 +24,9 @@ ext {
                    "description": "The A12 Client is built around the established React/Redux ecosystem, integrates the A12 UI components like engines and widgets, and interact with the A12 Data Services in the backend via HTTP/REST endpoints."]
 }
 
-def versionsFile = file("$rootDir/tool-versions.json")
-def checkedVersions = [:]
-
 node {
 //    CONFIG: Uncommenting this line enables the use of npm ci for reproducible builds.
 //    npmInstallCommand = System.env.BUILD_NUMBER ? "ci" : "install"
-}
-
-npmInstall.configure {
-    args = ['--legacy-peer-deps']
 }
 
 tasks.register('compile', NpmTask) {
@@ -42,7 +34,7 @@ tasks.register('compile', NpmTask) {
     dependsOn npmInstall
 
     if(skipESLintPrettier.toBoolean()) {
-        args = ['run-script', 'compile:skipESLintPrettier']
+        args = ['run-script', 'skip:eslint-prettier-compile']
     } else {
         args = ['run-script', 'compile']
     }
