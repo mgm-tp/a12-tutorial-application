@@ -1,0 +1,665 @@
+{
+  "name": "Query API Tutorial (TUT) - Task 2 start",
+  "version": "1",
+  "items": [
+    {
+      "type": "http",
+      "name": "REQUEST TEMPLATE",
+      "filename": "REQUEST TEMPLATE.bru",
+      "seq": 1,
+      "request": {
+        "url": "http://localhost:8081/api/v2/rpc",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "UAABEARER {{Authorization}}",
+            "enabled": true
+          }
+        ],
+        "params": [],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"id\": \"REQUEST TEMPLATE\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"<DOCUMENT MODEL NAME>\",\n      \"projectionName\": \"document OR cdd OR document-graph\",\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "none"
+        }
+      }
+    },
+    {
+      "type": "folder",
+      "name": "Task 2 - Discovering Queries",
+      "filename": "Task 2 - Discovering Queries",
+      "seq": 1,
+      "items": [
+        {
+          "type": "http",
+          "name": "Aggregation Example 1",
+          "filename": "Aggregation Example 1.bru",
+          "seq": 30,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"Aggregation Example 1\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"aggregation\": {\n        \"aggregations\": [\n          {\n            \"function\": \"count\",\n            \"field\": \"/Contact/PersonalData/EmailAddress\"\n          }\n        ],\n        \"group\": [\n          {\n            \"field\": \"/Contact/PersonalData/LastName\"\n          }\n        ]\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Aggregation Example 2",
+          "filename": "Aggregation Example 2.bru",
+          "seq": 31,
+          "request": {
+            "url": "http://localhost:8081/api/aggregation",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"Aggregation Example 2\",\n  \"targetDocumentModel\": \"Contact_DM\",\n  \"aggregation\": {\n    \"aggregations\": [\n      {\n        \"function\": \"count\",\n        \"field\": \"/Contact/PersonalData/EmailAddress\"\n      }\n    ],\n    \"group\": [\n      {\n        \"field\": \"/Contact/PersonalData/LastName\"\n      }\n    ]\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Heterogeneity Example 1",
+          "filename": "Heterogeneity Example 1.bru",
+          "seq": 28,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"Heterogeneity Example 1\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"exact_match\",\n        \"field\": \"/Contact/PersonalData/Nationality\",\n        \"value\": \"German\"\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Heterogeneity Example 2",
+          "filename": "Heterogeneity Example 2.bru",
+          "seq": 29,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"Heterogeneity Example 2\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"or\",\n        \"operands\": [\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/Contact/PersonalData/Nationality\",\n            \"value\": \"German\"\n          },\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/Contact/Address/Country\",\n            \"value\": \"Germany\"\n          }\n        ]\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Logical Operators Example 1",
+          "filename": "Logical Operators Example 1.bru",
+          "seq": 11,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"Logical Operators Example 1\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"and\",\n        \"operands\": [\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/Contact/PersonalData/Gender\",\n            \"value\": \"FEMALE\"\n          },\n          {\n            \"operator\": \"double_range\",\n            \"field\": \"/Contact/Project/Budget\",\n            \"from\": 300000\n          }\n        ]\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Logical Operators Example 2",
+          "filename": "Logical Operators Example 2.bru",
+          "seq": 12,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"Logical Operators Example 2\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"or\",\n        \"operands\": [\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/Contact/PersonalData/LastName\",\n            \"value\": \"Miller\"\n          },\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/Contact/PersonalData/LastName\",\n            \"value\": \"Baker\"\n          }\n        ]\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Logical Operators Example 3",
+          "filename": "Logical Operators Example 3.bru",
+          "seq": 13,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"Logical Operators Example 3\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"and\",\n        \"operands\": [\n          {\n            \"operator\": \"or\",\n            \"operands\": [\n              {\n                \"operator\": \"exact_match\",\n                \"field\": \"/Contact/PersonalData/LastName\",\n                \"value\": \"Miller\"\n              },\n              {\n                \"operator\": \"exact_match\",\n                \"field\": \"/Contact/PersonalData/LastName\",\n                \"value\": \"Baker\"\n              }\n            ]\n          },\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/Contact/PersonalData/Gender\",\n            \"value\": \"FEMALE\"\n          }\n        ]\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "cdd Example 1",
+          "filename": "cdd Example 1.bru",
+          "seq": 24,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"cdd Example 1\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Employment_CDM\",\n      \"projectionName\": \"cdd\",\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "cdd Example 2",
+          "filename": "cdd Example 2.bru",
+          "seq": 26,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"cdd Example 2\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Employment_CDM\",\n      \"projectionName\": \"cdd\",\n      \"constraint\": {\n        \"operator\": \"has\",\n        \"relationshipModel\": \"CompanyContact\",\n        \"targetRole\": \"Company\",\n        \"constraint\": {\n          \"operator\": \"simple_search\",\n          \"value\": \"Servicing Good GmbH\"\n        }\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "document-graph Example",
+          "filename": "document-graph Example.bru",
+          "seq": 22,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"document-graph Example\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Employment_CDM\",\n      \"projectionName\": \"document-graph\",\n      \"constraint\": {\n        \"operator\": \"exact_match\",\n        \"field\": \"/Contact/PersonalData/LastName\",\n        \"value\": \"Miller\"\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "double_range Example",
+          "filename": "double_range Example.bru",
+          "seq": 5,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"double_range Example\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"double_range\",\n        \"field\": \"/Contact/Project/Budget\",\n        \"from\": 500000,\n        \"to\": 1000000\n      },\n      \"sort\": [\n        {\n          \"field\": \"/Contact/PersonalData/LastName\",\n          \"direction\": \"DESC\",\n          \"nullHandling\": \"NULLS_LAST\",\n          \"ignoreCase\": false\n        },\n        {\n          \"field\": \"/Contact/PersonalData/FirstName\",\n          \"direction\": \"DESC\",\n          \"nullHandling\": \"NULLS_LAST\",\n          \"ignoreCase\": false\n        }\n      ],\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "exact_match Example 1",
+          "filename": "exact_match Example 1.bru",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"exact_match Example 1\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"exact_match\",\n        \"field\": \"/Contact/PersonalData/LastName\",\n        \"value\": \"Baker\"\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "exact_match Example 2",
+          "filename": "exact_match Example 2.bru",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"exact_match Example 2\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"fields\": [\n        \"/Contact/PersonalData/FirstName\",\n        \"/Contact/PersonalData/LastName\",\n        \"/Contact/PersonalData/EmailAddress\"\n      ],\n      \"constraint\": {\n        \"operator\": \"exact_match\",\n        \"field\": \"/Contact/PersonalData/LastName\",\n        \"value\": \"Baker\"\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "has Example 1",
+          "filename": "has Example 1.bru",
+          "seq": 16,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"has Example 1\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"has\",\n        \"relationshipModel\": \"CompanyContact\",\n        \"targetRole\": \"Company\"\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "has Example 2",
+          "filename": "has Example 2.bru",
+          "seq": 17,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"has Example 2\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Company_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"has\",\n        \"relationshipModel\": \"CompanyContact\",\n        \"targetRole\": \"Contact\"\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "has Example 3",
+          "filename": "has Example 3.bru",
+          "seq": 19,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"has Example 3\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"has\",\n        \"relationshipModel\": \"CompanyContact\",\n        \"targetRole\": \"Company\"\n      },\n      \"exclude\": false,\n      \"links\": [\n        {\n          \"relationshipModel\": \"CompanyContact\",\n          \"targetRole\": \"Company\"\n        }\n      ],\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "has Example 4",
+          "filename": "has Example 4.bru",
+          "seq": 21,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"has Example 4\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"has\",\n        \"relationshipModel\": \"CompanyContact\",\n        \"targetRole\": \"Company\",\n        \"linkDocumentConstraint\": {\n          \"operator\": \"exact_match\",\n          \"field\": \"/Root/Role\",\n          \"value\": \"executive\"\n        }\n      },\n      \"links\": [\n        {\n          \"relationshipModel\": \"CompanyContact\",\n          \"targetRole\": \"Company\"\n        }\n      ],\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "undefined_match Example",
+          "filename": "undefined_match Example.bru",
+          "seq": 7,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"undefined_match Example\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"undefined_match\",\n        \"field\": \"/Contact/PersonalData/CustomerType\"\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "activeEnvironmentUid": "itph0w0C83rUINkzC55XT",
+  "environments": [
+    {
+      "variables": [
+        {
+          "name": "Authorization",
+          "value": "<YOUR_ACCESS_TOKEN>",
+          "enabled": true,
+          "secret": false,
+          "type": "text"
+        }
+      ],
+      "name": "A12"
+    }
+  ],
+  "brunoConfig": {
+    "version": "1",
+    "name": "Query API Tutorial (TUT) - Task 2 start",
+    "type": "collection",
+    "ignore": [
+      "node_modules",
+      ".git"
+    ]
+  }
+}
