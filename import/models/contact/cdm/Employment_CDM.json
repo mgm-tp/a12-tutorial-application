@@ -1,6 +1,6 @@
 {
   "header": {
-    "id": "Contact_DM",
+    "id": "Employment_CDM",
     "modelType": "document",
     "modelVersion": "28.2.0",
     "locales": [
@@ -11,27 +11,40 @@
         "code": "de"
       }
     ],
-    "labels": [],
     "annotations": [
       {
-        "name": "abstract",
-        "value": "true"
-      },
-      {
-        "name": "subTypes",
-        "value": "ContactPotential_DM,ContactFinal_DM"
+        "name": "cdm.queryRoot",
+        "value": "Contact_DM"
       },
       {
         "name": "roles",
         "value": "admin,user"
       }
     ],
-    "modelReferences": []
+    "modelReferences": [
+      {
+        "alias": "Contact_DM",
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "Contact_DM"
+      },
+      {
+        "alias": "Company_DM",
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "Company_DM"
+      },
+      {
+        "alias": "RoleAdditionalField_DM",
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "RoleAdditionalField_DM"
+      }
+    ]
   },
   "content": {
     "modelInfo": {
-      "name": "Contact_DM",
-      "immutable": false
+      "name": "Employment_CDM"
     },
     "modelConfig": {
       "decimalSeparator": ".",
@@ -44,21 +57,21 @@
       "rootGroups": [
         {
           "type": "Group",
-          "id": "G11",
+          "id": "include_68e1f",
           "name": "Contact",
           "Group": {
             "repeatability": 1,
             "elements": [
               {
                 "type": "Group",
-                "id": "G2",
+                "id": "include_68e1f_G2",
                 "name": "PersonalData",
                 "Group": {
                   "repeatability": 1,
                   "elements": [
                     {
                       "type": "Field",
-                      "id": "F3",
+                      "id": "include_68e1f_F3",
                       "name": "FirstName",
                       "annotations": [
                         {
@@ -86,7 +99,7 @@
                     },
                     {
                       "type": "Field",
-                      "id": "F4",
+                      "id": "include_68e1f_F4",
                       "name": "LastName",
                       "annotations": [
                         {
@@ -114,7 +127,7 @@
                     },
                     {
                       "type": "Field",
-                      "id": "F6",
+                      "id": "include_68e1f_F6",
                       "name": "Gender",
                       "annotations": [
                         {
@@ -182,7 +195,7 @@
                     },
                     {
                       "type": "Field",
-                      "id": "F7",
+                      "id": "include_68e1f_F7",
                       "name": "DateOfBirth",
                       "annotations": [
                         {
@@ -210,7 +223,7 @@
                     },
                     {
                       "type": "Field",
-                      "id": "F9",
+                      "id": "include_68e1f_F9",
                       "name": "Nationality",
                       "annotations": [
                         {
@@ -235,7 +248,7 @@
                     },
                     {
                       "type": "Field",
-                      "id": "field_8d972",
+                      "id": "include_68e1f_field_8d972",
                       "name": "EmailAddress",
                       "annotations": [
                         {
@@ -276,7 +289,7 @@
                     },
                     {
                       "type": "Field",
-                      "id": "field_e3933",
+                      "id": "include_68e1f_field_e3933",
                       "name": "CustomerType",
                       "annotations": [
                         {
@@ -370,7 +383,7 @@
                     },
                     {
                       "type": "Group",
-                      "id": "group_05909",
+                      "id": "include_68e1f_group_05909",
                       "name": "Photo",
                       "Group": {
                         "repeatability": 1,
@@ -378,7 +391,7 @@
                         "elements": [
                           {
                             "type": "Field",
-                            "id": "field_a9ed3",
+                            "id": "include_68e1f_field_a9ed3",
                             "name": "original_filename",
                             "annotations": [
                               {
@@ -393,7 +406,7 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_e1d6a",
+                            "id": "include_68e1f_field_e1d6a",
                             "name": "internal_filename",
                             "annotations": [
                               {
@@ -408,7 +421,7 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_9fcd3",
+                            "id": "include_68e1f_field_9fcd3",
                             "name": "content",
                             "annotations": [
                               {
@@ -427,7 +440,7 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_145b4",
+                            "id": "include_68e1f_field_145b4",
                             "name": "attachment_id",
                             "annotations": [
                               {
@@ -442,7 +455,7 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_58899",
+                            "id": "include_68e1f_field_58899",
                             "name": "size",
                             "annotations": [
                               {
@@ -457,7 +470,7 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_72463",
+                            "id": "include_68e1f_field_72463",
                             "name": "mime_type",
                             "annotations": [
                               {
@@ -472,7 +485,7 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_867ef",
+                            "id": "include_68e1f_field_867ef",
                             "name": "category",
                             "annotations": [
                               {
@@ -487,7 +500,7 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_6346c",
+                            "id": "include_68e1f_field_6346c",
                             "name": "description",
                             "annotations": [
                               {
@@ -502,7 +515,7 @@
                           },
                           {
                             "type": "Rule",
-                            "id": "rule_6ed58",
+                            "id": "include_68e1f_rule_6ed58",
                             "name": "AttachmentInternalFilenameRequired",
                             "Rule": {
                               "errorEntityRelPath": "../internal_filename",
@@ -523,7 +536,7 @@
                           },
                           {
                             "type": "Rule",
-                            "id": "rule_b4062",
+                            "id": "include_68e1f_rule_b4062",
                             "name": "AttachmentMimeTypeRequired",
                             "Rule": {
                               "errorEntityRelPath": "../mime_type",
@@ -544,7 +557,7 @@
                           },
                           {
                             "type": "Rule",
-                            "id": "rule_3a21c",
+                            "id": "include_68e1f_rule_3a21c",
                             "name": "AttachmentIdOrContentFilled",
                             "Rule": {
                               "errorEntityRelPath": "../content",
@@ -565,7 +578,7 @@
                           },
                           {
                             "type": "Rule",
-                            "id": "rule_37050",
+                            "id": "include_68e1f_rule_37050",
                             "name": "SizeOfContentFilled",
                             "Rule": {
                               "errorEntityRelPath": "../content",
@@ -592,14 +605,14 @@
               },
               {
                 "type": "Group",
-                "id": "G16",
+                "id": "include_68e1f_G16",
                 "name": "Phones",
                 "Group": {
                   "repeatability": 5,
                   "elements": [
                     {
                       "type": "Field",
-                      "id": "F17",
+                      "id": "include_68e1f_F17",
                       "name": "PhoneNumber",
                       "annotations": [
                         {
@@ -624,7 +637,7 @@
                     },
                     {
                       "type": "Field",
-                      "id": "F18",
+                      "id": "include_68e1f_F18",
                       "name": "Type",
                       "annotations": [
                         {
@@ -682,14 +695,14 @@
               },
               {
                 "type": "Group",
-                "id": "group_4ca01",
+                "id": "include_68e1f_group_4ca01",
                 "name": "Address",
                 "Group": {
                   "repeatability": 5,
                   "elements": [
                     {
                       "type": "Field",
-                      "id": "field_e196b",
+                      "id": "include_68e1f_field_e196b",
                       "name": "Street",
                       "annotations": [
                         {
@@ -714,7 +727,7 @@
                     },
                     {
                       "type": "Field",
-                      "id": "field_e60ef",
+                      "id": "include_68e1f_field_e60ef",
                       "name": "Housenumber",
                       "annotations": [
                         {
@@ -739,7 +752,7 @@
                     },
                     {
                       "type": "Field",
-                      "id": "field_297f9",
+                      "id": "include_68e1f_field_297f9",
                       "name": "City",
                       "annotations": [
                         {
@@ -764,7 +777,7 @@
                     },
                     {
                       "type": "Field",
-                      "id": "field_6e8a1",
+                      "id": "include_68e1f_field_6e8a1",
                       "name": "Zip",
                       "annotations": [
                         {
@@ -789,7 +802,7 @@
                     },
                     {
                       "type": "Field",
-                      "id": "field_5a772",
+                      "id": "include_68e1f_field_5a772",
                       "name": "Country",
                       "annotations": [
                         {
@@ -817,7 +830,7 @@
               },
               {
                 "type": "Group",
-                "id": "group_e742d",
+                "id": "include_68e1f_group_e742d",
                 "name": "Project",
                 "Group": {
                   "label": [
@@ -834,7 +847,7 @@
                   "elements": [
                     {
                       "type": "Field",
-                      "id": "field_63ab7",
+                      "id": "include_68e1f_field_63ab7",
                       "name": "Budget",
                       "annotations": [
                         {
@@ -866,7 +879,7 @@
               },
               {
                 "type": "Field",
-                "id": "field_0e131",
+                "id": "include_68e1f_field_0e131",
                 "name": "ContactType",
                 "annotations": [
                   {
@@ -915,6 +928,559 @@
                     {
                       "locale": "de",
                       "text": "Kontakttyp"
+                    }
+                  ]
+                }
+              }
+            ],
+            "modelAlias": "Contact_DM"
+          }
+        },
+        {
+          "type": "Group",
+          "id": "group_b2ced",
+          "name": "CompanyContact",
+          "annotations": [
+            {
+              "name": "cdm.relationship",
+              "value": "CompanyContact"
+            },
+            {
+              "name": "cdm.sourceRole",
+              "value": "Contact"
+            },
+            {
+              "name": "cdm.targetRole",
+              "value": "Company"
+            },
+            {
+              "name": "cdm.targetDocumentModel",
+              "value": "Company_DM"
+            }
+          ],
+          "Group": {
+            "repeatability": 1,
+            "elements": [
+              {
+                "type": "Group",
+                "id": "include_3a8bc",
+                "name": "Company",
+                "Group": {
+                  "repeatability": 1,
+                  "elements": [
+                    {
+                      "type": "Group",
+                      "id": "include_3a8bc_group_ab05a",
+                      "name": "GeneralInformation",
+                      "Group": {
+                        "repeatability": 1,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_3a8bc_field_9c311",
+                            "name": "CompanyName",
+                            "annotations": [
+                              {
+                                "name": "indexed"
+                              }
+                            ],
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Company Name"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Firmenname"
+                                }
+                              ],
+                              "requirednessConfig": {
+                                "mode": "absoluteOrRelativeToNextRepAncestor"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_3a8bc_group_030d0",
+                            "name": "Logo",
+                            "Group": {
+                              "repeatability": 1,
+                              "usageType": "attachment",
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_3a8bc_field_f7a9f",
+                                  "name": "original_filename",
+                                  "annotations": [
+                                    {
+                                      "name": "indexed"
+                                    }
+                                  ],
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_3a8bc_field_86bee",
+                                  "name": "internal_filename",
+                                  "annotations": [
+                                    {
+                                      "name": "indexed"
+                                    }
+                                  ],
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_3a8bc_field_a8859",
+                                  "name": "content",
+                                  "annotations": [
+                                    {
+                                      "name": "indexed"
+                                    }
+                                  ],
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType",
+                                      "StringType": {
+                                        "lineBreaksPermitted": true,
+                                        "noValueValidation": true
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_3a8bc_field_3aa51",
+                                  "name": "attachment_id",
+                                  "annotations": [
+                                    {
+                                      "name": "indexed"
+                                    }
+                                  ],
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_3a8bc_field_178a4",
+                                  "name": "size",
+                                  "annotations": [
+                                    {
+                                      "name": "indexed"
+                                    }
+                                  ],
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "NumberType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_3a8bc_field_f378d",
+                                  "name": "mime_type",
+                                  "annotations": [
+                                    {
+                                      "name": "indexed"
+                                    }
+                                  ],
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_3a8bc_field_0dffd",
+                                  "name": "category",
+                                  "annotations": [
+                                    {
+                                      "name": "indexed"
+                                    }
+                                  ],
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_3a8bc_field_ec9d6",
+                                  "name": "description",
+                                  "annotations": [
+                                    {
+                                      "name": "indexed"
+                                    }
+                                  ],
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Rule",
+                                  "id": "include_3a8bc_rule_4565d",
+                                  "name": "AttachmentInternalFilenameRequired",
+                                  "Rule": {
+                                    "errorEntityRelPath": "../internal_filename",
+                                    "errorCode": "Error rule_4565d",
+                                    "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(internal_filename)",
+                                    "severity": "ERROR",
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Internal Error: Field internal_filename of customType attachment is not filled."
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Internal Error: Field internal_filename of customType attachment is not filled."
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Rule",
+                                  "id": "include_3a8bc_rule_c4c29",
+                                  "name": "AttachmentMimeTypeRequired",
+                                  "Rule": {
+                                    "errorEntityRelPath": "../mime_type",
+                                    "errorCode": "Error rule_c4c29",
+                                    "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(mime_type)",
+                                    "severity": "ERROR",
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Internal Error: Field mime_type of customType attachment is not filled."
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Internal Error: Field mime_type of customType attachment is not filled."
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Rule",
+                                  "id": "include_3a8bc_rule_b1052",
+                                  "name": "AttachmentIdOrContentFilled",
+                                  "Rule": {
+                                    "errorEntityRelPath": "../content",
+                                    "errorCode": "Error rule_b1052",
+                                    "errorCondition": "GroupFilled(RuleGroup) and NotExactlyOneFieldFilled(attachment_id, content)",
+                                    "severity": "ERROR",
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Internal Error: Either attachment_id or content must be filled in a customType attachment, but not both."
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Internal Error: Either attachment_id or content must be filled in a customType attachment, but not both."
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Rule",
+                                  "id": "include_3a8bc_rule_05af0",
+                                  "name": "SizeOfContentFilled",
+                                  "Rule": {
+                                    "errorEntityRelPath": "../content",
+                                    "errorCode": "Error rule_05af0",
+                                    "errorCondition": "FieldFilled(content) and FieldNotFilled(size)",
+                                    "severity": "ERROR",
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Internal Error: If the content is filled, the size must be also filled."
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Internal Error: If the content is filled, the size must be also filled."
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_3a8bc_field_6c736",
+                            "name": "Website",
+                            "annotations": [
+                              {
+                                "name": "indexed"
+                              }
+                            ],
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Website"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Website"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_3a8bc_group_19d75",
+                      "name": "Address",
+                      "Group": {
+                        "repeatability": 5,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_3a8bc_field_237cc",
+                            "name": "Street",
+                            "annotations": [
+                              {
+                                "name": "indexed"
+                              }
+                            ],
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Street"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Straße"
+                                }
+                              ],
+                              "requirednessConfig": {
+                                "mode": "absoluteOrRelativeToNextRepAncestor"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_3a8bc_field_dd917",
+                            "name": "City",
+                            "annotations": [
+                              {
+                                "name": "indexed"
+                              }
+                            ],
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "City"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Stadt"
+                                }
+                              ],
+                              "requirednessConfig": {
+                                "mode": "absoluteOrRelativeToNextRepAncestor"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_3a8bc_field_a3261",
+                            "name": "Country",
+                            "annotations": [
+                              {
+                                "name": "indexed"
+                              }
+                            ],
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Country"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Land"
+                                }
+                              ],
+                              "requirednessConfig": {
+                                "mode": "absoluteOrRelativeToNextRepAncestor"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_3a8bc_group_024f8",
+                      "name": "Phones",
+                      "Group": {
+                        "repeatability": 5,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_3a8bc_field_19ded",
+                            "name": "PhoneNumber",
+                            "annotations": [
+                              {
+                                "name": "indexed"
+                              }
+                            ],
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Phone number"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Telefonnummer"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "modelAlias": "Company_DM"
+                }
+              },
+              {
+                "type": "Group",
+                "id": "group_d0052",
+                "name": "relationship",
+                "Group": {
+                  "repeatability": 1,
+                  "elements": [
+                    {
+                      "type": "Group",
+                      "id": "include_9466d",
+                      "name": "Root",
+                      "Group": {
+                        "repeatability": 1,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_9466d_field_f8e6a",
+                            "name": "Role",
+                            "annotations": [
+                              {
+                                "name": "indexed"
+                              }
+                            ],
+                            "Field": {
+                              "fieldType": {
+                                "type": "EnumerationType",
+                                "EnumerationType": {
+                                  "values": [
+                                    {
+                                      "value": "executive",
+                                      "label": [
+                                        {
+                                          "locale": "en",
+                                          "text": "Executive"
+                                        },
+                                        {
+                                          "locale": "de",
+                                          "text": "Führungskraft"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "value": "managerial",
+                                      "label": [
+                                        {
+                                          "locale": "en",
+                                          "text": "Managerial"
+                                        },
+                                        {
+                                          "locale": "de",
+                                          "text": "Geschäftsführend"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "value": "operational",
+                                      "label": [
+                                        {
+                                          "locale": "en",
+                                          "text": "Operational"
+                                        },
+                                        {
+                                          "locale": "de",
+                                          "text": "Betrieblich"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "value": "other",
+                                      "label": [
+                                        {
+                                          "locale": "en",
+                                          "text": "Other"
+                                        },
+                                        {
+                                          "locale": "de",
+                                          "text": "Andere"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Role"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Rolle"
+                                }
+                              ]
+                            }
+                          }
+                        ],
+                        "modelAlias": "RoleAdditionalField_DM"
+                      }
                     }
                   ]
                 }

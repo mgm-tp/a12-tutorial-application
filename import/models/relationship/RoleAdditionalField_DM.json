@@ -1,0 +1,141 @@
+{
+  "header": {
+    "id": "RoleAdditionalField_DM",
+    "modelType": "document",
+    "modelVersion": "28.2.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "admin,user"
+      }
+    ],
+    "modelReferences": []
+  },
+  "content": {
+    "modelInfo": {
+      "name": "RoleAdditionalField_DM",
+      "immutable": false
+    },
+    "modelConfig": {
+      "decimalSeparator": ".",
+      "timeZone": "UTC",
+      "conditionLanguage": {
+        "code": "en_US"
+      }
+    },
+    "modelRoot": {
+      "rootGroups": [
+        {
+          "type": "Group",
+          "id": "group_a19bf",
+          "name": "Root",
+          "Group": {
+            "label": [
+              {
+                "locale": "en",
+                "text": "Role"
+              },
+              {
+                "locale": "de",
+                "text": "Role"
+              }
+            ],
+            "repeatability": 1,
+            "elements": [
+              {
+                "type": "Field",
+                "id": "field_f8e6a",
+                "name": "Role",
+                "annotations": [
+                  {
+                    "name": "indexed"
+                  }
+                ],
+                "Field": {
+                  "fieldType": {
+                    "type": "EnumerationType",
+                    "EnumerationType": {
+                      "values": [
+                        {
+                          "value": "executive",
+                          "label": [
+                            {
+                              "locale": "en",
+                              "text": "Executive"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "Führungskraft"
+                            }
+                          ]
+                        },
+                        {
+                          "value": "managerial",
+                          "label": [
+                            {
+                              "locale": "en",
+                              "text": "Managerial"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "Geschäftsführend"
+                            }
+                          ]
+                        },
+                        {
+                          "value": "operational",
+                          "label": [
+                            {
+                              "locale": "en",
+                              "text": "Operational"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "Betrieblich"
+                            }
+                          ]
+                        },
+                        {
+                          "value": "other",
+                          "label": [
+                            {
+                              "locale": "en",
+                              "text": "Other"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "Andere"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Role"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Rolle"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

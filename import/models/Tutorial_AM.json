@@ -24,7 +24,7 @@
     "annotations": [
       {
         "name": "roles",
-        "value": "user"
+        "value": "admin,user"
       }
     ],
     "modelReferences": []
@@ -90,8 +90,8 @@
                 }
               },
               {
-                "name": "ContactForm",
-                "description": "Form showing on Contact Document",
+                "name": "ContactFinalForm",
+                "description": "Form showing on Contact Final Document",
                 "matchConditions": [
                   {
                     "key": "module",
@@ -100,6 +100,10 @@
                   {
                     "key": "instance",
                     "isSet": true
+                  },
+                  {
+                    "key": "model",
+                    "mustEqual": "ContactFinal_DM"
                   }
                 ],
                 "sceneChange": {
@@ -110,8 +114,313 @@
                       "models": [
                         {
                           "modelType": "form",
-                          "name": "Contact_FM",
-                          "documentModel": "Contact_DM"
+                          "name": "ContactFinal_FM",
+                          "documentModel": "ContactFinal_DM"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "name": "ContactPotentialForm",
+                "description": "Form showing on Contact Potential Document",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Contact"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": true
+                  },
+                  {
+                    "key": "model",
+                    "mustEqual": "ContactPotential_DM"
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "FormEngine",
+                      "constraints": {
+                        "type": "MasterDetail"
+                      },
+                      "models": [
+                        {
+                          "modelType": "form",
+                          "name": "ContactPotential_FM",
+                          "documentModel": "ContactPotential_DM"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CompanyModule",
+        "menu": {
+          "name": "Company",
+          "label": [
+            {
+              "locale": "en",
+              "text": "Company"
+            },
+            {
+              "locale": "de",
+              "text": "Company"
+            }
+          ],
+          "initialActivity": {
+            "descriptor": {
+              "module": "Company"
+            }
+          }
+        },
+        "flows": [
+          {
+            "name": "CompanyFlow",
+            "scenes": [
+              {
+                "name": "CompanyOverview",
+                "description": "Overview of Company Documents",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Company"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": false
+                  },
+                  {
+                    "key": "processDefinitionKey",
+                    "isSet": false
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "layout": {
+                        "name": "MasterDetail"
+                      },
+                      "type": "REGION_CLEAR"
+                    },
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "OverviewEngine",
+                      "models": [
+                        {
+                          "modelType": "overview",
+                          "name": "Company_OM"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "name": "CompanyForm",
+                "description": "Form showing on Company Document",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Company"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": true
+                  },
+                  {
+                    "key": "processDefinitionKey",
+                    "isSet": false
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "FormEngine",
+                      "constraints": {
+                        "type": "MasterDetail"
+                      },
+                      "models": [
+                        {
+                          "modelType": "form",
+                          "name": "Company_FM"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "EmploymentModule",
+        "menu": {
+          "name": "Employment",
+          "label": [
+            {
+              "locale": "en",
+              "text": "Employment"
+            },
+            {
+              "locale": "de",
+              "text": "Anstellung"
+            }
+          ],
+          "initialActivity": {
+            "descriptor": {
+              "module": "Employment",
+              "engine": "overview"
+            }
+          }
+        },
+        "flows": [
+          {
+            "name": "EmploymentFlow",
+            "scenes": [
+              {
+                "name": "EmploymentOverview",
+                "description": "Overview of Employment Documents",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Employment"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": false
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "layout": {
+                        "name": "MasterDetail"
+                      },
+                      "type": "REGION_CLEAR"
+                    },
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "OverviewEngine",
+                      "models": [
+                        {
+                          "modelType": "overview",
+                          "name": "Employment_COM"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "name": "ContactFinalDetails",
+                "description": "Form showing on CDM Contact Final Document",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Employment"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": true
+                  },
+                  {
+                    "key": "model",
+                    "mustEqual": "ContactFinal_DM"
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "FormEngine",
+                      "constraints": {
+                        "type": "MasterDetail"
+                      },
+                      "models": [
+                        {
+                          "modelType": "form",
+                          "name": "EmploymentFinal_CFM"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "name": "ContactPotentialDetails",
+                "description": "Form showing on CDM Contact Potential Document",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Employment"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": true
+                  },
+                  {
+                    "key": "model",
+                    "mustEqual": "ContactPotential_DM"
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "FormEngine",
+                      "constraints": {
+                        "type": "MasterDetail"
+                      },
+                      "models": [
+                        {
+                          "modelType": "form",
+                          "name": "EmploymentPotential_CFM"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "name": "CompanyDetails",
+                "description": "Form showing on Company Document",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Employment"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": true
+                  },
+                  {
+                    "key": "model",
+                    "mustEqual": "Company_DM"
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "FormEngine",
+                      "constraints": {
+                        "type": "MasterDetail"
+                      },
+                      "models": [
+                        {
+                          "modelType": "form",
+                          "name": "Company_FM"
                         }
                       ]
                     }
