@@ -1,6 +1,6 @@
 {
   "header": {
-    "id": "Contact_FM",
+    "id": "ContactPotential_FM",
     "modelType": "form",
     "modelVersion": "37.3.0",
     "locales": [
@@ -14,11 +14,11 @@
     "labels": [
       {
         "locale": "en",
-        "text": "Contact"
+        "text": "Contact (Potential)"
       },
       {
         "locale": "de",
-        "text": "Kontakt"
+        "text": "Kontakt (Potentiell)"
       }
     ],
     "annotations": [
@@ -29,14 +29,19 @@
     ],
     "modelReferences": [
       {
-        "alias": "Contact_DM",
+        "alias": "ContactPotential_DM",
         "modelType": "document",
         "purpose": "data binding",
-        "reference": "Contact_DM"
+        "reference": "ContactPotential_DM"
       }
     ]
   },
   "content": {
+    "styles": [
+      {
+        "name": "h_leftAlign"
+      }
+    ],
     "subHeaderBox": {
       "id": "subHeaderBox1",
       "majorButtons": {
@@ -138,6 +143,36 @@
         "name": "Screen1",
         "screenElements": [
           {
+            "type": "Section",
+            "id": "section_723c6",
+            "name": "Metainformation",
+            "screenElements": [
+              {
+                "type": "ControlGrid",
+                "id": "controlgrid_ec7f2",
+                "name": "CG0",
+                "layout": {
+                  "lg": "2-2-2-2-2-2"
+                },
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "row_85c10",
+                    "name": "r0",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_83828",
+                        "readonly": true,
+                        "elementRef": "field_a4353"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
             "type": "MultiColumnSection",
             "id": "multicolumnsection-c3749",
             "name": "PersonalData",
@@ -189,69 +224,6 @@
                         "elementRef": "field_8d972"
                       }
                     ]
-                  },
-                  {
-                    "type": "Row",
-                    "id": "row-8b57e",
-                    "name": "r2",
-                    "cell": [
-                      {
-                        "type": "Control",
-                        "id": "control-65fe4",
-                        "offset": {
-                          "lg": 0
-                        },
-                        "datePickerConfig": {
-                          "minYear": -70,
-                          "maxYear": -18,
-                          "absolute": false,
-                          "preselectionYear": -34
-                        },
-                        "elementRef": "F7"
-                      },
-                      {
-                        "type": "Control",
-                        "id": "control-fd741",
-                        "elementRef": "F9"
-                      },
-                      {
-                        "type": "Control",
-                        "id": "control-f12a7",
-                        "label": {
-                          "type": "Multilingual",
-                          "multilingualText": {
-                            "text": [
-                              {
-                                "locale": "en",
-                                "text": "Gender"
-                              },
-                              {
-                                "locale": "de",
-                                "text": "Geschlecht"
-                              }
-                            ]
-                          }
-                        },
-                        "elementRef": "F6"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "Row",
-                    "id": "row-a6104",
-                    "name": "r3",
-                    "cell": [
-                      {
-                        "type": "Control",
-                        "id": "control-27cff",
-                        "elementRef": "group_05909"
-                      },
-                      {
-                        "type": "Control",
-                        "id": "control_8afb1",
-                        "elementRef": "field_e3933"
-                      }
-                    ]
                   }
                 ],
                 "verticalAlignment": "BOTTOM"
@@ -260,7 +232,7 @@
           },
           {
             "type": "Section",
-            "id": "section_6a976",
+            "id": "section_9a8c9",
             "name": "Project",
             "title": {
               "type": "Multilingual",
@@ -280,35 +252,25 @@
             "screenElements": [
               {
                 "type": "ControlGrid",
-                "id": "controlgrid_96835",
+                "id": "controlgrid_37c55",
                 "name": "CG1",
-                "title": {
-                  "type": "Multilingual",
-                  "multilingualText": {
-                    "text": [
-                      {
-                        "locale": "en",
-                        "text": "Project"
-                      },
-                      {
-                        "locale": "de",
-                        "text": "Projekt"
-                      }
-                    ]
-                  }
-                },
                 "layout": {
                   "lg": "4-4-4"
                 },
                 "row": [
                   {
                     "type": "Row",
-                    "id": "row_8b49a",
+                    "id": "row_0ef59",
                     "cell": [
                       {
                         "type": "Control",
-                        "id": "control_961ea",
-                        "elementRef": "field_63ab7"
+                        "id": "control_4a898",
+                        "style": [
+                          {
+                            "name": "h_leftAlign"
+                          }
+                        ],
+                        "elementRef": "field_57a27"
                       }
                     ]
                   }
@@ -449,22 +411,8 @@
     "fieldConfiguration": {
       "field": [
         {
-          "label": {
-            "type": "Multilingual",
-            "multilingualText": {
-              "text": [
-                {
-                  "locale": "en",
-                  "text": "Profile Picture"
-                },
-                {
-                  "locale": "de",
-                  "text": "Profilbild"
-                }
-              ]
-            }
-          },
-          "elementRef": "group_05909"
+          "initialValue": "POTENTIAL",
+          "elementRef": "field_a4353"
         }
       ]
     },

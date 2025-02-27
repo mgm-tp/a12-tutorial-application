@@ -1,0 +1,78 @@
+{
+  "header": {
+    "id": "CompanyContact_Contact_SelectedItemsOverview",
+    "modelType": "overview",
+    "modelVersion": "38.1.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "purpose": "document-model-for-overview",
+        "modelType": "document",
+        "alias": "DM",
+        "reference": "CompanyContact_Contact____generated"
+      }
+    ]
+  },
+  "content": {
+    "configuration": {
+      "enableFilter": false,
+      "showFullTextSearch": false,
+      "pagingSize": 10
+    },
+    "columns": [
+      {
+        "id": "column-06c2b",
+        "width": 1,
+        "styles": {},
+        "elementRef": "I4_F3",
+        "sortable": false
+      },
+      {
+        "id": "column-5e160",
+        "width": 1,
+        "styles": {},
+        "elementRef": "I4_F4",
+        "sortable": false
+      },
+      {
+        "id": "column-109ea",
+        "width": 1,
+        "styles": {},
+        "elementRef": "I4_field_8d972",
+        "sortable": false
+      },
+      {
+        "id": "column-7b355",
+        "width": 1,
+        "styles": {},
+        "elementRef": "I5_field_f8e6a",
+        "sortable": false
+      }
+    ],
+    "rowActionGroup": {
+      "actions": []
+    },
+    "subHeaderBox": {
+      "majorElements": [],
+      "minorElements": []
+    },
+    "footerBox": {
+      "majorElements": [],
+      "minorElements": []
+    }
+  }
+}

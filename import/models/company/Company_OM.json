@@ -1,6 +1,6 @@
 {
   "header": {
-    "id": "Contact_OM",
+    "id": "Company_OM",
     "modelType": "overview",
     "modelVersion": "38.1.0",
     "locales": [
@@ -32,21 +32,58 @@
         "purpose": "document-model-for-overview",
         "modelType": "document",
         "alias": "DM",
-        "reference": "Contact_DM"
+        "reference": "Company_DM"
       }
     ]
   },
   "content": {
     "configuration": {
       "enableFilter": true,
+      "showFullTextSearch": true,
+      "pagingSize": 10,
       "filterConfiguration": {
         "showFilterButton": true,
         "showFilterBar": true,
-        "filterMode": "all"
+        "filterMode": "all_columns"
       },
-      "showFullTextSearch": true,
-      "pagingSize": 50
+      "rowHeight": 49
     },
+    "columns": [
+      {
+        "id": "column-aee7c",
+        "width": 1,
+        "styles": {},
+        "elementRef": "field_9c311",
+        "sortable": true,
+        "preferredSorting": "ASC"
+      },
+      {
+        "id": "column-9d1b2",
+        "label": [
+          {
+            "locale": "en",
+            "text": "Logo"
+          },
+          {
+            "locale": "de",
+            "text": "Logo"
+          }
+        ],
+        "width": 1,
+        "styles": {},
+        "elementRef": "group_030d0",
+        "sortable": true,
+        "preferredSorting": "ASC",
+        "attachmentDisplayMode": "preview"
+      },
+      {
+        "id": "column-d6ffe",
+        "width": 1,
+        "styles": {},
+        "elementRef": "field_6c736",
+        "sortable": false
+      }
+    ],
     "subHeaderBox": {
       "majorElements": [
         {
@@ -58,92 +95,40 @@
       ],
       "minorElements": [
         {
-          "type": "button",
           "label": [
             {
               "locale": "en",
-              "text": "Add"
+              "text": "ADD"
             },
             {
               "locale": "de",
-              "text": "Hinzufügen"
+              "text": "hinzufügen"
             }
           ],
+          "type": "button",
           "event": "add",
           "icon": {
             "name": "add"
           },
+          "description": [
+            {
+              "locale": "en",
+              "text": "ADD"
+            },
+            {
+              "locale": "de",
+              "text": "hinzufügen"
+            }
+          ],
           "destructive": false,
           "primary": false
         }
       ]
     },
-    "footerBox": {
-      "majorElements": [],
-      "minorElements": []
-    },
-    "columns": [
-      {
-        "id": "column-b85bb",
-        "icon": {
-          "name": "person",
-          "theme": "filled"
-        },
-        "width": 1,
-        "styles": {},
-        "elementRef": "field_0e131",
-        "sortable": true,
-        "preferredSorting": "ASC"
-      },
-      {
-        "id": "column-c3b30",
-        "label": [
-          {
-            "locale": "en",
-            "text": "Profile Picture"
-          },
-          {
-            "locale": "de",
-            "text": "Profilbild"
-          }
-        ],
-        "width": 1,
-        "elementRef": "group_05909",
-        "sortable": false,
-        "attachmentDisplayMode": "preview"
-      },
-      {
-        "id": "column-5bd25",
-        "width": 1,
-        "elementRef": "F3",
-        "sortable": true,
-        "preferredSorting": "ASC"
-      },
-      {
-        "id": "column-5847d",
-        "width": 1,
-        "elementRef": "F4",
-        "sortable": true,
-        "preferredSorting": "ASC"
-      },
-      {
-        "id": "column-a7455",
-        "width": 1,
-        "styles": {},
-        "elementRef": "F7",
-        "sortable": false
-      },
-      {
-        "id": "column-d37d5",
-        "width": 1,
-        "elementRef": "F9",
-        "sortable": false
-      }
-    ],
     "rowActionGroup": {
       "actions": [
         {
-          "event": "delete",
+          "event": "event_delete",
           "confirmation": {
             "title": [
               {
@@ -152,7 +137,7 @@
               },
               {
                 "locale": "de",
-                "text": "Löschen des Eintrags"
+                "text": "Item löschen"
               }
             ],
             "message": [
@@ -173,6 +158,10 @@
           "primary": false
         }
       ]
+    },
+    "footerBox": {
+      "majorElements": [],
+      "minorElements": []
     }
   }
 }
