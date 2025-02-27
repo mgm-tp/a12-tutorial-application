@@ -1,0 +1,495 @@
+{
+  "header": {
+    "id": "ContactPotential_DM",
+    "modelType": "document",
+    "modelVersion": "28.2.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [
+      {
+        "locale": "en",
+        "text": "Contact (Potential)"
+      },
+      {
+        "locale": "de",
+        "text": "Kontakt (Potentiell)"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": []
+  },
+  "content": {
+    "modelInfo": {
+      "name": "ContactPotential_DM",
+      "immutable": false
+    },
+    "modelConfig": {
+      "decimalSeparator": ".",
+      "timeZone": "UTC",
+      "conditionLanguage": {
+        "code": "en_US"
+      }
+    },
+    "modelRoot": {
+      "rootGroups": [
+        {
+          "type": "Group",
+          "id": "G11",
+          "name": "Contact",
+          "Group": {
+            "repeatability": 1,
+            "elements": [
+              {
+                "type": "Group",
+                "id": "G2",
+                "name": "PersonalData",
+                "Group": {
+                  "repeatability": 1,
+                  "elements": [
+                    {
+                      "type": "Field",
+                      "id": "F3",
+                      "name": "FirstName",
+                      "annotations": [
+                        {
+                          "name": "indexed"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "First Name"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Vorname"
+                          }
+                        ],
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F4",
+                      "name": "LastName",
+                      "annotations": [
+                        {
+                          "name": "indexed"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Last Name"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Nachname"
+                          }
+                        ],
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_8d972",
+                      "name": "EmailAddress",
+                      "annotations": [
+                        {
+                          "name": "indexed"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType",
+                          "StringType": {
+                            "errorMessage": [
+                              {
+                                "locale": "en",
+                                "text": "Please enter a valid email address."
+                              },
+                              {
+                                "locale": "de",
+                                "text": "Bitte geben Sie eine valide E-Mail-Adresse an."
+                              }
+                            ],
+                            "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Email Address"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "E-Mail-Adresse"
+                          }
+                        ],
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Group",
+                "id": "G16",
+                "name": "Phones",
+                "Group": {
+                  "repeatability": 5,
+                  "elements": [
+                    {
+                      "type": "Field",
+                      "id": "F17",
+                      "name": "PhoneNumber",
+                      "annotations": [
+                        {
+                          "name": "indexed"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Phone Number"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Telefonnummer"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F18",
+                      "name": "Type",
+                      "annotations": [
+                        {
+                          "name": "indexed"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "EnumerationType",
+                          "EnumerationType": {
+                            "values": [
+                              {
+                                "value": "MOBILE",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Mobile"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Mobil"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "WORK",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Work"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Arbeit"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Type"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Art"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Group",
+                "id": "group_4ca01",
+                "name": "Address",
+                "Group": {
+                  "repeatability": 5,
+                  "elements": [
+                    {
+                      "type": "Field",
+                      "id": "field_e196b",
+                      "name": "Street",
+                      "annotations": [
+                        {
+                          "name": "indexed"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Street"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Straße"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_e60ef",
+                      "name": "Housenumber",
+                      "annotations": [
+                        {
+                          "name": "indexed"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Housenumber"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Hausnummer"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_297f9",
+                      "name": "City",
+                      "annotations": [
+                        {
+                          "name": "indexed"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "City"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Stadt"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_6e8a1",
+                      "name": "Zip",
+                      "annotations": [
+                        {
+                          "name": "indexed"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Zip Code"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Postleitzahl"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_5a772",
+                      "name": "Country",
+                      "annotations": [
+                        {
+                          "name": "indexed"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Country"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Land"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Group",
+                "id": "group_22d48",
+                "name": "Project",
+                "Group": {
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Project"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Projekt"
+                    }
+                  ],
+                  "repeatability": 1,
+                  "elements": [
+                    {
+                      "type": "Field",
+                      "id": "field_57a27",
+                      "name": "Budget",
+                      "annotations": [
+                        {
+                          "name": "indexed"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "NumberType",
+                          "NumberType": {
+                            "maxFractionalDigits": 2,
+                            "zeroNotAllowed": true
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Budget"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Budget"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Field",
+                "id": "field_a4353",
+                "name": "ContactType",
+                "annotations": [
+                  {
+                    "name": "indexed"
+                  }
+                ],
+                "Field": {
+                  "fieldType": {
+                    "type": "EnumerationType",
+                    "EnumerationType": {
+                      "values": [
+                        {
+                          "value": "FINAL",
+                          "label": [
+                            {
+                              "locale": "en",
+                              "text": "Final"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "Final"
+                            }
+                          ]
+                        },
+                        {
+                          "value": "POTENTIAL",
+                          "label": [
+                            {
+                              "locale": "en",
+                              "text": "Potential"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "Potentiell"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Contact Type"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Kontakttyp"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

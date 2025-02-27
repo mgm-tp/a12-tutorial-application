@@ -1,0 +1,61 @@
+{
+  "name": "Query API Tutorial (TUT) - Task 1 start",
+  "version": "1",
+  "items": [
+    {
+      "type": "http",
+      "name": "REQUEST TEMPLATE",
+      "seq": 1,
+      "request": {
+        "url": "http://localhost:8081/api/v2/rpc",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "UAABEARER {{Authorization}}",
+            "enabled": true
+          }
+        ],
+        "params": [],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"id\": \"REQUEST TEMPLATE\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"<DOCUMENT MODEL NAME>\",\n      \"projectionName\": \"document OR cdd OR document-graph\",\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "none"
+        }
+      }
+    }
+  ],
+  "activeEnvironmentUid": "9v8Buw5wBvHxbkn8Zobhc",
+  "environments": [
+    {
+      "variables": [
+        {
+          "name": "Authorization",
+          "value": "<YOUR_ACCESS_TOKEN>",
+          "enabled": true,
+          "secret": false,
+          "type": "text"
+        }
+      ],
+      "name": "A12"
+    }
+  ],
+  "brunoConfig": {
+    "version": "1",
+    "name": "Query API Tutorial (TUT) - Task 1 start",
+    "type": "collection",
+    "ignore": [
+      "node_modules",
+      ".git"
+    ]
+  }
+}

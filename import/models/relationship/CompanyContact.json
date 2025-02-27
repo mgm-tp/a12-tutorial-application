@@ -1,0 +1,106 @@
+{
+  "header": {
+    "id": "CompanyContact",
+    "modelType": "relationship",
+    "modelVersion": "3.0.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "purpose": "Document model",
+        "modelType": "document",
+        "alias": "Company",
+        "reference": "Company_DM"
+      },
+      {
+        "purpose": "Document model",
+        "modelType": "document",
+        "alias": "Contact",
+        "reference": "Contact_DM"
+      },
+      {
+        "purpose": "Link Document model",
+        "modelType": "document",
+        "alias": "Link Model",
+        "reference": "RoleAdditionalField_DM"
+      }
+    ]
+  },
+  "content": {
+    "duplicatesAllowed": false,
+    "associationType": "SHARED",
+    "storage": "EXTERNAL",
+    "entityCharacteristics": [
+      {
+        "ordered": false,
+        "navigable": true,
+        "linkConstraints": {
+          "multiplicity": {
+            "lowerLimit": 0,
+            "unbounded": false,
+            "upperLimit": 1
+          }
+        },
+        "candidateConstraints": {},
+        "role": "Company",
+        "documentModel": "Company_DM",
+        "labels": [
+          {
+            "locale": "en",
+            "text": "Company"
+          },
+          {
+            "locale": "de",
+            "text": "Firma"
+          }
+        ]
+      },
+      {
+        "ordered": false,
+        "navigable": true,
+        "linkConstraints": {
+          "multiplicity": {
+            "lowerLimit": 0,
+            "unbounded": true,
+            "upperLimit": null
+          }
+        },
+        "candidateConstraints": {},
+        "role": "Contact",
+        "documentModel": "Contact_DM",
+        "labels": [
+          {
+            "locale": "en",
+            "text": "Contact"
+          },
+          {
+            "locale": "de",
+            "text": "Kontakt"
+          }
+        ]
+      }
+    ],
+    "labels": [
+      {
+        "locale": "en"
+      },
+      {
+        "locale": "de"
+      }
+    ],
+    "linkDocumentModel": "RoleAdditionalField_DM"
+  }
+}
