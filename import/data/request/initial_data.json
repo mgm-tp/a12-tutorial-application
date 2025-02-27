@@ -1,0 +1,742 @@
+[
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContactFinal1",
+    "params": {
+      "documentModelName": "ContactFinal_DM",
+      "document": {
+        "Contact": {
+          "ContactType": "FINAL",
+          "PersonalData": {
+            "FirstName": "Henry",
+            "LastName": "Baker",
+            "EmailAddress": "henry.baker@gmx.com",
+            "DateOfBirth": "1987-05-21",
+            "Nationality": "German",
+            "Gender": "MALE",
+            "CustomerType": "lead"
+          },
+          "Project": {
+            "Budget": 150000
+          },
+          "Address": [
+            {
+              "Street": "Kastanienallee",
+              "Housenumber": "25",
+              "City": "Wiesmoor",
+              "Zip": "26639",
+              "Country": "Germany"
+            },
+            {
+              "Street": "Storkower Strasse",
+              "Housenumber": "89",
+              "City": "Hartenfels",
+              "Zip": "56244",
+              "Country": "Germany"
+            },
+            {
+              "Street": "Sonnenallee",
+              "Housenumber": "97",
+              "City": "Augsburg",
+              "Zip": "86172",
+              "Country": "Germany"
+            }
+          ],
+          "Phones": [
+            {
+              "PhoneNumber": "+49176/8821390213",
+              "Type": "MOBILE"
+            },
+            {
+              "PhoneNumber": "+492203/9387913",
+              "Type": "WORK"
+            }
+          ]
+        }
+      },
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContactFinal2",
+    "params": {
+      "documentModelName": "ContactFinal_DM",
+      "document": {
+        "Contact": {
+          "ContactType": "FINAL",
+          "PersonalData": {
+            "FirstName": "Maximilian",
+            "LastName": "Baker",
+            "EmailAddress": "maximilian.baker@gmx.com",
+            "DateOfBirth": "1995-06-19",
+            "Nationality": "German",
+            "Gender": "MALE",
+            "CustomerType": "lead"
+          },
+          "Project": {
+            "Budget": 300000
+          },
+          "Address": [
+            {
+              "Street": "Rathenausstrasse",
+              "Housenumber": "50",
+              "City": "Fürth",
+              "Zip": "90702",
+              "Country": "Germany"
+            },
+            {
+              "Street": "Jenaer Strasse",
+              "Housenumber": "77",
+              "City": "Duisburg",
+              "Zip": "47053",
+              "Country": "Germany"
+            }
+          ],
+          "Phones": [
+            {
+              "PhoneNumber": "+49176/1328139912",
+              "Type": "MOBILE"
+            },
+            {
+              "PhoneNumber": "+492203/188123829",
+              "Type": "WORK"
+            }
+          ]
+        }
+      },
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContactFinal3",
+    "params": {
+      "documentModelName": "ContactFinal_DM",
+      "document": {
+        "Contact": {
+          "ContactType": "FINAL",
+          "PersonalData": {
+            "FirstName": "Anna",
+            "LastName": "Baker",
+            "EmailAddress": "anna.baker@gmx.com",
+            "DateOfBirth": "1990-08-06",
+            "Nationality": "German",
+            "Gender": "FEMALE",
+            "CustomerType": "vip"
+          },
+          "Project": {
+            "Budget": 950000
+          },
+          "Address": [
+            {
+              "Street": "Kaiserstrasse",
+              "Housenumber": "12",
+              "City": "Berlin",
+              "Zip": "12392",
+              "Country": "Germany"
+            },
+            {
+              "Street": "Adenauerstrasse",
+              "Housenumber": "90",
+              "City": "Nuremberg",
+              "Zip": "90512",
+              "Country": "Germany"
+            }
+          ],
+          "Phones": [
+            {
+              "PhoneNumber": "+49176/57292390",
+              "Type": "MOBILE"
+            },
+            {
+              "PhoneNumber": "+4933/12300412",
+              "Type": "WORK"
+            }
+          ]
+        }
+      },
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContactFinal4",
+    "params": {
+      "documentModelName": "ContactFinal_DM",
+      "document": {
+        "Contact": {
+          "ContactType": "FINAL",
+          "PersonalData": {
+            "FirstName": "Alex",
+            "LastName": "Baker",
+            "EmailAddress": "alex.baker@gmx.com",
+            "DateOfBirth": "1983-12-19",
+            "Nationality": "German",
+            "Gender": "MALE",
+            "CustomerType": "partner"
+          },
+          "Project": {
+            "Budget": 360000
+          },
+          "Address": [
+            {
+              "Street": "Waldstrasse",
+              "Housenumber": "2",
+              "City": "Cologne",
+              "Zip": "51145",
+              "Country": "Germany"
+            },
+            {
+              "Street": "Siemensstrasse",
+              "Housenumber": "15",
+              "City": "Cologne",
+              "Zip": "50667",
+              "Country": "Germany"
+            },
+            {
+              "Street": "Voltastrasse",
+              "Housenumber": "3",
+              "City": "Cologne",
+              "Zip": "50667",
+              "Country": "Germany"
+            }
+          ],
+          "Phones": [
+            {
+              "PhoneNumber": "+49176/0024823824",
+              "Type": "MOBILE"
+            }
+          ]
+        }
+      },
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContactFinal5",
+    "params": {
+      "documentModelName": "ContactFinal_DM",
+      "document": {
+        "Contact": {
+          "ContactType": "FINAL",
+          "PersonalData": {
+            "FirstName": "Miriam",
+            "LastName": "Miller",
+            "EmailAddress": "miriam.miller@gmx.com",
+            "DateOfBirth": "2000-03-02",
+            "Nationality": "French",
+            "Gender": "FEMALE",
+            "CustomerType": "partner"
+          },
+          "Project": {
+            "Budget": 1000000
+          },
+          "Address": [
+            {
+              "Street": "Rue de Paris",
+              "Housenumber": "1",
+              "City": "Lille",
+              "Zip": "59000",
+              "Country": "France"
+            }
+          ],
+          "Phones": [
+            {
+              "PhoneNumber": "+33176/931293801",
+              "Type": "MOBILE"
+            },
+            {
+              "PhoneNumber": "+4933/10031290123",
+              "Type": "WORK"
+            }
+          ]
+        }
+      },
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContactPotential1",
+    "params": {
+      "documentModelName": "ContactPotential_DM",
+      "document": {
+        "Contact": {
+          "ContactType": "POTENTIAL",
+          "PersonalData": {
+            "FirstName": "Pierre",
+            "LastName": "Miller",
+            "EmailAddress": "pierre.miller@gmx.com"
+          },
+          "Project": {
+            "Budget": 500000
+          },
+          "Phones": [
+            {
+              "PhoneNumber": "+33176/321939213",
+              "Type": "WORK"
+            }
+          ]
+        }
+      },
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContactPotential2",
+    "params": {
+      "documentModelName": "ContactPotential_DM",
+      "document": {
+        "Contact": {
+          "ContactType": "POTENTIAL",
+          "PersonalData": {
+            "FirstName": "Hans",
+            "LastName": "Mayer",
+            "EmailAddress": "hans.mayer@gmx.com"
+          },
+          "Project": {
+            "Budget": 250000
+          },
+          "Address": [
+            {
+              "Street": "Berliner Strasse",
+              "Housenumber": "33",
+              "City": "Bonn",
+              "Zip": "52304",
+              "Country": "Germany"
+            },
+            {
+              "Street": "Fasanenweg",
+              "Housenumber": "2",
+              "City": "Königswinter",
+              "Zip": "53420",
+              "Country": "Germany"
+            }
+          ],
+          "Phones": [
+            {
+              "PhoneNumber": "+49176/92139129",
+              "Type": "MOBILE"
+            }
+          ]
+        }
+      },
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContactPotential3",
+    "params": {
+      "documentModelName": "ContactPotential_DM",
+      "document": {
+        "Contact": {
+          "ContactType": "POTENTIAL",
+          "PersonalData": {
+            "FirstName": "Olaf",
+            "LastName": "Schmitz",
+            "EmailAddress": "olaf.schmitz@gmx.com"
+          },
+          "Project": {
+            "Budget": 100000
+          }
+        }
+      },
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContactPotential4",
+    "params": {
+      "documentModelName": "ContactPotential_DM",
+      "document": {
+        "Contact": {
+          "ContactType": "POTENTIAL",
+          "PersonalData": {
+            "FirstName": "Julia",
+            "LastName": "Limhold",
+            "EmailAddress": "julia.limhold@gmx.com"
+          },
+          "Project": {
+            "Budget": 350000
+          },
+          "Address": [
+            {
+              "Street": "Friedrich-Hirsch-Strasse",
+              "Housenumber": "110",
+              "City": "Cologne",
+              "Zip": "51145",
+              "Country": "Germany"
+            }
+          ],
+          "Phones": [
+            {
+              "PhoneNumber": "+49176/112300421",
+              "Type": "MOBILE"
+            },
+            {
+              "PhoneNumber": "+492203/39129301",
+              "Type": "WORK"
+            }
+          ]
+        }
+      },
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContactPotential5",
+    "params": {
+      "documentModelName": "ContactPotential_DM",
+      "document": {
+        "Contact": {
+          "ContactType": "POTENTIAL",
+          "PersonalData": {
+            "FirstName": "James",
+            "LastName": "Baker",
+            "EmailAddress": "james.baker@gmx.com"
+          },
+          "Project": {
+            "Budget": 400000
+          },
+          "Phones": [
+            {
+              "PhoneNumber": "+49176/8821390213",
+              "Type": "MOBILE"
+            }
+          ]
+        }
+      },
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddCompany1",
+    "params": {
+      "documentModelName": "Company_DM",
+      "document": {
+        "Company": {
+          "GeneralInformation": {
+            "CompanyName": "Trading Good Ltd.",
+            "Website": "trading-good.com"
+          },
+          "Phones": [
+            {
+              "PhoneNumber": "+49221/9213898"
+            }
+          ]
+        }
+      },
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddCompany2",
+    "params": {
+      "documentModelName": "Company_DM",
+      "document": {
+        "Company": {
+          "GeneralInformation": {
+            "CompanyName": "Servicing Good GmbH",
+            "Website": "servicing-good.com"
+          },
+          "Phones": [
+            {
+              "PhoneNumber": "+4930/0210301"
+            }
+          ]
+        }
+      },
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "id": "addLinkCompanyContact1",
+    "method": "ADD_LINK",
+    "params": {
+      "linkDescriptor": {
+        "relationshipModel": "CompanyContact",
+        "entities": [
+          {
+            "role": "Company",
+            "docRef": "#{#AddCompany1.metadata.docRef}"
+          },
+          {
+            "role": "Contact",
+            "docRef": "#{#AddContactFinal1.metadata.docRef}"
+          }
+        ],
+        "position": "TOP"
+      },
+      "linkDocument": {
+        "id": "__NEW__",
+        "Root": {
+          "Role": "executive"
+        }
+      }
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "id": "addLinkCompanyContact2",
+    "method": "ADD_LINK",
+    "params": {
+      "linkDescriptor": {
+        "relationshipModel": "CompanyContact",
+        "entities": [
+          {
+            "role": "Company",
+            "docRef": "#{#AddCompany1.metadata.docRef}"
+          },
+          {
+            "role": "Contact",
+            "docRef": "#{#AddContactFinal2.metadata.docRef}"
+          }
+        ],
+        "position": "TOP"
+      },
+      "linkDocument": {
+        "id": "__NEW__",
+        "Root": {
+          "Role": "executive"
+        }
+      }
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "id": "addLinkCompanyContact3",
+    "method": "ADD_LINK",
+    "params": {
+      "linkDescriptor": {
+        "relationshipModel": "CompanyContact",
+        "entities": [
+          {
+            "role": "Company",
+            "docRef": "#{#AddCompany1.metadata.docRef}"
+          },
+          {
+            "role": "Contact",
+            "docRef": "#{#AddContactFinal3.metadata.docRef}"
+          }
+        ],
+        "position": "TOP"
+      },
+      "linkDocument": {
+        "id": "__NEW__",
+        "Root": {
+          "Role": "managerial"
+        }
+      }
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "id": "addLinkCompanyContact4",
+    "method": "ADD_LINK",
+    "params": {
+      "linkDescriptor": {
+        "relationshipModel": "CompanyContact",
+        "entities": [
+          {
+            "role": "Company",
+            "docRef": "#{#AddCompany1.metadata.docRef}"
+          },
+          {
+            "role": "Contact",
+            "docRef": "#{#AddContactFinal4.metadata.docRef}"
+          }
+        ],
+        "position": "TOP"
+      },
+      "linkDocument": {
+        "id": "__NEW__",
+        "Root": {
+          "Role": "operational"
+        }
+      }
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "id": "addLinkCompanyContact5",
+    "method": "ADD_LINK",
+    "params": {
+      "linkDescriptor": {
+        "relationshipModel": "CompanyContact",
+        "entities": [
+          {
+            "role": "Company",
+            "docRef": "#{#AddCompany1.metadata.docRef}"
+          },
+          {
+            "role": "Contact",
+            "docRef": "#{#AddContactFinal5.metadata.docRef}"
+          }
+        ],
+        "position": "TOP"
+      },
+      "linkDocument": {
+        "id": "__NEW__",
+        "Root": {
+          "Role": "managerial"
+        }
+      }
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "id": "addLinkCompanyContact6",
+    "method": "ADD_LINK",
+    "params": {
+      "linkDescriptor": {
+        "relationshipModel": "CompanyContact",
+        "entities": [
+          {
+            "role": "Company",
+            "docRef": "#{#AddCompany1.metadata.docRef}"
+          },
+          {
+            "role": "Contact",
+            "docRef": "#{#AddContactPotential1.metadata.docRef}"
+          }
+        ],
+        "position": "TOP"
+      },
+      "linkDocument": {
+        "id": "__NEW__",
+        "Root": {
+          "Role": "other"
+        }
+      }
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "id": "addLinkCompanyContact7",
+    "method": "ADD_LINK",
+    "params": {
+      "linkDescriptor": {
+        "relationshipModel": "CompanyContact",
+        "entities": [
+          {
+            "role": "Company",
+            "docRef": "#{#AddCompany1.metadata.docRef}"
+          },
+          {
+            "role": "Contact",
+            "docRef": "#{#AddContactPotential2.metadata.docRef}"
+          }
+        ],
+        "position": "TOP"
+      },
+      "linkDocument": {
+        "id": "__NEW__",
+        "Root": {
+          "Role": "executive"
+        }
+      }
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "id": "addLinkCompanyContact8",
+    "method": "ADD_LINK",
+    "params": {
+      "linkDescriptor": {
+        "relationshipModel": "CompanyContact",
+        "entities": [
+          {
+            "role": "Company",
+            "docRef": "#{#AddCompany2.metadata.docRef}"
+          },
+          {
+            "role": "Contact",
+            "docRef": "#{#AddContactPotential3.metadata.docRef}"
+          }
+        ],
+        "position": "TOP"
+      },
+      "linkDocument": {
+        "id": "__NEW__",
+        "Root": {
+          "Role": "operational"
+        }
+      }
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "id": "addLinkCompanyContact9",
+    "method": "ADD_LINK",
+    "params": {
+      "linkDescriptor": {
+        "relationshipModel": "CompanyContact",
+        "entities": [
+          {
+            "role": "Company",
+            "docRef": "#{#AddCompany2.metadata.docRef}"
+          },
+          {
+            "role": "Contact",
+            "docRef": "#{#AddContactPotential4.metadata.docRef}"
+          }
+        ],
+        "position": "TOP"
+      },
+      "linkDocument": {
+        "id": "__NEW__",
+        "Root": {
+          "Role": "operational"
+        }
+      }
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "id": "addLinkCompanyContact10",
+    "method": "ADD_LINK",
+    "params": {
+      "linkDescriptor": {
+        "relationshipModel": "CompanyContact",
+        "entities": [
+          {
+            "role": "Company",
+            "docRef": "#{#AddCompany2.metadata.docRef}"
+          },
+          {
+            "role": "Contact",
+            "docRef": "#{#AddContactPotential5.metadata.docRef}"
+          }
+        ],
+        "position": "TOP"
+      },
+      "linkDocument": {
+        "id": "__NEW__",
+        "Root": {
+          "Role": "operational"
+        }
+      }
+    }
+  }
+]

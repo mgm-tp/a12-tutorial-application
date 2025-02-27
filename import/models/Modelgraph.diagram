@@ -1,0 +1,128 @@
+{
+  "header": {
+    "id": "Modelgraph",
+    "type": "modelGraphDiagram",
+    "version": "2.0.0"
+  },
+  "content": {
+    "nodes": [
+      {
+        "id": "node_379792",
+        "modelRef": "Contact_DM",
+        "type": "documentNode",
+        "point": {
+          "x": 390,
+          "y": 220
+        }
+      },
+      {
+        "id": "node_b88df5",
+        "modelRef": "RoleAdditionalField_DM",
+        "type": "documentNode",
+        "point": {
+          "x": 145,
+          "y": 115
+        }
+      },
+      {
+        "id": "node_d6f4a6",
+        "modelRef": "Company_DM",
+        "type": "documentNode",
+        "point": {
+          "x": 390,
+          "y": 10
+        }
+      },
+      {
+        "id": "node_0693e2",
+        "modelRef": "ContactFinal_DM",
+        "type": "documentNode",
+        "point": {
+          "x": 550,
+          "y": 365
+        }
+      },
+      {
+        "id": "node_9f7638",
+        "modelRef": "ContactPotential_DM",
+        "type": "documentNode",
+        "point": {
+          "x": 230,
+          "y": 365
+        }
+      }
+    ],
+    "sections": [
+      {
+        "id": "edge_b24055.section_b69989",
+        "modelRef": "CompanyContact",
+        "type": "relationshipSection",
+        "anchors": [],
+        "source": "node_d6f4a6.port_bottomCenter",
+        "target": "node_379792.port_topCenter",
+        "connectingPoints": [
+          {
+            "x": 470,
+            "y": 155
+          }
+        ],
+        "localSettings": {
+          "firstEntity": {},
+          "secondEntity": {},
+          "visualSettings": {}
+        }
+      },
+      {
+        "id": "edge_b24055.section_eca50e",
+        "modelRef": "CompanyContact",
+        "type": "linkDocumentSection",
+        "anchors": [],
+        "source": "node_b88df5.port_rightCenter",
+        "target": "edge_b24055.section_b69989.connectingPoint_SinglePerSection"
+      },
+      {
+        "id": "edge_d2f31b.section_c71b12",
+        "modelRef": "ContactFinal_DM",
+        "type": "subTypeSection",
+        "anchors": [
+          {
+            "x": 630,
+            "y": 340
+          },
+          {
+            "x": 530,
+            "y": 340
+          }
+        ],
+        "source": "node_0693e2.port_topCenter",
+        "target": "node_379792.port_bottomRight"
+      },
+      {
+        "id": "edge_eb17f8.section_3aeab6",
+        "modelRef": "ContactPotential_DM",
+        "type": "subTypeSection",
+        "anchors": [
+          {
+            "x": 310,
+            "y": 335
+          },
+          {
+            "x": 410,
+            "y": 335
+          }
+        ],
+        "source": "node_9f7638.port_topCenter",
+        "target": "node_379792.port_bottomLeft"
+      }
+    ],
+    "globalSettings": {
+      "showLabels": true,
+      "showRelationshipName": true,
+      "showRelationshipRoles": false,
+      "showDuplicable": false,
+      "showOrderable": false,
+      "showMultiplicity": true,
+      "showGrid": true
+    }
+  }
+}

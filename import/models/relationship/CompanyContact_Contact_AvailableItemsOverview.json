@@ -1,0 +1,80 @@
+{
+  "header": {
+    "id": "CompanyContact_Contact_AvailableItemsOverview",
+    "modelType": "overview",
+    "modelVersion": "38.0.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "purpose": "document-model-for-overview",
+        "modelType": "document",
+        "alias": "DM",
+        "reference": "Contact_DM"
+      }
+    ]
+  },
+  "content": {
+    "configuration": {
+      "enableFilter": true,
+      "showFullTextSearch": false,
+      "pagingSize": 10,
+      "filterConfiguration": {
+        "showFilterButton": true,
+        "showFilterBar": true,
+        "filterMode": "all_columns"
+      }
+    },
+    "columns": [
+      {
+        "id": "column-350a7",
+        "width": 1,
+        "styles": {},
+        "elementRef": "F3",
+        "sortable": false
+      },
+      {
+        "id": "column-4c7ec",
+        "width": 1,
+        "styles": {},
+        "elementRef": "F4",
+        "sortable": false
+      },
+      {
+        "id": "column-e29f9",
+        "width": 1,
+        "styles": {},
+        "elementRef": "field_8d972",
+        "sortable": false
+      }
+    ],
+    "subHeaderBox": {
+      "majorElements": [
+        {
+          "type": "filter"
+        }
+      ],
+      "minorElements": []
+    },
+    "rowActionGroup": {
+      "actions": []
+    },
+    "footerBox": {
+      "majorElements": [],
+      "minorElements": []
+    }
+  }
+}

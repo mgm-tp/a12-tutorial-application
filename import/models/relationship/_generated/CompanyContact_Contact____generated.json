@@ -1,0 +1,94 @@
+{
+  "header": {
+    "id": "CompanyContact_Contact____generated",
+    "modelType": "document",
+    "modelVersion": "28.3.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [],
+    "annotations": [
+      {
+        "name": "application",
+        "value": ""
+      },
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "alias": "RoleAdditionalField_DM",
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "RoleAdditionalField_DM"
+      },
+      {
+        "alias": "Contact_DM",
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "Contact_DM"
+      }
+    ]
+  },
+  "content": {
+    "modelInfo": {
+      "name": "CompanyContact_Contact____generated"
+    },
+    "modelConfig": {
+      "decimalSeparator": ".",
+      "timeZone": "UTC",
+      "conditionLanguage": {
+        "code": "en_US"
+      }
+    },
+    "modelRoot": {
+      "rootGroups": [
+        {
+          "type": "Group",
+          "id": "G2",
+          "name": "target",
+          "Group": {
+            "repeatability": 1,
+            "elements": [
+              {
+                "type": "Group",
+                "id": "I4",
+                "name": "Contact",
+                "Group": {
+                  "repeatability": 1,
+                  "modelAlias": "Contact_DM"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "Group",
+          "id": "G3",
+          "name": "relationship",
+          "Group": {
+            "repeatability": 1,
+            "elements": [
+              {
+                "type": "Group",
+                "id": "I5",
+                "name": "Root",
+                "Group": {
+                  "repeatability": 1,
+                  "modelAlias": "RoleAdditionalField_DM"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

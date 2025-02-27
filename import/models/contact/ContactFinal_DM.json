@@ -1,6 +1,6 @@
 {
   "header": {
-    "id": "Contact_DM",
+    "id": "ContactFinal_DM",
     "modelType": "document",
     "modelVersion": "28.3.0",
     "locales": [
@@ -11,16 +11,17 @@
         "code": "de"
       }
     ],
-    "labels": [],
+    "labels": [
+      {
+        "locale": "en",
+        "text": "Contact (Final)"
+      },
+      {
+        "locale": "de",
+        "text": "Kontakt (Final)"
+      }
+    ],
     "annotations": [
-      {
-        "name": "abstract",
-        "value": "true"
-      },
-      {
-        "name": "subTypes",
-        "value": "ContactPotential_DM,ContactFinal_DM"
-      },
       {
         "name": "roles",
         "value": "user"
@@ -30,7 +31,7 @@
   },
   "content": {
     "modelInfo": {
-      "name": "Contact_DM",
+      "name": "ContactFinal_DM",
       "immutable": false
     },
     "modelConfig": {
@@ -60,6 +61,7 @@
                       "type": "Field",
                       "id": "F3",
                       "name": "FirstName",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -83,6 +85,7 @@
                       "type": "Field",
                       "id": "F4",
                       "name": "LastName",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -106,6 +109,7 @@
                       "type": "Field",
                       "id": "F6",
                       "name": "Gender",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "EnumerationType",
@@ -169,6 +173,7 @@
                       "type": "Field",
                       "id": "F7",
                       "name": "DateOfBirth",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "DateType",
@@ -192,7 +197,7 @@
                       "type": "Field",
                       "id": "F9",
                       "name": "Nationality",
-                      "annotations": [],
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -213,6 +218,7 @@
                       "type": "Field",
                       "id": "field_8d972",
                       "name": "EmailAddress",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "StringType",
@@ -249,6 +255,7 @@
                       "type": "Field",
                       "id": "field_e3933",
                       "name": "CustomerType",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "EnumerationType",
@@ -346,6 +353,7 @@
                             "type": "Field",
                             "id": "field_a9ed3",
                             "name": "original_filename",
+                            "annotation": [],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType"
@@ -356,6 +364,7 @@
                             "type": "Field",
                             "id": "field_e1d6a",
                             "name": "internal_filename",
+                            "annotation": [],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType"
@@ -366,6 +375,7 @@
                             "type": "Field",
                             "id": "field_9fcd3",
                             "name": "content",
+                            "annotation": [],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType",
@@ -380,6 +390,7 @@
                             "type": "Field",
                             "id": "field_145b4",
                             "name": "attachment_id",
+                            "annotation": [],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType"
@@ -390,6 +401,7 @@
                             "type": "Field",
                             "id": "field_58899",
                             "name": "size",
+                            "annotation": [],
                             "Field": {
                               "fieldType": {
                                 "type": "NumberType"
@@ -400,6 +412,7 @@
                             "type": "Field",
                             "id": "field_72463",
                             "name": "mime_type",
+                            "annotation": [],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType"
@@ -410,6 +423,7 @@
                             "type": "Field",
                             "id": "field_867ef",
                             "name": "category",
+                            "annotation": [],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType"
@@ -420,6 +434,7 @@
                             "type": "Field",
                             "id": "field_6346c",
                             "name": "description",
+                            "annotation": [],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType"
@@ -432,7 +447,7 @@
                             "name": "AttachmentInternalFilenameRequired",
                             "Rule": {
                               "errorEntityRelPath": "../internal_filename",
-                              "errorCode": "Errorrule_6ed58",
+                              "errorCode": "Error rule_6ed58",
                               "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(internal_filename)",
                               "severity": "ERROR",
                               "errorMessage": [
@@ -453,7 +468,7 @@
                             "name": "AttachmentMimeTypeRequired",
                             "Rule": {
                               "errorEntityRelPath": "../mime_type",
-                              "errorCode": "Errorrule_b4062",
+                              "errorCode": "Error rule_b4062",
                               "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(mime_type)",
                               "severity": "ERROR",
                               "errorMessage": [
@@ -474,7 +489,7 @@
                             "name": "AttachmentIdOrContentFilled",
                             "Rule": {
                               "errorEntityRelPath": "../content",
-                              "errorCode": "Errorrule_3a21c",
+                              "errorCode": "Error rule_3a21c",
                               "errorCondition": "GroupFilled(RuleGroup) and NotExactlyOneFieldFilled(attachment_id, content)",
                               "severity": "ERROR",
                               "errorMessage": [
@@ -495,7 +510,7 @@
                             "name": "SizeOfContentFilled",
                             "Rule": {
                               "errorEntityRelPath": "../content",
-                              "errorCode": "Errorrule_37050",
+                              "errorCode": "Error rule_37050",
                               "errorCondition": "FieldFilled(content) and FieldNotFilled(size)",
                               "severity": "ERROR",
                               "errorMessage": [
@@ -527,6 +542,7 @@
                       "type": "Field",
                       "id": "F17",
                       "name": "PhoneNumber",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -547,6 +563,7 @@
                       "type": "Field",
                       "id": "F18",
                       "name": "Type",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "EnumerationType",
@@ -607,6 +624,7 @@
                       "type": "Field",
                       "id": "field_e196b",
                       "name": "Street",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -627,6 +645,7 @@
                       "type": "Field",
                       "id": "field_e60ef",
                       "name": "Housenumber",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -647,6 +666,7 @@
                       "type": "Field",
                       "id": "field_297f9",
                       "name": "City",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -667,6 +687,7 @@
                       "type": "Field",
                       "id": "field_6e8a1",
                       "name": "Zip",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -687,6 +708,7 @@
                       "type": "Field",
                       "id": "field_5a772",
                       "name": "Country",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -708,7 +730,7 @@
               },
               {
                 "type": "Group",
-                "id": "group_e742d",
+                "id": "group_1de92",
                 "name": "Project",
                 "Group": {
                   "label": [
@@ -725,8 +747,9 @@
                   "elements": [
                     {
                       "type": "Field",
-                      "id": "field_63ab7",
+                      "id": "field_94ca2",
                       "name": "Budget",
+                      "annotation": [],
                       "Field": {
                         "fieldType": {
                           "type": "NumberType",
@@ -752,8 +775,10 @@
               },
               {
                 "type": "Field",
-                "id": "field_0e131",
+                "id": "field_03502",
                 "name": "ContactType",
+                "annotations": [
+                ],
                 "Field": {
                   "fieldType": {
                     "type": "EnumerationType",
