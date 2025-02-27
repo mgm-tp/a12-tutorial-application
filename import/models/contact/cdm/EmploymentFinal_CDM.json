@@ -1,0 +1,128 @@
+{
+  "header": {
+    "id": "EmploymentFinal_CDM",
+    "modelType": "document",
+    "modelVersion": "28.4.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [],
+    "annotations": [
+      {
+        "name": "cdm.queryRoot",
+        "value": "ContactFinal_DM"
+      },
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "alias": "ContactFinal_DM",
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "ContactFinal_DM"
+      },
+      {
+        "alias": "Company_DM",
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "Company_DM"
+      },
+      {
+        "alias": "RoleAdditionalField_DM",
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "RoleAdditionalField_DM"
+      }
+    ]
+  },
+  "content": {
+    "modelInfo": {
+      "name": "EmploymentFinal_CDM",
+      "immutable": false
+    },
+    "modelConfig": {
+      "timeZone": "UTC",
+      "decimalSeparator": ".",
+      "conditionLanguage": {
+        "code": "en_US"
+      }
+    },
+    "modelRoot": {
+      "rootGroups": [
+        {
+          "type": "Group",
+          "id": "include_a0060",
+          "name": "Contact",
+          "Group": {
+            "repeatability": 1,
+            "modelAlias": "ContactFinal_DM"
+          }
+        },
+        {
+          "type": "Group",
+          "id": "group_8a45f",
+          "name": "CompanyContact",
+          "annotations": [
+            {
+              "name": "cdm.relationship",
+              "value": "CompanyContact"
+            },
+            {
+              "name": "cdm.sourceRole",
+              "value": "Contact"
+            },
+            {
+              "name": "cdm.targetRole",
+              "value": "Company"
+            },
+            {
+              "name": "cdm.targetDocumentModel",
+              "value": "Company_DM"
+            }
+          ],
+          "Group": {
+            "repeatability": 1,
+            "elements": [
+              {
+                "type": "Group",
+                "id": "include_84256",
+                "name": "Company",
+                "Group": {
+                  "repeatability": 1,
+                  "modelAlias": "Company_DM"
+                }
+              },
+              {
+                "type": "Group",
+                "id": "group_54e68",
+                "name": "relationship",
+                "Group": {
+                  "repeatability": 1,
+                  "elements": [
+                    {
+                      "type": "Group",
+                      "id": "include_60974",
+                      "name": "Root",
+                      "Group": {
+                        "repeatability": 1,
+                        "modelAlias": "RoleAdditionalField_DM"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

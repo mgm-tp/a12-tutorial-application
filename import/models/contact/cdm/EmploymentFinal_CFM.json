@@ -1,0 +1,528 @@
+{
+  "header": {
+    "id": "EmploymentFinal_CFM",
+    "modelType": "form",
+    "modelVersion": "37.4.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [
+      {
+        "locale": "en",
+        "text": "Employment (Final)"
+      },
+      {
+        "locale": "de",
+        "text": "Anstellung (Final)"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "bindingConfiguration",
+        "value": "[{\"type\":\"relationship\",\"details\":{\"name\":\"binding-CompanyContact\",\"metaInformation\":{\"version\":\"1.0.0\"},\"modificationConfiguration\":{\"addButtonLabel\":[{\"locale\":\"en\",\"text\":\"Add\"},{\"locale\":\"de\",\"text\":\"Add\"}],\"editButtonLabel\":[{\"locale\":\"en\",\"text\":\"Edit\"},{\"locale\":\"de\",\"text\":\"Edit\"}],\"extendParentActivityDescriptor\":true},\"targetRole\":\"Company\",\"relationshipName\":\"CompanyContact\",\"components\":[{\"name\":\"DropDownSelection\",\"models\":[{\"name\":\"Company_OM\",\"use\":\"candidate\"},{\"name\":\"CompanyContact_Company_SelectedItemsOverview\",\"use\":\"link\"}]}]},\"elementId\":\"customscreenelement_6b73f\"}]"
+      },
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "alias": "EmploymentFinal_CDM",
+        "modelType": "document",
+        "purpose": "data binding",
+        "reference": "EmploymentFinal_CDM"
+      },
+      {
+        "modelType": "overview",
+        "purpose": "bindingReference",
+        "reference": "Company_OM"
+      },
+      {
+        "modelType": "overview",
+        "purpose": "bindingReference",
+        "reference": "CompanyContact_Company_SelectedItemsOverview"
+      }
+    ]
+  },
+  "content": {
+    "styles": [
+      {
+        "name": "h_leftAlign"
+      }
+    ],
+    "subHeaderBox": {
+      "id": "subHeaderBox"
+    },
+    "footerBox": {
+      "id": "footerBox",
+      "minorButtons": {
+        "button": [
+          {
+            "type": "EVENT",
+            "id": "button_99c3d",
+            "name": "Cancel",
+            "buttonStyling": {
+              "label": {
+                "type": "Multilingual",
+                "multilingualText": {
+                  "text": [
+                    {
+                      "locale": "en",
+                      "text": "Cancel"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Abbrechen"
+                    }
+                  ]
+                }
+              },
+              "destructive": true
+            },
+            "event": "event_cancel",
+            "scope": "HIDDEN_IN_READONLY_MODE"
+          }
+        ]
+      },
+      "majorButtons": {
+        "button": [
+          {
+            "type": "EVENT",
+            "id": "button_8692e",
+            "name": "Save",
+            "buttonStyling": {
+              "label": {
+                "type": "Multilingual",
+                "multilingualText": {
+                  "text": [
+                    {
+                      "locale": "en",
+                      "text": "Save"
+                    }
+                  ]
+                }
+              },
+              "priority": "PRIMARY"
+            },
+            "event": "event_submit",
+            "validation": "full",
+            "scope": "HIDDEN_IN_READONLY_MODE"
+          }
+        ]
+      }
+    },
+    "screens": [
+      {
+        "id": "screen-af17b",
+        "name": "Contact",
+        "screenElements": [
+          {
+            "type": "Section",
+            "id": "section_9cc08",
+            "name": "Metainformation",
+            "screenElements": [
+              {
+                "type": "ControlGrid",
+                "id": "controlgrid_5d938",
+                "name": "CG0",
+                "layout": {
+                  "lg": "2-2-2-2-2-2"
+                },
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "row_f070a",
+                    "name": "r0",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_4a86d",
+                        "readonly": true,
+                        "elementRef": "include_a0060_field_03502"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Section",
+            "id": "section-39fbb",
+            "name": "PersonalData",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "de",
+                    "text": "Persönliche Daten"
+                  },
+                  {
+                    "locale": "en",
+                    "text": "Personal Data"
+                  }
+                ]
+              }
+            },
+            "screenElements": [
+              {
+                "type": "ControlGrid",
+                "id": "controlgrid-67bc7",
+                "name": "Photo",
+                "layout": {
+                  "lg": "12"
+                },
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "row-4a3b5",
+                    "name": "attachment-row",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_44498",
+                        "elementRef": "include_a0060_group_05909"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "ControlGrid",
+                "id": "controlgrid-6de58",
+                "name": "PersonalData_Controls",
+                "layout": {
+                  "lg": "12"
+                },
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "row-3ddfe",
+                    "name": "row-3ddfe",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_017f2",
+                        "elementRef": "include_a0060_F3"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "id": "row-1bdb0",
+                    "name": "row-1bdb0",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_e7867",
+                        "elementRef": "include_a0060_F4"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "id": "row-b0453",
+                    "name": "row-b0453",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_fbe0b",
+                        "elementRef": "include_a0060_field_8d972"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "id": "row-c1233",
+                    "name": "row-c1233",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_bfb01",
+                        "elementRef": "include_a0060_F7"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "id": "row-ab62a",
+                    "name": "row-ab62a",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_313fa",
+                        "elementRef": "include_a0060_F9"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "id": "row-4ac02",
+                    "name": "row-4ac02",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_961d7",
+                        "elementRef": "include_a0060_F6"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Section",
+            "id": "section_50979",
+            "name": "Project",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Project"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Projekt"
+                  }
+                ]
+              }
+            },
+            "screenElements": [
+              {
+                "type": "ControlGrid",
+                "id": "controlgrid_5a1bc",
+                "name": "CG1",
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "row_e9f94",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_33762",
+                        "style": [
+                          {
+                            "name": "h_leftAlign"
+                          }
+                        ],
+                        "elementRef": "include_a0060_field_94ca2"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "InlineRepeat",
+            "id": "inlinerepeat_161d8",
+            "name": "Address_Repeat",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Address"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Adresse"
+                  }
+                ]
+              }
+            },
+            "repeatOverviewColumn": [
+              {
+                "type": "FieldBasedRepeatOverviewColumn",
+                "id": "fieldbasedrepeatoverviewcolumn_b41c3",
+                "elementRef": "include_a0060_field_e196b"
+              },
+              {
+                "type": "FieldBasedRepeatOverviewColumn",
+                "id": "fieldbasedrepeatoverviewcolumn_f6c51",
+                "elementRef": "include_a0060_field_e60ef"
+              },
+              {
+                "type": "FieldBasedRepeatOverviewColumn",
+                "id": "fieldbasedrepeatoverviewcolumn_9cdd8",
+                "elementRef": "include_a0060_field_297f9"
+              },
+              {
+                "type": "FieldBasedRepeatOverviewColumn",
+                "id": "fieldbasedrepeatoverviewcolumn_59671",
+                "elementRef": "include_a0060_field_6e8a1"
+              },
+              {
+                "type": "FieldBasedRepeatOverviewColumn",
+                "id": "fieldbasedrepeatoverviewcolumn_04c39",
+                "elementRef": "include_a0060_field_5a772"
+              }
+            ],
+            "groupRef": "include_a0060_group_4ca01",
+            "enableAdd": true,
+            "enableRemove": true
+          },
+          {
+            "type": "InlineRepeat",
+            "id": "inlinerepeat_75bb9",
+            "name": "Phones_Repeat",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Phone"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Telefon"
+                  }
+                ]
+              }
+            },
+            "repeatOverviewColumn": [
+              {
+                "type": "FieldBasedRepeatOverviewColumn",
+                "id": "fieldbasedrepeatoverviewcolumn_cd820",
+                "elementRef": "include_a0060_F17"
+              },
+              {
+                "type": "FieldBasedRepeatOverviewColumn",
+                "id": "fieldbasedrepeatoverviewcolumn_4b07b",
+                "elementRef": "include_a0060_F18"
+              }
+            ],
+            "groupRef": "include_a0060_G16",
+            "enableAdd": true,
+            "enableRemove": true
+          },
+          {
+            "type": "CustomScreenElement",
+            "id": "customscreenelement_6b73f",
+            "name": "binding-CompanyContact",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "binding-CompanyContact"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "binding-CompanyContact"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "fieldConfiguration": {
+      "field": [
+        {
+          "initialValue": "FINAL",
+          "elementRef": "include_a0060_field_03502"
+        }
+      ]
+    },
+    "groupConfiguration": {},
+    "defaults": {
+      "buttonLabels": {
+        "ADD": {
+          "text": [
+            {
+              "locale": "en",
+              "text": "add"
+            }
+          ]
+        },
+        "COMMIT_ADD": {
+          "text": [
+            {
+              "locale": "en",
+              "text": "add"
+            }
+          ]
+        },
+        "APPLY": {
+          "text": [
+            {
+              "locale": "en",
+              "text": "apply"
+            }
+          ]
+        },
+        "EDIT": {
+          "text": [
+            {
+              "locale": "en",
+              "text": "edit"
+            }
+          ]
+        },
+        "REMOVE": {
+          "text": [
+            {
+              "locale": "en",
+              "text": "remove"
+            }
+          ]
+        },
+        "VIEW": {
+          "text": [
+            {
+              "locale": "en",
+              "text": "view"
+            }
+          ]
+        },
+        "CANCEL": {
+          "text": [
+            {
+              "locale": "en",
+              "text": "cancel"
+            }
+          ]
+        },
+        "RETURN": {
+          "text": [
+            {
+              "locale": "en",
+              "text": "return"
+            }
+          ]
+        },
+        "COPY": {
+          "text": [
+            {
+              "locale": "en",
+              "text": "copy"
+            }
+          ]
+        },
+        "CLOSE": {
+          "text": [
+            {
+              "locale": "en",
+              "text": "close"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
