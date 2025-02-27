@@ -1,0 +1,101 @@
+{
+  "header": {
+    "id": "CompanyContact_Company_SelectedItemsOverview",
+    "modelType": "overview",
+    "modelVersion": "38.2.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "purpose": "document-model-for-overview",
+        "modelType": "document",
+        "alias": "DM",
+        "reference": "CompanyContact_Company____generated"
+      }
+    ]
+  },
+  "content": {
+    "configuration": {
+      "enableFilter": false,
+      "showFullTextSearch": false,
+      "pagingSize": 10
+    },
+    "columns": [
+      {
+        "id": "column-d12c0",
+        "label": [
+          {
+            "locale": "en",
+            "text": "Company"
+          },
+          {
+            "locale": "de",
+            "text": "Firma"
+          }
+        ],
+        "width": 1,
+        "styles": {},
+        "elementRef": "I4_field_9c311",
+        "sortable": false
+      },
+      {
+        "id": "column-1befc",
+        "label": [
+          {
+            "locale": "en",
+            "text": "Website"
+          },
+          {
+            "locale": "de",
+            "text": "Website"
+          }
+        ],
+        "width": 1,
+        "styles": {},
+        "elementRef": "I4_field_6c736",
+        "sortable": false
+      },
+      {
+        "id": "column-1d050",
+        "label": [
+          {
+            "locale": "en",
+            "text": "Role"
+          },
+          {
+            "locale": "de",
+            "text": "Rolle"
+          }
+        ],
+        "width": 1,
+        "styles": {},
+        "elementRef": "I5_field_f8e6a",
+        "sortable": false
+      }
+    ],
+    "rowActionGroup": {
+      "actions": []
+    },
+    "subHeaderBox": {
+      "majorElements": [],
+      "minorElements": []
+    },
+    "footerBox": {
+      "majorElements": [],
+      "minorElements": []
+    }
+  }
+}
