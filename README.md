@@ -33,7 +33,6 @@ By default, A12 Tutorial services are exposed on the following ports:
 |---------------------|-----------|-------------|
 | Frontend            | ``:8081`` |             |
 | A12 Tutorial Server | ``:8082`` |             |
-| Postgres                | ``:8083`` | Docker only |
 | Postgres            | ``:8083`` | Docker only |
 
 <a name="prerequisities"></a>
@@ -43,14 +42,14 @@ Proper environment setup is crucial for the successful build and run of this pro
 To wrap up, the following [tools](./tool-versions.json) are required to build this project. Versions are maintained in `./tool-versions.json` file and follow [npm semver] versioning patterns.
 
 <!--- VERSION_TABLE_START (Edit versions in tool-versions.json, not here. Do not delete this tag.) --->
-| Tool                         | Version      | Note |
-|------------------------------|--------------|------|
-| [JDK]                        | '17 - 21'    |      |
-| [Gradle]<sup>1</sup>         | '>=8.5.x <9' |      |
-| [Node]                       | '18.18.x'    |      |
-| [npm]<sup>1</sup>            | '9.8.x'      |      |
-| [Docker]<sup>1</sup>         | '>=20.x'     |      |
-| [Docker Compose]<sup>1</sup> | '>=2.20.x'   |      |
+| Tool                 | Version      | Note |
+|----------------------|--------------|------|
+| [JDK]                | '21'         |      |
+| [Gradle]<sup>1</sup> | '>=8.5.x <9' |      |
+| [Node]               | '22.x.x'     |      |
+| [npm]<sup>1</sup>    | '>=10.7.x'   |      |
+| [Docker]<sup>1</sup> | '>=20.x'     |      |
+| [Docker Compose]     | '>=2.20.3'   |      |
 <!--- VERSION_TABLE_END (Edit versions in tool-versions.json, not here. Do not delete this tag.) --->
 
 <sup>1</sup>) These tools have to be configured to use proper Artifactory. Please, follow [Artifactory access] documentation to set it up.

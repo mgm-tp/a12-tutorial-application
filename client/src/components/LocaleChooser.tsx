@@ -15,7 +15,7 @@ interface LocaleChooserProps {
     readonly locales?: LocaleWithName[];
 }
 
-export default function LocaleChooser({ locales }: LocaleChooserProps): JSX.Element {
+export default function LocaleChooser({ locales }: LocaleChooserProps): React.ReactNode {
     const dispatch = useDispatch();
     const supportedLocales = locales && locales.length > 0 ? locales : supportedLocalesWithName;
     const size = useContext(SizeContext);

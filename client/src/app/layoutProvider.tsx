@@ -21,7 +21,7 @@ export const customLayoutProvider: FrameViews.LayoutProvider = (name: string) =>
  * @param props Check {@link ApplicationFrameLayoutProps} for all available properties to customize.
  * @return JSX.Element The application layout.
  */
-function CustomApplicationFrameLayout(props: FrameViews.ApplicationFrameLayoutProps): JSX.Element {
+function CustomApplicationFrameLayout(props: FrameViews.ApplicationFrameLayoutProps): React.ReactNode {
     const localizer = useLocalizer();
     const roles = useSelector(UaaSelectors.roles)?.map((role) => role.name);
 

@@ -23,6 +23,7 @@ import { GlobalStyles } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/base
 import { flatTheme } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/flat/flat-theme";
 import { DragAndDropUtils } from "@com.mgmtp.a12.widgets/widgets-core/lib/common";
 import { SizeContext, useWindowSize } from "@com.mgmtp.a12.widgets/widgets-core/lib/layout/size-detector";
+import { shouldForwardProp } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/should-forward-prop";
 
 import { DEFAULT_TRANSLATIONS } from "../../localization";
 
@@ -33,7 +34,7 @@ import { AuthenticatedPage } from "./AuthenticatedPage";
  *
  * Based on the authentication state Login or Authenticated page is displayed.
  */
-export const BasePage = (): JSX.Element => {
+export const BasePage = (): React.ReactNode => {
     const { breakPoint } = useWindowSize();
     const authenticatedState = useSelector(UaaSelectors.state);
     const isAuthenticated = authenticatedState === AuthenticationState.AUTHENTICATED;
@@ -83,9 +84,9 @@ export const BasePage = (): JSX.Element => {
  *
  * Other available themes can be found in the Widgets documentation.
  */
-export const StyledPage = (): JSX.Element => {
+export const StyledPage = (): React.ReactNode => {
     return (
-        <StyleSheetManager disableVendorPrefixes>
+        <StyleSheetManager shouldForwardProp={shouldForwardProp}>
             <ThemeProvider theme={flatTheme}>
                 <GlobalStyles />
                 <BasePage />

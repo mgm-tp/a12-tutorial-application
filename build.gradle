@@ -33,43 +33,6 @@ subprojects {
         plugin 'org.sonarqube'
     }
 
-    //Adjusted from https://docs.gradle.org/current/userguide/dependency_locking.html#lock_all_configurations_in_one_build_execution
-    tasks.register('resolveAndLockDependencies') {
-        notCompatibleWithConfigurationCache("Filters configurations at execution time")
-        doFirst {
-            assert gradle.startParameter.writeDependencyLocks: "$path must be run from the command line with the `--write-locks` flag"
-            dependencyLocking.lockAllConfigurations()
-        }
-        doLast {
-            configurations.findAll {
-                // Add any custom filtering on the configurations to be resolved
-                it.canBeResolved
-            }.each {
-                it.resolve()
-            }
-        }
-    }
-
-    tasks.register('unlockAndDeleteLockfiles') {
-        notCompatibleWithConfigurationCache("Filters configurations at execution time")
-        doFirst {
-            dependencyLocking.unlockAllConfigurations()
-        }
-        doLast {
-            configurations.findAll {
-                // Add any custom filtering on the configurations to be resolved
-                it.canBeResolved
-            }.each {
-                it.resolve()
-            }
-            def lockfile = new File(project.projectDir, 'gradle.lockfile')
-            if (lockfile.exists()) {
-                println "Deleting ${lockfile.absolutePath}"
-                lockfile.delete()
-            }
-        }
-    }
-
     ext.registryCredentialsForPublishVar = {
         url = dockerRegistryForPublish
         username = project.repository_username

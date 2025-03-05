@@ -33,4 +33,4 @@ gradle-app.setting
 **/*.bak
 *.txt
 .DS_Store
-/server/h2/
+/server/postgres/

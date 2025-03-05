@@ -33,7 +33,7 @@
         },
         {
             "type": "java",
-            "name": "server start (h2-in-file)",
+            "name": "server start (postgres-in-file)",
             "request": "launch",
             "mainClass": "com.mgmtp.a12.template.server.ProjectTemplateServerApplication",
             "args": [
@@ -55,7 +55,7 @@
         },
         {
             "type": "java",
-            "name": "init app start (h2-in-file)",
+            "name": "init app start (postgres-in-file)",
             "request": "launch",
             "mainClass": "com.mgmtp.a12.template.server.init.ProjectTemplateInitApplication",
             "args": [

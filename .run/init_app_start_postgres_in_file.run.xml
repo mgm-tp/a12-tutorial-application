@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="init app start (h2-in-file)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+  <configuration default="false" name="init app start (postgres-in-file)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="dev-env" />
     <option name="INCLUDE_PROVIDED_SCOPE" value="false"/>
     <module name="your-project-name.server.init.main" />

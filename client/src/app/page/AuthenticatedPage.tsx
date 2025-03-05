@@ -6,7 +6,7 @@ import { ApplicationModel } from "@com.mgmtp.a12.client/client-core/lib/core/mod
 import { createViewProvider } from "../viewProvider";
 import { customLayoutProvider } from "../layoutProvider";
 
-export const AuthenticatedPage = (): JSX.Element => {
+export const AuthenticatedPage = (): React.ReactNode => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const rootRegionRef: ApplicationModel.Region.Reference = [];
     const RegionUi = useMemo(() => FrameFactories.regionUiProvider(rootRegionRef), [rootRegionRef]);

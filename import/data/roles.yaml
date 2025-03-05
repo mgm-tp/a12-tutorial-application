@@ -10,6 +10,7 @@ roles:
       - DOCUMENT_LIST
       - ATTACHMENT_UPLOAD
       - MODEL_MANAGE
+      - QUERY
   - name: systemAdmin
     description: system admin role
     accessRights:
@@ -27,3 +28,4 @@ roles:
       - DOCUMENT_DELETE
       - MODEL_READ
       - ATTACHMENT_UPLOAD
+      - QUERY

@@ -12,7 +12,7 @@ String GRADLE_VERSION = 'Gradle8'
 @Field
 String JDK_VERSION = 'OpenJDK21'
 @Field
-String NODE_JS_VERSION = 'Node18'
+String NODE_JS_VERSION = 'Node22'
 @Field
 String GRADLE_SETTINGS_FILE_REF = 'gradle-settings'
 @Field
@@ -47,27 +47,27 @@ pipeline {
 
     stages {
 
-        stage('Review') {
-            when {
-                allOf {
-                    anyOf {
-                        triggeredBy 'BranchIndexingCause'
-                        triggeredBy 'BranchEventCause'
-                        triggeredBy "UserIdCause"
+                stage('Review') {
+                    when {
+                        allOf {
+                            anyOf {
+                                triggeredBy 'BranchIndexingCause'
+                                triggeredBy 'BranchEventCause'
+                                triggeredBy "UserIdCause"
+                            }
+                            changeRequest()
+                        }
                     }
-                    changeRequest()
-                }
-            }
-            steps {
-                script {
-                    withBuildConfiguration {
-                        sh 'gradle build'
-                        String projectVersion = sh script: 'gradle getVersion -q', returnStdout: true
-                        currentBuild.displayName += ': ' + projectVersion
+                    steps {
+                        script {
+                            withBuildConfiguration {
+                                sh 'gradle build'
+                                String projectVersion = sh script: 'gradle getVersion -q', returnStdout: true
+                                currentBuild.displayName += ': ' + projectVersion
+                            }
+                        }
                     }
                 }
-            }
-        }
 
         stage('Pre-release') {
             when {

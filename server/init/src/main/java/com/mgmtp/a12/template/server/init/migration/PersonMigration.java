@@ -7,16 +7,17 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mgmtp.a12.dataservices.common.events.CommonDataServicesEventListener;
 import com.mgmtp.a12.dataservices.document.DataServicesDocument;
 import com.mgmtp.a12.dataservices.document.DocumentReference;
+import com.mgmtp.a12.dataservices.document.DocumentService;
 import com.mgmtp.a12.dataservices.document.events.DocumentAfterRepositoryLoadEvent;
 import com.mgmtp.a12.dataservices.document.persistence.IDocumentRepository;
 import com.mgmtp.a12.dataservices.migration.MigrationStep;
 import com.mgmtp.a12.dataservices.migration.MigrationTask;
-import com.mgmtp.a12.dataservices.search.SearchIndexLoader;
 import com.mgmtp.a12.uaa.authentication.backend.Authenticated;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @MigrationStep(version = "202306.1.1", name = "Data migration of Person Document")
@@ -26,15 +27,15 @@ public class PersonMigration {
     private static final String MODEL_TO_MIGRATE = "Person_DM";
     private static final String REMOVED_FIELD_PATH = "/Person/PersonalData/PlaceOfBirth";
     private final IDocumentRepository documentRepository;
-    private final SearchIndexLoader indexLoader;
+    private final DocumentService documentService;
     private final MigrationConfiguration config;
     private final ObjectMapper mapper = new ObjectMapper();
 
     public PersonMigration(final IDocumentRepository documentRepository,
-                           final SearchIndexLoader indexLoader,
+                           final DocumentService documentService,
                            final MigrationConfiguration config) {
         this.documentRepository = documentRepository;
-        this.indexLoader = indexLoader;
+        this.documentService = documentService;
         this.config = config;
     }
 
@@ -48,12 +49,10 @@ public class PersonMigration {
         documentReferences.forEach(docRef -> {
             Optional<DataServicesDocument> optDocument = documentRepository.findByDocumentReference(docRef);
 
-            optDocument.ifPresent(documentRepository::update);
+            optDocument.ifPresent(dsDoc -> documentService.update(docRef, dsDoc.getKernelDocument(), Locale.ENGLISH));
         });
 
         config.setEnabled(false);
-        indexLoader.rebuildIndexForModel(MODEL_TO_MIGRATE, 500, true);
-
     }
 
     @CommonDataServicesEventListener(condition = "@migrationConfiguration.isEnabled() &&"

@@ -1,14 +1,8 @@
-import com.mgmtp.a12.A12AlignmentRule
-
 plugins {
     id 'java'
     alias(gradlePluginLibs.plugins.spring.boot)
     alias(gradlePluginLibs.plugins.test.logger)
     alias(gradlePluginLibs.plugins.rewrite)
-}
-
-java {
-    sourceCompatibility = JavaLanguageVersion.of(17)
 }
 
 ext {
@@ -32,13 +26,8 @@ dependencies {
     // A12 dataservices distribution
     implementation a12Libs.dataservices.server.init.app
 
-    // Align A12 Versions
-    components.all(A12AlignmentRule)
-
-    // Virtual BOMs
-    implementation(platform(a12Libs.base.bom))
-
     // Native BOMs
+    implementation(platform(a12Libs.base.bom))
     implementation(platform(a12Libs.kernel.bom))
     implementation(platform(a12Libs.uaa.bom))
     implementation(platform(a12Libs.dataservices.bom))

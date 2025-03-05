@@ -9,13 +9,15 @@ import { StoreFactories } from "@com.mgmtp.a12.client/client-core/lib/core/store
 import { ModelActions } from "@com.mgmtp.a12.client/client-core/lib/core/model";
 import { TreeEngineFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/client";
 import { TreeEngineServerConnectorFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/server-connector";
+import { DefaultElementLibraryFactories } from "@com.mgmtp.a12.contentengine/contentengine-default-element-library";
 
 import { mapAppModelByPermission } from "./utils";
 
 export const ALL_MODULES = [
     AppModelAdapterModule,
     TreeEngineFactories.createModule(),
-    TreeEngineServerConnectorFactories.createModule()
+    TreeEngineServerConnectorFactories.createModule(),
+    DefaultElementLibraryFactories.createModule()
 ];
 const moduleRegistry = ModuleRegistryProvider.getInstance();
 

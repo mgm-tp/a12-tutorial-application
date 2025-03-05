@@ -2,6 +2,10 @@ import com.bmuschko.gradle.docker.tasks.image.*
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 subprojects {
+    dependencyLocking {
+        lockAllConfigurations()
+    }
+
     ext.artifactsVar = {
         archives bootJar
     }
@@ -77,7 +81,7 @@ subprojects {
         copyFile "--from=builder extracted/spring-boot-loader/", "./"
         copyFile "--from=builder extracted/snapshot-dependencies/", "./"
         copyFile "--from=builder extracted/application/", "./"
-        entryPoint "java", "org.springframework.boot.loader.launch.JarLauncher"
+        entryPoint "java", "org.springframework.boot.loader.launch.JarLauncher", "\$JAVA_OPTS"
     }
 
     tasks.register('buildImages', DockerBuildImage) {
@@ -85,7 +89,7 @@ subprojects {
         dependsOn createDockerfile
 
         images.add(calculateFullTag(serviceName))
-        inputDir.set(file(layout.buildDirectory)) 
+        inputDir.set(file(layout.buildDirectory))
         if (dockerUseCredentials.toBoolean()) {
             dockerRegistryCredentialsForRead
         }

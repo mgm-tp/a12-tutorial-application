@@ -21,7 +21,7 @@ import { CRUDFactories } from "@com.mgmtp.a12.crud/crud-core";
 import { DirtyHandlingFactories } from "@com.mgmtp.a12.client/client-core/lib/extensions/dirtyHandling";
 import {
     cddDataHolderReducerExtension,
-    cddDataProvider,
+    createCddDataProvider,
     cddReducers,
     cdmSagas,
     createCdmMiddlewares,
@@ -49,7 +49,7 @@ export function setup(): {
     initialStoreActions(): Promise<void>;
 } {
     const dataHandlers: DataHandler[] = [
-        cddDataProvider,
+        createCddDataProvider(),
         createEmptyDocumentDataProvider(),
         RelationshipFactories.createRelationshipDataProvider(),
         ...OverviewEngineFactories.createDataProviders(),

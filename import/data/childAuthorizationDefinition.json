@@ -47,7 +47,11 @@
       "description": "User is only able to see the documents created by them",
       "target": "hasAccessRight('DOCUMENT_LIST') && !containsAnyRole('admin')",
       "templates": [
-        "'__meta.creator:' + principal.username"
+        {
+          "operator": "exact_match",
+          "field": "/__meta/creator",
+          "value": "principal.username"
+        }
       ]
     }
   ],
@@ -85,7 +89,7 @@
         "Document List By User Created"
       ],
       "scopes": [
-        "Document List"
+        "Query"
       ]
     },
     {

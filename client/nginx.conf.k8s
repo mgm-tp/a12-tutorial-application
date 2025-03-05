@@ -24,7 +24,7 @@ http {
     gzip_types      text/plain text/css application/javascript;
 
     server {
-       listen       80;
+       listen       8081;
        server_name  localhost;
        client_max_body_size 100M;
 

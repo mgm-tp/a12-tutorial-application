@@ -2,7 +2,7 @@
   "header": {
     "id": "YourAppModel_AM",
     "modelType": "application",
-    "modelVersion": "5.0.0",
+    "modelVersion": "6.0.0",
     "locales": [
       {
         "code": "en"

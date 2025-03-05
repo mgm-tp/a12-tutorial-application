@@ -2,7 +2,7 @@
   "header": {
     "id": "Person_DM",
     "modelType": "document",
-    "modelVersion": "28.2.0",
+    "modelVersion": "28.3.0",
     "locales": [
       {
         "code": "en"
@@ -368,10 +368,7 @@
                                   "locale": "en",
                                   "text": "Internal Error: Field $internal_filename$ of customType attachment is not filled."
                                 }
-                              ],
-                              "guiPatterns": {
-                                "dynamicEnumeration": "false"
-                              }
+                              ]
                             }
                           },
                           {
@@ -392,10 +389,7 @@
                                   "locale": "en",
                                   "text": "Internal Error: Field $mime_type$ of customType attachment is not filled."
                                 }
-                              ],
-                              "guiPatterns": {
-                                "dynamicEnumeration": "false"
-                              }
+                              ]
                             }
                           },
                           {
@@ -416,10 +410,7 @@
                                   "locale": "en",
                                   "text": "Internal Error: Either attachment_id or content must be filled in a customType attachment, but not both."
                                 }
-                              ],
-                              "guiPatterns": {
-                                "dynamicEnumeration": "false"
-                              }
+                              ]
                             }
                           },
                           {
@@ -440,10 +431,7 @@
                                   "locale": "de",
                                   "text": "Internal Error: If the content is filled, the size must be also filled."
                                 }
-                              ],
-                              "guiPatterns": {
-                                "dynamicEnumeration": "false"
-                              }
+                              ]
                             }
                           }
                         ]

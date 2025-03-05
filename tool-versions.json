@@ -3,7 +3,7 @@
     "jdk": {
       "name": "JDK",
       "superscript": "",
-      "version": "17 - 21",
+      "version": "21",
       "note": ""
     },
     "gradle": {
@@ -15,13 +15,13 @@
     "node": {
       "name": "Node",
       "superscript": "",
-      "version": "18.18.x",
+      "version": "22.x.x",
       "note": ""
     },
     "npm": {
       "name": "npm",
       "superscript": "1",
-      "version": "9.8.x",
+      "version": ">=10.7.x",
       "note": ""
     },
     "docker": {

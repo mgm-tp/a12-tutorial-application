@@ -28,7 +28,7 @@ class Utils {
      */
     static Map checkAllToolVersions(ProviderFactory providers, File versionFile) {
         def tools = new JsonSlurper().parseText(versionFile.text).tools.keySet()
-        println "Checking preresiquite tools versions for ${tools.join(', ')}"
+        println "Checking prerequisite tools versions for ${tools.join(', ')}"
         def toolProperties = new HashMap<String, ToolProperties>()
         tools.each { tool -> toolProperties[tool] = getToolVersion(providers, versionFile, tool) }
 
@@ -128,7 +128,7 @@ class Utils {
      * @param projectDir The project directory path
      */
     static void replacePlaceholders(File setupFile, ConfigurableFileTree fileTree, String projectDir) {
-        def includedFiles = ['**/*.json', '**/*.gradle', '**/*.properties', '**/*.yml', '**/*.html', '**/*.ts', '**/*.java', '.run/*.xml', 'quality/checkstyle/*.xml', '**/.env']
+        def includedFiles = ['**/*.json', '**/*.gradle', '**/*.properties', '**/*.yml', '**/*.html', '**/*.ts', '**/*.java', '.run/*.xml', 'quality/**', '**/.env']
         def excludedDirs = ['**/logs/**', '**/resource/**', '**/.gradle/**', '**/buildSrc/**', '**/target/**', '**/build/**', '**/node_modules/**', 'build.gradle', "**/internal/**"]
         // Backslashes in a text have to be escaped for JsonSlurper parsing
         def escapedText = setupFile.text.replace("\\", "\\\\")
