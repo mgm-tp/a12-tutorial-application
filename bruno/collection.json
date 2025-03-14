@@ -1260,37 +1260,6 @@
       "items": [
         {
           "type": "http",
-          "name": "Original Aggregation max",
-          "seq": 26,
-          "request": {
-            "url": "http://localhost:8081/api/v2/rpc",
-            "method": "POST",
-            "headers": [
-              {
-                "name": "Authorization",
-                "value": "UAABEARER {{Authorization}}",
-                "enabled": true
-              }
-            ],
-            "params": [],
-            "body": {
-              "mode": "json",
-              "json": "{\n  \"id\": \"Original Aggregation max\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"LIST_DOCUMENTS\",\n  \"params\": {\n    \"documentModelName\": \"Contact_DM\",\n    \"filter\": {\n      \"filters\": [\n        \"Contact.PersonalData.LastName:Baker\"\n      ]\n    },\n    \"facets\": [\n      {\n        \"id\": \"max_project_budget_baker\",\n        \"type\": \"max\",\n        \"field\": \"Contact.Project.Budget\"\n      }\n    ]\n  }\n}",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "docs": "",
-            "auth": {
-              "mode": "none"
-            }
-          }
-        },
-        {
-          "type": "http",
           "name": "Original Aggregation avg",
           "seq": 32,
           "request": {
@@ -1322,8 +1291,8 @@
         },
         {
           "type": "http",
-          "name": "Original LIST_TERMINATING_LINKS 1",
-          "seq": 11,
+          "name": "Original Aggregation max",
+          "seq": 26,
           "request": {
             "url": "http://localhost:8081/api/v2/rpc",
             "method": "POST",
@@ -1337,38 +1306,7 @@
             "params": [],
             "body": {
               "mode": "json",
-              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Original LIST_TERMINATING_LINKS 1\",\n  \"method\": \"LIST_TERMINATING_LINKS\",\n  \"params\": {\n    \"relationshipModelName\": \"CompanyContact\",\n    \"terminatingRoleName\": \"Contact\"\n  }\n}",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "docs": "",
-            "auth": {
-              "mode": "none"
-            }
-          }
-        },
-        {
-          "type": "http",
-          "name": "Original Aggregation range",
-          "seq": 24,
-          "request": {
-            "url": "http://localhost:8081/api/v2/rpc",
-            "method": "POST",
-            "headers": [
-              {
-                "name": "Authorization",
-                "value": "UAABEARER {{Authorization}}",
-                "enabled": true
-              }
-            ],
-            "params": [],
-            "body": {
-              "mode": "json",
-              "json": "{\n  \"id\": \"Original Aggregation range\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"LIST_DOCUMENTS\",\n  \"params\": {\n    \"documentModelName\": \"Contact_DM\",\n    \"facets\": [\n      {\n        \"id\": \"range_project_budget\",\n        \"type\": \"range\",\n        \"field\": \"Contact.Project.Budget\",\n        \"start\": 200000,\n        \"end\": 1000000,\n        \"gap\": 100000\n      }\n    ]\n  }\n}",
+              "json": "{\n  \"id\": \"Original Aggregation max\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"LIST_DOCUMENTS\",\n  \"params\": {\n    \"documentModelName\": \"Contact_DM\",\n    \"filter\": {\n      \"filters\": [\n        \"Contact.PersonalData.LastName:Baker\"\n      ]\n    },\n    \"facets\": [\n      {\n        \"id\": \"max_project_budget_baker\",\n        \"type\": \"max\",\n        \"field\": \"Contact.Project.Budget\"\n      }\n    ]\n  }\n}",
               "formUrlEncoded": [],
               "multipartForm": []
             },
@@ -1415,8 +1353,8 @@
         },
         {
           "type": "http",
-          "name": "Original LOAD_DOCUMENT_GRAPH",
-          "seq": 15,
+          "name": "Original Aggregation range",
+          "seq": 24,
           "request": {
             "url": "http://localhost:8081/api/v2/rpc",
             "method": "POST",
@@ -1430,7 +1368,7 @@
             "params": [],
             "body": {
               "mode": "json",
-              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Original LOAD_DOCUMENT_GRAPH\",\n  \"method\": \"LOAD_DOCUMENT_GRAPH\",\n  \"params\": {\n    \"cdm\": \"Employment_CDM\",\n    \"docRef\": \"ContactFinal_DM/41e180b2-6420-4643-a420-a2db3d8cca9f\"\n  }\n}",
+              "json": "{\n  \"id\": \"Original Aggregation range\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"LIST_DOCUMENTS\",\n  \"params\": {\n    \"documentModelName\": \"Contact_DM\",\n    \"facets\": [\n      {\n        \"id\": \"range_project_budget\",\n        \"type\": \"range\",\n        \"field\": \"Contact.Project.Budget\",\n        \"start\": 200000,\n        \"end\": 1000000,\n        \"gap\": 100000\n      }\n    ]\n  }\n}",
               "formUrlEncoded": [],
               "multipartForm": []
             },
@@ -1509,7 +1447,7 @@
         {
           "type": "http",
           "name": "Original Aggregation term 2",
-          "seq": 22,
+          "seq": 23,
           "request": {
             "url": "http://localhost:8081/api/v2/rpc",
             "method": "POST",
@@ -1524,37 +1462,6 @@
             "body": {
               "mode": "json",
               "json": "{\n  \"id\": \"Original Aggregation term 2\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"LIST_DOCUMENTS\",\n  \"params\": {\n    \"documentModelName\": \"Contact_DM\",\n    \"facets\": [\n      {\n        \"id\": \"term_nationality\",\n        \"type\": \"term\",\n        \"field\": \"Contact.PersonalData.Nationality\"\n      },\n      {\n        \"id\": \"term_family\",\n        \"type\": \"term\",\n        \"field\": \"Contact.PersonalData.LastName\"\n      },\n      {\n        \"id\": \"avg_project_budget\",\n        \"type\": \"avg\",\n        \"field\": \"Contact.Project.Budget\"\n      }\n    ]\n  }\n}",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "docs": "",
-            "auth": {
-              "mode": "none"
-            }
-          }
-        },
-        {
-          "type": "http",
-          "name": "Original LIST_CANDIDATES",
-          "seq": 9,
-          "request": {
-            "url": "http://localhost:8081/api/v2/rpc",
-            "method": "POST",
-            "headers": [
-              {
-                "name": "Authorization",
-                "value": "UAABEARER {{Authorization}}",
-                "enabled": true
-              }
-            ],
-            "params": [],
-            "body": {
-              "mode": "json",
-              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Original LIST_CANDIDATES\",\n  \"method\": \"LIST_CANDIDATES\",\n  \"params\": {\n    \"source\": {\n      \"relationshipModel\": \"CompanyContact\",\n      \"role\": \"Company\"\n    },\n    \"filter\": {\n      \"filters\": [\n        \"Contact.PersonalData.LastName:Baker\",\n        \"Contact.Project.Budget:[200000 TO ]\",\n        \"-Contact.PersonalData.CustomerType:VIP\"\n      ],\n      \"lang\": \"de\"\n    },\n    \"sort\": {\n      \"order\": \"Contact.PersonalData.FirstName ASC\"\n    },\n    \"page\": {\n      \"offset\": 0,\n      \"limit\": 10\n    }\n  }\n}",
               "formUrlEncoded": [],
               "multipartForm": []
             },
@@ -1601,8 +1508,8 @@
         },
         {
           "type": "http",
-          "name": "Original LIST_DOCUMENTS",
-          "seq": 3,
+          "name": "Original LIST_CANDIDATES",
+          "seq": 9,
           "request": {
             "url": "http://localhost:8081/api/v2/rpc",
             "method": "POST",
@@ -1616,7 +1523,7 @@
             "params": [],
             "body": {
               "mode": "json",
-              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Original LIST_DOCUMENTS\",\n  \"method\": \"LIST_DOCUMENTS\",\n  \"params\": {\n    \"documentModelName\": \"Contact_DM\",\n    \"filter\": {\n      \"filters\": [\n        \"Contact.PersonalData.LastName:Baker\",\n        \"Contact.ContactType:Final\",\n        \"-Contact.PersonalData.Gender:Weiblich\"\n      ],\n      \"lang\": \"de\"\n    },\n    \"sort\": {\n      \"order\": \"Contact.PersonalData.FirstName ASC\"\n    }\n  }\n}",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Original LIST_CANDIDATES\",\n  \"method\": \"LIST_CANDIDATES\",\n  \"params\": {\n    \"source\": {\n      \"relationshipModel\": \"CompanyContact\",\n      \"role\": \"Company\"\n    },\n    \"filter\": {\n      \"filters\": [\n        \"Contact.PersonalData.LastName:Baker\",\n        \"Contact.Project.Budget:[200000 TO ]\",\n        \"-Contact.PersonalData.CustomerType:VIP\"\n      ],\n      \"lang\": \"de\"\n    },\n    \"sort\": {\n      \"order\": \"Contact.PersonalData.FirstName ASC\"\n    },\n    \"page\": {\n      \"offset\": 0,\n      \"limit\": 10\n    }\n  }\n}",
               "formUrlEncoded": [],
               "multipartForm": []
             },
@@ -1663,6 +1570,68 @@
         },
         {
           "type": "http",
+          "name": "Original LIST_CDDS 2",
+          "seq": 19,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Original LIST_CDDS 2\",\n  \"method\": \"LIST_CDDS\",\n  \"params\": {\n    \"cdm\": \"Employment_CDM\",\n    \"filter\": {\n      \"filters\": [\n        \"CompanyContact.relationship.Root.Role:executive\"\n      ]\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Original LIST_DOCUMENTS",
+          "seq": 3,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Original LIST_DOCUMENTS\",\n  \"method\": \"LIST_DOCUMENTS\",\n  \"params\": {\n    \"documentModelName\": \"Contact_DM\",\n    \"filter\": {\n      \"filters\": [\n        \"Contact.PersonalData.LastName:Baker\",\n        \"Contact.ContactType:Final\",\n        \"-Contact.PersonalData.Gender:Weiblich\"\n      ],\n      \"lang\": \"de\"\n    },\n    \"sort\": {\n      \"order\": \"Contact.PersonalData.FirstName ASC\"\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
           "name": "Original LIST_LINKS 1",
           "seq": 5,
           "request": {
@@ -1694,39 +1663,8 @@
         },
         {
           "type": "http",
-          "name": "Original LIST_CDDS 2",
-          "seq": 18,
-          "request": {
-            "url": "http://localhost:8081/api/v2/rpc",
-            "method": "POST",
-            "headers": [
-              {
-                "name": "Authorization",
-                "value": "UAABEARER {{Authorization}}",
-                "enabled": true
-              }
-            ],
-            "params": [],
-            "body": {
-              "mode": "json",
-              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Original LIST_CDDS 2\",\n  \"method\": \"LIST_CDDS\",\n  \"params\": {\n    \"cdm\": \"Employment_CDM\",\n    \"filter\": {\n      \"filters\": [\n        \"CompanyContact.relationship.Root.Role:executive\"\n      ]\n    }\n  }\n}",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "docs": "",
-            "auth": {
-              "mode": "none"
-            }
-          }
-        },
-        {
-          "type": "http",
           "name": "Original LIST_LINKS 2",
-          "seq": 6,
+          "seq": 7,
           "request": {
             "url": "http://localhost:8081/api/v2/rpc",
             "method": "POST",
@@ -1756,8 +1694,39 @@
         },
         {
           "type": "http",
+          "name": "Original LIST_TERMINATING_LINKS 1",
+          "seq": 11,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Original LIST_TERMINATING_LINKS 1\",\n  \"method\": \"LIST_TERMINATING_LINKS\",\n  \"params\": {\n    \"relationshipModelName\": \"CompanyContact\",\n    \"terminatingRoleName\": \"Contact\"\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
           "name": "Original LIST_TERMINATING_LINKS 2",
-          "seq": 12,
+          "seq": 13,
           "request": {
             "url": "http://localhost:8081/api/v2/rpc",
             "method": "POST",
@@ -1784,10 +1753,546 @@
               "mode": "none"
             }
           }
+        },
+        {
+          "type": "http",
+          "name": "Original LOAD_DOCUMENT_GRAPH",
+          "seq": 15,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Original LOAD_DOCUMENT_GRAPH\",\n  \"method\": \"LOAD_DOCUMENT_GRAPH\",\n  \"params\": {\n    \"cdm\": \"Employment_CDM\",\n    \"docRef\": \"ContactFinal_DM/41e180b2-6420-4643-a420-a2db3d8cca9f\"\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query Aggregation avg",
+          "seq": 33,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"Query Aggregation avg\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"or\",\n        \"operands\": [\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/Contact/PersonalData/LastName\",\n            \"value\": \"Baker\"\n          },\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/Contact/PersonalData/LastName\",\n            \"value\": \"Miller\"\n          }\n        ]\n      },\n      \"aggregation\": {\n        \"aggregations\": [\n          {\n            \"function\": \"avg\",\n            \"field\": \"/Contact/Project/Budget\"\n          }\n        ],\n        \"group\": [\n          {\n            \"field\": \"/__meta/modelReference\"\n          }\n        ]\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query Aggregation max",
+          "seq": 27,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"Query Aggregation max\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"exact_match\",\n        \"field\": \"/Contact/PersonalData/LastName\",\n        \"value\": \"Baker\"\n      },\n      \"aggregation\": {\n        \"aggregations\": [\n          {\n            \"function\": \"max\",\n            \"field\": \"/Contact/Project/Budget\"\n          }\n        ],\n        \"group\": [\n          {\n            \"field\": \"/Contact/PersonalData/LastName\"\n          }\n        ]\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query Aggregation min",
+          "seq": 29,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"Query Aggregation min\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"not\",\n        \"operand\": {\n          \"operator\": \"exact_match\",\n          \"field\": \"/Contact/PersonalData/LastName\",\n          \"value\": \"Baker\"\n        }\n      },\n      \"aggregation\": {\n        \"aggregations\": [\n          {\n            \"function\": \"min\",\n            \"field\": \"/Contact/Project/Budget\"\n          }\n        ],\n        \"group\": [\n          {\n            \"field\": \"/__meta/modelReference\"\n          }\n        ]\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query Aggregation range",
+          "seq": 25,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"Query Aggregation range\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"double_range\",\n        \"field\": \"/Contact/Project/Budget\",\n        \"from\": 200000,\n        \"to\": 999999\n      },\n      \"aggregation\": {\n        \"aggregations\": [\n          {\n            \"function\": \"count\",\n            \"field\": \"/Contact/PersonalData/EmailAddress\"\n          }\n        ],\n        \"group\": [\n          {\n            \"field\": \"/Contact/Project/Budget\"\n          }\n        ]\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query Aggregation sum",
+          "seq": 31,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"id\": \"Query Aggregation sum\",\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"exact_match\",\n        \"field\": \"/Contact/PersonalData/Nationality\",\n        \"value\": \"German\"\n      },\n      \"aggregation\": {\n        \"aggregations\": [\n          {\n            \"function\": \"sum\",\n            \"field\": \"/Contact/Project/Budget\"\n          }\n        ],\n        \"group\": [\n          {\n            \"field\": \"/__meta/modelReference\"\n          }\n        ]\n      },\n      \"paging\": {\n        \"pageSize\": 10,\n        \"pageNumber\": 0\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query Aggregation term 1",
+          "seq": 22,
+          "request": {
+            "url": "http://localhost:8081/api/aggregation",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"targetDocumentModel\": \"Contact_DM\",\n  \"aggregation\": {\n    \"aggregations\": [\n      {\n        \"function\": \"count\",\n        \"field\": \"/Contact/PersonalData/EmailAddress\"\n      }\n    ],\n    \"group\": [\n      {\n        \"field\": \"/Contact/PersonalData/Nationality\"\n      }\n    ]\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query GET_DOCUMENT",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Query GET_DOCUMENT\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"exact_match\",\n        \"field\": \"/__meta/docRef\",\n        \"value\": \"ContactFinal_DM/41e180b2-6420-4643-a420-a2db3d8cca9f\"\n      },\n      \"paging\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 10\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query LIST_CANDIDATES",
+          "seq": 10,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              },
+              {
+                "name": "Accept-Language",
+                "value": "de",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Query LIST_CANDIDATES\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"and\",\n        \"operands\": [\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/Contact/PersonalData/LastName\",\n            \"value\": \"Baker\"\n          },\n          {\n            \"operator\": \"double_range\",\n            \"field\": \"/Contact/Project/Budget\",\n            \"from\": \"200000\"\n          },\n          {\n            \"operator\": \"not\",\n            \"operand\": {\n              \"operator\": \"exact_match\",\n              \"field\": \"/Contact/PersonalData/CustomerType\",\n              \"value\": \"VIP\"\n            }\n          }\n        ]\n      },\n      \"sort\": [\n        {\n          \"direction\": \"ASC\",\n          \"field\": \"/Contact/PersonalData/FirstName\",\n          \"ignoreCase\": true,\n          \"nullHandling\": \"NULLS_LAST\"\n        }\n      ],\n      \"paging\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 10\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query LIST_CDDS 1",
+          "seq": 18,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Query LIST_CDDS 1\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Employment_CDM\",\n      \"projectionName\": \"cdd\",\n      \"paging\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 10\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query LIST_CDDS 2",
+          "seq": 20,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Query LIST_CDDS 2\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Employment_CDM\",\n      \"projectionName\": \"cdd\",\n      \"constraint\": {\n        \"operator\": \"has\",\n        \"relationshipModel\": \"CompanyContact\",\n        \"targetRole\": \"Company\",\n        \"linkConstraint\": {\n          \"operator\": \"exact_match\",\n          \"field\": \"/Root/Role\",\n          \"value\": \"executive\"\n        }\n      },\n      \"paging\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 10\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query LIST_DOCUMENTS",
+          "seq": 4,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              },
+              {
+                "name": "Accept-Language",
+                "value": "de",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Query LIST_DOCUMENTS\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"and\",\n        \"operands\": [\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/Contact/PersonalData/LastName\",\n            \"value\": \"Baker\"\n          },\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/Contact/ContactType\",\n            \"value\": \"Final\"\n          },\n          {\n            \"operator\": \"not\",\n            \"operand\": {\n              \"operator\": \"exact_match\",\n              \"field\": \"/Contact/PersonalData/Gender\",\n              \"value\": \"Weiblich\"\n            }\n          }\n        ]\n      },\n      \"sort\": {\n        \"field\": \"/Contact/PersonalData/FirstName\",\n        \"direction\": \"ASC\",\n        \"nullHandling\": \"NULLS_LAST\",\n        \"ignoreCase\": true\n      },\n      \"paging\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 10\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query LIST_LINKS 1",
+          "seq": 6,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Query LIST_LINKS 1\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Company_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"and\",\n        \"operands\": [\n          {\n            \"operator\": \"has\",\n            \"relationshipModel\": \"CompanyContact\",\n            \"targetRole\": \"Contact\"\n          },\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/__meta/docRef\",\n            \"value\": \"Company_DM/7c069a13-2df1-46cb-948b-57a3fccb7707\"\n          }\n        ]\n      },\n      \"links\": [\n        {\n          \"relationshipModel\": \"CompanyContact\",\n          \"targetRole\": \"Contact\"\n        }\n      ],\n      \"paging\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 10\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query LIST_LINKS 2",
+          "seq": 8,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Query LIST_LINKS 2\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"and\",\n        \"operands\": [\n          {\n            \"operator\": \"has\",\n            \"relationshipModel\": \"CompanyContact\",\n            \"targetRole\": \"Company\"\n          },\n          {\n            \"operator\": \"exact_match\",\n            \"field\": \"/__meta/docRef\",\n            \"value\": \"ContactFinal_DM/41e180b2-6420-4643-a420-a2db3d8cca9f\"\n          }\n        ]\n      },\n      \"exclude\": true,\n      \"links\": [\n        {\n          \"relationshipModel\": \"CompanyContact\",\n          \"targetRole\": \"Company\"\n        }\n      ],\n      \"paging\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 10\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query LIST_TERMINATING_LINKS 1",
+          "seq": 12,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Query LIST_TERMINATING_LINKS 1\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"and\",\n        \"operands\": [\n          {\n            \"operator\": \"has\",\n            \"relationshipModel\": \"CompanyContact\",\n            \"targetRole\": \"Company\"\n          },\n          {\n            \"operator\": \"not\",\n            \"operand\": {\n              \"operator\": \"has\",\n              \"relationshipModel\": \"CompanyContact\",\n              \"targetRole\": \"Contact\"\n            }\n          }\n        ]\n      },\n      \"links\": {\n        \"relationshipModel\": \"CompanyContact\",\n        \"targetRole\": \"Company\"\n      },\n      \"paging\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 100\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query LIST_TERMINATING_LINKS 2",
+          "seq": 14,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Query LIST_TERMINATING_LINKS 2\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Contact_DM\",\n      \"projectionName\": \"document\",\n      \"constraint\": {\n        \"operator\": \"or\",\n        \"operands\": [\n          {\n            \"operator\": \"not\",\n            \"operand\": {\n              \"operator\": \"has\",\n              \"relationshipModel\": \"CompanyContact\",\n              \"targetRole\": \"Company\"\n            }\n          },\n          {\n            \"operator\": \"and\",\n            \"operands\": [\n              {\n                \"operator\": \"has\",\n                \"relationshipModel\": \"CompanyContact\",\n                \"targetRole\": \"Company\"\n              },\n              {\n                \"operator\": \"not\",\n                \"operand\": {\n                  \"operator\": \"has\",\n                  \"relationshipModel\": \"CompanyContact\",\n                  \"targetRole\": \"Contact\"\n                }\n              }\n            ]\n          }\n        ]\n      },\n      \"links\": {\n        \"relationshipModel\": \"CompanyContact\",\n        \"targetRole\": \"Company\"\n      },\n      \"paging\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 100\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Query LOAD_DOCUMENT_GRAPH",
+          "seq": 16,
+          "request": {
+            "url": "http://localhost:8081/api/v2/rpc",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "UAABEARER {{Authorization}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"Query LOAD_DOCUMENT_GRAPH\",\n  \"method\": \"QUERY\",\n  \"params\": {\n    \"query\": {\n      \"targetDocumentModel\": \"Employment_CDM\",\n      \"projectionName\": \"document-graph\",\n      \"constraint\": {\n        \"operator\": \"exact_match\",\n        \"field\": \"/__meta/docRef\",\n        \"value\": \"ContactFinal_DM/41e180b2-6420-4643-a420-a2db3d8cca9f\"\n      },\n      \"paging\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 10\n      }\n    }\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
         }
       ]
     }
-
   ],
   "activeEnvironmentUid": "HgXiu0k1DCHNQ4yYdkSBu",
   "environments": [
