@@ -2,12 +2,10 @@ roles:
   - name: admin
     description: admin role
     accessRights:
-      - DOCUMENT_READ
       - DOCUMENT_CREATE
       - DOCUMENT_UPDATE
       - DOCUMENT_PARTIAL_UPDATE
       - DOCUMENT_DELETE
-      - DOCUMENT_LIST
       - ATTACHMENT_UPLOAD
       - MODEL_MANAGE
       - QUERY
@@ -20,8 +18,6 @@ roles:
   - name: user
     description: user role
     accessRights:
-      - DOCUMENT_READ
-      - DOCUMENT_LIST
       - DOCUMENT_CREATE
       - DOCUMENT_UPDATE
       - DOCUMENT_PARTIAL_UPDATE

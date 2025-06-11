@@ -3,14 +3,6 @@
   "description": "Authorization for user access",
   "policies": [
     {
-      "name": "Document Read By User Created",
-      "description": "User is only able to read the documents created by them",
-      "target": "hasAccessRight('DOCUMENT_READ') && !containsAnyRole('admin')",
-      "rules": [
-        "principal.username == #resource.kernelDocument.__meta.creator"
-      ]
-    },
-    {
       "name": "Document Delete By User Created",
       "description": "User is only able to delete the documents created by them",
       "target": "hasAccessRight('DOCUMENT_DELETE') && !containsAnyRole('admin')",
@@ -45,7 +37,7 @@
     {
       "name": "Document List By User Created",
       "description": "User is only able to see the documents created by them",
-      "target": "hasAccessRight('DOCUMENT_LIST') && !containsAnyRole('admin')",
+      "target": "!containsAnyRole('admin')",
       "templates": [
         {
           "operator": "exact_match",
@@ -56,15 +48,6 @@
     }
   ],
   "permissions": [
-    {
-      "name": "User Read Document Permission",
-      "policy-refs": [
-        "Document Read By User Created"
-      ],
-      "scopes": [
-        "Document Read"
-      ]
-    },
     {
       "name": "User Delete Document Permission",
       "policy-refs": [

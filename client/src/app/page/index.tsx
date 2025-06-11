@@ -24,8 +24,9 @@ import { flatTheme } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/flat/fl
 import { DragAndDropUtils } from "@com.mgmtp.a12.widgets/widgets-core/lib/common";
 import { SizeContext, useWindowSize } from "@com.mgmtp.a12.widgets/widgets-core/lib/layout/size-detector";
 import { shouldForwardProp } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/should-forward-prop";
+import { DateTimeContext } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/date-time/date-time-context";
 
-import { DEFAULT_TRANSLATIONS } from "../../localization";
+import { DEFAULT_TRANSLATIONS, LocaleWithName } from "../../localization";
 
 import { AuthenticatedPage } from "./AuthenticatedPage";
 
@@ -43,6 +44,7 @@ export const BasePage = (): React.ReactNode => {
 
     // Initialize localizations
     const locale = useSelector(LocaleSelectors.locale());
+    const dateTimeLocale = (locale as LocaleWithName).dateTimeLocale;
     const dataFormats = defaultDataFormats(locale);
     const conversion = defaultValueConversion(dataFormats);
     const localizer = defaultLocalizerFactory({
@@ -60,19 +62,21 @@ export const BasePage = (): React.ReactNode => {
                 backend={DragAndDropUtils.DefaultDndBackend}
                 options={DragAndDropUtils.DefaultDndBackendOptions}>
                 <LocalizerContext.Provider value={{ locale, conversion, dataFormats, localizer }}>
-                    <A11YLanguageContext.Provider value={A11yResource}>
-                        <NotificationViews.Frame>
-                            <DirtyHandlingViews.VetoDialog>
-                                <ViewViews.ProgressIndicator progress={busyState ? "loading" : "none"} global>
-                                    {isAuthenticated ? (
-                                        <AuthenticatedPage />
-                                    ) : (
-                                        <LoginPage imageURL={"/images/login_bg.jpg"} />
-                                    )}
-                                </ViewViews.ProgressIndicator>
-                            </DirtyHandlingViews.VetoDialog>
-                        </NotificationViews.Frame>
-                    </A11YLanguageContext.Provider>
+                    <DateTimeContext.Provider value={{ locale: dateTimeLocale }}>
+                        <A11YLanguageContext.Provider value={A11yResource}>
+                            <NotificationViews.Frame>
+                                <DirtyHandlingViews.VetoDialog>
+                                    <ViewViews.ProgressIndicator progress={busyState ? "loading" : "none"} global>
+                                        {isAuthenticated ? (
+                                            <AuthenticatedPage />
+                                        ) : (
+                                            <LoginPage imageURL={"/images/login_bg.jpg"} />
+                                        )}
+                                    </ViewViews.ProgressIndicator>
+                                </DirtyHandlingViews.VetoDialog>
+                            </NotificationViews.Frame>
+                        </A11YLanguageContext.Provider>
+                    </DateTimeContext.Provider>
                 </LocalizerContext.Provider>
             </DndProvider>
         </SizeContext.Provider>

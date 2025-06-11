@@ -10,6 +10,7 @@
 [JDK]: https://adoptopenjdk.net/
 [Gradle]: https://docs.gradle.org/
 [Docker]: https://hub.docker.com/
+[Docker Compose]: https://docs.docker.com/compose/
 [Node]: https://nodejs.org/en/docs/
 [npm]: https://docs.npmjs.com/about-npm
 [npm semver]: https://github.com/npm/node-semver
@@ -39,7 +40,7 @@ By default, A12 Tutorial services are exposed on the following ports:
 ## Prerequisites
 Proper environment setup is crucial for the successful build and run of this project. Please follow the steps in the [environment and tools setup] documentation carefully.
 
-To wrap up, the following [tools](./tool-versions.json) are required to build this project. Versions are maintained in `./tool-versions.json` file and follow [npm semver] versioning patterns.
+To wrap up, the following [tools](./tool-versions.json) are required to build this project. Versions are maintained in `./tool-versions.json` and follow [npm semver] versioning patterns.
 
 <!--- VERSION_TABLE_START (Edit versions in tool-versions.json, not here. Do not delete this tag.) --->
 | Tool                 | Version      | Note |
@@ -52,25 +53,27 @@ To wrap up, the following [tools](./tool-versions.json) are required to build th
 | [Docker Compose]     | '>=2.20.3'   |      |
 <!--- VERSION_TABLE_END (Edit versions in tool-versions.json, not here. Do not delete this tag.) --->
 
-<sup>1</sup>) These tools have to be configured to use proper Artifactory. Please, follow [Artifactory access] documentation to set it up.
+<sup>1</sup>) These tools have to be configured to use proper Artifactory. Please, follow the [Artifactory access] documentation to set it up.
 
 <a name="quickstart"></a>
 ## Quickstart
-Assuming you went through the documentation, your environment is set up and project is prepared, this is the most straightforward way to get your project application up and running:
+Assuming you went through the documentation, your environment is set up and your project is prepared, this is the most straightforward way to get your project application up and running:
 
 **1. Build the application modules**  
 `gradle build`
 
 **2. Run**
 1. Project Template application
-´  1. Run the server application with the default development Spring profile and keep it running:  
+   1. Run the server application with the default development Spring profile and keep it running:  
       `gradle :server:app:bootrun --args='--spring.profiles.active=dev-env'`
    2. Run client
        1. In another terminal window, move to client directory with `cd client`.
        2. Then start the webpack with `npm start` and keep it running.
 2. Project Template init application (for initialization and migration purposes)
-   1. Run the init application with the default development Spring profile:  
-      `gradle :server:init:bootrun --args='--spring.profiles.active=dev-env'`
+   - Run the init application with the default development Spring profile:  
+          `gradle :server:init:bootrun --args='--spring.profiles.active=dev-env'`
+   - Run the init application with the 'init-data' Spring profile additionally to initialize documents based on the `import/data/request` folder:
+          `gradle :server:init:bootrun --args='--spring.profiles.active=dev-env,init-data'`  
 
 **3. Explore the application**  
 The frontend is, by default, running on http://localhost:8081.

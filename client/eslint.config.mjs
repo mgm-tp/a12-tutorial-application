@@ -103,6 +103,7 @@ export default [
                     patterns: [
                         "../**/internal/*",
                         "@com.mgmtp.a12*/**/internal/**",
+                        "@com.mgmtp.a12*/**/a12internal/**",
                         "@com.mgmtp.a12*/**/src/**",
                         "lodash*"
                     ]

@@ -82,8 +82,7 @@ module.exports = {
             chunks: ["silent_renew"]
         }),
         new Webpack.DefinePlugin({
-            // Check if we can enable it in the official release
-            // __A12_MODEL_VERSIONS__: JSON.stringify(collectA12ModelVersions()),
+            __A12_MODEL_VERSIONS__: JSON.stringify(collectA12ModelVersions()),
             minify: true
         }),
         new CopyWebpackPlugin({
