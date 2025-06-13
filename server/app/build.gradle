@@ -26,6 +26,9 @@ sourceSets {
         java {
             srcDir(generatedTypingsOutputDir)
         }
+        checkstyle {
+            checkstyleGeneratedTypings.enabled false
+        }
     }
     main {
         java {
