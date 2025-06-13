@@ -44,6 +44,7 @@ dependencyResolutionManagement {
 
             library('base-bom', 'com.mgmtp.a12.base', 'base-bundle').versionRef('base')
             library('kernel-bom', 'com.mgmtp.a12.kernel', 'kernel-bom').versionRef('kernel')
+            library('kernel-md-document-v2', 'com.mgmtp.a12.kernel', 'kernel-md-document-v2').versionRef('kernel')
             library('uaa-bom', 'com.mgmtp.a12.uaa', 'uaa-bom').versionRef('uaa')
             library('dataservices-bom', 'com.mgmtp.a12.dataservices', 'dataservices-parent').versionRef('dataservices')
         }

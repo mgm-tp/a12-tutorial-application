@@ -15,6 +15,10 @@
             "CustomerType":"lead",
             "DateOfBirth":"1987-10-11"
           },
+          "HistoryInfo": {
+            "CreatedBy": "admin",
+            "CreatedAt": "2025-06-13T14:36:12"
+          },
           "Phones": [
             {
               "PhoneNumber":"123456",

@@ -15,6 +15,31 @@ ext {
                    "description": "A Data Services server with API and implementations to deal with models and documents supporting creation, retrieval, update, deletion and querying"]
 }
 
+configurations {
+    runTypedAccessorGeneratorConfig
+}
+
+def generatedTypingsOutputDir = layout.buildDirectory.dir("generated/typings").get().asFile
+def dmFilePath = project(':import').projectDir.toPath().resolve("models/contact/Contact_DM.json")
+def packagePrefix = "com.mgmtp.a12.tutorial.server.contact.typings"
+
+sourceSets {
+    generatedTypings {
+        java {
+            srcDir(generatedTypingsOutputDir)
+        }
+        checkstyle {
+            checkstyleGeneratedTypings.enabled false
+        }
+    }
+    main {
+        java {
+            compileClasspath += sourceSets.generatedTypings.output
+            runtimeClasspath += sourceSets.generatedTypings.output
+        }
+    }
+}
+
 dependencies {
     //Open rewrite analysis
     rewrite libs.rewrite.static.analysis
@@ -48,7 +73,21 @@ dependencies {
 
     // OpenCage
     implementation libs.jopencage
+
+    // Generation of typed accessors
+    generatedTypingsImplementation a12Libs.kernel.md.document.v2
+    runTypedAccessorGeneratorConfig group: 'com.mgmtp.a12.kernel', name: 'kernel-md-typed-accessor-gen', version: a12Libs.versions.getKernel().get(), classifier: 'TypedAccessorGenerator-CLI'
 }
+
+tasks.register('runTypedAccessorGenerator', JavaExec) {
+    classpath = configurations.runTypedAccessorGeneratorConfig
+    mainClass = 'com.mgmtp.a12.kernel.md.document.typed_accessor_gen.TypedAccessorGenerator'
+    args '--document-model-file', dmFilePath,
+        '--package-prefix', packagePrefix,
+        '--output-dir', generatedTypingsOutputDir
+}
+
+tasks.compileGeneratedTypingsJava.dependsOn(runTypedAccessorGenerator)
 
 springBoot {
     mainClass = 'com.mgmtp.a12.tutorial.server.TutorialServerApplication'
