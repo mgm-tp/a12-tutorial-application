@@ -384,6 +384,167 @@
                 "enableRemove": true
               }
             ]
+          },
+          {
+            "type": "Section",
+            "id": "section_a7c68",
+            "name": "ChangeInfo",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Change information"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Änderungsinformation"
+                  }
+                ]
+              }
+            },
+            "collapsible": true,
+            "initiallyCollapsed": true,
+            "screenElements": [
+              {
+                "type": "ControlGrid",
+                "id": "controlgrid_ce98d",
+                "name": "CG1",
+                "layout": {
+                  "lg": "6-6"
+                },
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "row_f1d97",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_70a4c",
+                        "readonly": true,
+                        "elementRef": "field_42752"
+                      },
+                      {
+                        "type": "Control",
+                        "id": "control_72492",
+                        "readonly": true,
+                        "elementRef": "field_2df36"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "DetachedRepeat",
+                "id": "detachedrepeat_3add5",
+                "name": "ChangeHistory_Repeat",
+                "title": {
+                  "type": "Multilingual",
+                  "multilingualText": {
+                    "text": [
+                      {
+                        "locale": "en",
+                        "text": "Change history"
+                      },
+                      {
+                        "locale": "de",
+                        "text": "Änderungshistorie"
+                      }
+                    ]
+                  }
+                },
+                "readonly": true,
+                "repeatOverviewColumn": [
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_81a0a",
+                    "elementRef": "field_4cf70"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_2d996",
+                    "elementRef": "field_d3deb"
+                  }
+                ],
+                "groupRef": "group_c79dd",
+                "enableAdd": false,
+                "enableRemove": false,
+                "detailScreen": {
+                  "id": "screen_3ecb2",
+                  "name": "Change Details",
+                  "title": {
+                    "type": "Multilingual",
+                    "multilingualText": {
+                      "text": [
+                        {
+                          "locale": "en",
+                          "text": "Change Details"
+                        },
+                        {
+                          "locale": "de",
+                          "text": "Änderungsdetails"
+                        }
+                      ]
+                    }
+                  },
+                  "screenElements": [
+                    {
+                      "type": "ControlGrid",
+                      "id": "controlgrid_c8bf3",
+                      "name": "MyGrid",
+                      "layout": {
+                        "lg": "6-6"
+                      },
+                      "row": [
+                        {
+                          "type": "Row",
+                          "id": "row_0ec16",
+                          "cell": [
+                            {
+                              "type": "Control",
+                              "id": "control_05d84",
+                              "elementRef": "field_4cf70"
+                            },
+                            {
+                              "type": "Control",
+                              "id": "control_e09a4",
+                              "elementRef": "field_d3deb"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "InlineRepeat",
+                      "id": "inlinerepeat_f79ca",
+                      "name": "ChangeDetails_Repeat",
+                      "readonly": true,
+                      "repeatOverviewColumn": [
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_914d1",
+                          "elementRef": "field_409df"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_32c60",
+                          "elementRef": "field_622ed"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_10fb3",
+                          "elementRef": "field_87264"
+                        }
+                      ],
+                      "groupRef": "group_25635",
+                      "enableAdd": false,
+                      "enableRemove": false
+                    }
+                  ]
+                }
+              }
+            ]
           }
         ]
       }
