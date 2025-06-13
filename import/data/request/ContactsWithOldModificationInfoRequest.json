@@ -1,0 +1,246 @@
+[
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContact1",
+    "params": {
+      "document": {
+        "Contact": {
+          "PersonalData": {
+            "DateOfBirth": "1990-06-01",
+            "FirstName": "Max",
+            "Gender": "MALE",
+            "LastName": "Mustermann",
+            "CustomerType": "lead",
+            "EmailAddress": "Max@Mustermann.de",
+            "Nationality": "German"
+          },
+          "HistoryInfo": {
+            "CreatedBy": "admin",
+            "CreatedAt": "2025-06-13T14:26:25",
+            "ChangeHistory": [
+              {
+                "ModifiedAt": "2025-06-13T14:42:27",
+                "ModifiedBy": "admin",
+                "ChangeDetails": [
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "Nationality",
+                    "Repetition": 1
+                  }
+                ]
+              },
+              {
+                "ModifiedAt": "2025-06-13T14:44:32",
+                "ModifiedBy": "admin",
+                "ChangeDetails": [
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "DateOfBirth",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "Gender",
+                    "Repetition": 1
+                  }
+                ]
+              },
+              {
+                "ModifiedAt": "2024-06-13T14:46:03",
+                "ModifiedBy": "admin",
+                "ChangeDetails": [
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "CustomerType",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "Country",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "City",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "Street",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "Housenumber",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "Zip",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "updated",
+                    "ChangedProperty": "Nationality",
+                    "Repetition": 1
+                  }
+                ]
+              },
+              {
+                "ModifiedAt": "2023-06-13T14:46:52",
+                "ModifiedBy": "admin",
+                "ChangeDetails": [
+                  {
+                    "ChangeType": "updated",
+                    "ChangedProperty": "Street",
+                    "Repetition": 1
+                  }
+                ]
+              }
+            ]
+          },
+          "Phones": [
+            {
+              "Type": "MOBILE",
+              "PhoneNumber": "+49168562178"
+            }
+          ],
+          "Address": [
+            {
+              "Zip": "80809",
+              "Country": "Germany",
+              "Street": "Taunusstrasse",
+              "City": "Munich",
+              "Housenumber": "23"
+            }
+          ]
+        }
+      },
+      "documentModelName": "Contact_DM",
+      "locale": "en"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "ADD_DOCUMENT",
+    "id": "AddContact2",
+    "params": {
+      "document": {
+        "Contact": {
+          "PersonalData": {
+            "DateOfBirth": "1989-06-01",
+            "FirstName": "Maria",
+            "Gender": "MALE",
+            "LastName": "Perez Ortiz",
+            "CustomerType": "lead",
+            "EmailAddress": "Maria@Perez.com.mx",
+            "Nationality": "Mexican"
+          },
+          "HistoryInfo": {
+            "CreatedBy": "admin",
+            "CreatedAt": "2025-06-13T14:26:25",
+            "ChangeHistory": [
+              {
+                "ModifiedAt": "2025-06-13T14:42:27",
+                "ModifiedBy": "admin",
+                "ChangeDetails": [
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "Nationality",
+                    "Repetition": 1
+                  }
+                ]
+              },
+              {
+                "ModifiedAt": "2025-06-13T14:44:32",
+                "ModifiedBy": "admin",
+                "ChangeDetails": [
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "DateOfBirth",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "Gender",
+                    "Repetition": 1
+                  }
+                ]
+              },
+              {
+                "ModifiedAt": "2023-06-13T14:46:03",
+                "ModifiedBy": "admin",
+                "ChangeDetails": [
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "CustomerType",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "Country",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "City",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "Street",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "Housenumber",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "added",
+                    "ChangedProperty": "Zip",
+                    "Repetition": 1
+                  },
+                  {
+                    "ChangeType": "updated",
+                    "ChangedProperty": "Nationality",
+                    "Repetition": 1
+                  }
+                ]
+              },
+              {
+                "ModifiedAt": "2024-06-13T14:46:52",
+                "ModifiedBy": "admin",
+                "ChangeDetails": [
+                  {
+                    "ChangeType": "updated",
+                    "ChangedProperty": "Street",
+                    "Repetition": 1
+                  }
+                ]
+              }
+            ]
+          },
+          "Phones": [
+            {
+              "Type": "MOBILE",
+              "PhoneNumber": "+521558963214"
+            }
+          ],
+          "Address": [
+            {
+              "Zip": "01569",
+              "Country": "Mexico",
+              "Street": "La calle de las rosas",
+              "City": "CDMX",
+              "Housenumber": "101"
+            }
+          ]
+        }
+      },
+      "documentModelName": "Contact_DM",
+      "locale": "en"
+    }
+  }
+]

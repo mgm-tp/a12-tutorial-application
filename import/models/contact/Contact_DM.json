@@ -696,6 +696,435 @@
                     }
                   ]
                 }
+              },
+              {
+                "type": "Group",
+                "id": "group_96b96",
+                "name": "HistoryInfo",
+                "Group": {
+                  "repeatability": 1,
+                  "elements": [
+                    {
+                      "type": "Field",
+                      "id": "field_42752",
+                      "name": "CreatedAt",
+                      "Field": {
+                        "fieldType": {
+                          "type": "DateTimeType",
+                          "DateTimeType": {
+                            "format": "yyyy-MM-dd'T'HH:mm:ss"
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Created at"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Erstellt am"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_2df36",
+                      "name": "CreatedBy",
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Created by"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Erstellt von"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "group_c79dd",
+                      "name": "ChangeHistory",
+                      "Group": {
+                        "repeatability": 1000,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "field_4cf70",
+                            "name": "ModifiedAt",
+                            "Field": {
+                              "fieldType": {
+                                "type": "DateTimeType",
+                                "DateTimeType": {
+                                  "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                }
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Modified at"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Geändert am"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "field_d3deb",
+                            "name": "ModifiedBy",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Modified by"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Geändert von"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "group_25635",
+                            "name": "ChangeDetails",
+                            "Group": {
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Change Details"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Änderungsdetails"
+                                }
+                              ],
+                              "repeatability": 50,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "field_409df",
+                                  "name": "ChangedProperty",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "EnumerationType",
+                                      "EnumerationType": {
+                                        "values": [
+                                          {
+                                            "value": "FirstName",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Personal Data > First Name"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Persönliche Daten > Vorname"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "LastName",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Personal Data > Last Name"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Persönliche Daten > Nachname"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "EmailAddress",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Personal Data > Email Address"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Persönliche Daten > E-Mail-Adresse"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "Nationality",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Personal Data > Nationality"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Persönliche Daten > Nationalität"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "Gender",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Personal Data > Gender"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Persönliche Daten > Geschlecht"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "CustomerType",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Personal Data > Customer Type"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Persönliche Daten > Kundentyp"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "DateOfBirth",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Personal Data > Date of Birth"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Persönliche Daten > Geburtstag"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "attachment_id",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Personal Data > Profile Picture"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Persönliche Daten > Profilbild"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "PhoneNumber",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Phone > Phone Number"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Telefon > Telefonnummer"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "Type",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Phone > Type"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Telefon > Art"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "Street",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Address > Street"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Adresse > Straße"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "Housenumber",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Address > Housenumber"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Adresse > Hausnummer"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "City",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Address > City"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Adresse > Stadt"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "Zip",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Address > Zip Code"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Adresse > Postleitzahl"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "Country",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "Address > Country"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "Adresse > Land"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "categories": []
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Property"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Eigenschaft"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "field_622ed",
+                                  "name": "ChangeType",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "EnumerationType",
+                                      "EnumerationType": {
+                                        "values": [
+                                          {
+                                            "value": "added",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "added"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "hinzugefügt"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "deleted",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "deleted"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "entfernt"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "value": "updated",
+                                            "label": [
+                                              {
+                                                "locale": "en",
+                                                "text": "updated"
+                                              },
+                                              {
+                                                "locale": "de",
+                                                "text": "aktualisiert"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Type"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Typ"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "field_87264",
+                                  "name": "Repetition",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "NumberType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Repetition"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Wiederholung"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ]
           }
