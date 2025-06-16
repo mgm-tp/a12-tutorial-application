@@ -33,8 +33,17 @@
 package com.mgmtp.a12.tutorial.server.utils;
 
 import com.mgmtp.a12.kernel.md.document.apiV2.DocumentPointer;
+import com.mgmtp.a12.kernel.md.document.apiV2.typed.TypedPointer;
+import com.mgmtp.a12.kernel.md.document.apiV2.typed.TypedRepetitionsPointer;
+import com.mgmtp.a12.tutorial.server.typings.pointers._contact_dc.PContact;
+import com.mgmtp.a12.tutorial.server.typings.pointers._contact_dc._contact.PHistoryInfo;
+import com.mgmtp.a12.tutorial.server.typings.pointers._contact_dc._contact._historyinfo.PChangeHistory;
+import com.mgmtp.a12.tutorial.server.typings.views.Contact_Dc;
+import com.mgmtp.a12.tutorial.server.typings.views._contact_dc._contact._historyinfo.ChangeHistory;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.time.Instant;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Constants {
@@ -65,5 +74,16 @@ public final class Constants {
             "/Contact/HistoryInfo/ChangeHistory[%s]/ChangeDetails[%s]/ChangeType";
     public static final String CONTACT_CHANGE_REPETITION_POINTER_PATTERN =
             "/Contact/HistoryInfo/ChangeHistory[%s]/ChangeDetails[%s]/Repetition";
+
+    // typed pointer
+    public static final PContact<Contact_Dc> CONTACT_TYPED_POINTER = Contact_Dc._pointer().contact();
+    public static final PHistoryInfo<Contact_Dc> CONTACT_HISTORY_INFO_TYPED_POINTER =
+            CONTACT_TYPED_POINTER.historyInfo();
+    public static final TypedPointer<Contact_Dc, Instant> CONTACT_CREATED_AT_TYPED_POINTER =
+            CONTACT_HISTORY_INFO_TYPED_POINTER.createdAt();
+    public static final TypedPointer<Contact_Dc, String> CONTACT_CREATED_BY_TYPED_POINTER =
+            CONTACT_HISTORY_INFO_TYPED_POINTER.createdBy();
+    public static final TypedRepetitionsPointer<Contact_Dc, ChangeHistory, PChangeHistory<Contact_Dc>>
+            CONTACT_CHANGE_HISTORY_TYPED_POINTER = CONTACT_HISTORY_INFO_TYPED_POINTER.changeHistory();
 
 }

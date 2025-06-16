@@ -48,7 +48,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ChangeInfoListener {
 
-    private final ChangeInfoService changeInfoService;
+    private final ChangeInfoServiceTyped changeInfoService;
 
     /**
      * Before the document is created, the creation info will be set from the following listener.
