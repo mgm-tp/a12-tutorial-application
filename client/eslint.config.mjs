@@ -125,7 +125,8 @@ export default [
                     peerDependencies: false,
                     bundledDependencies: false
                 }
-            ]
+            ],
+            "react/prop-types": "off"
         }
     }
 ];

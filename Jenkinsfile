@@ -111,7 +111,7 @@ pipeline {
                             default:
                                 echo "Deploy to INT environment with status $downstreamBuildResult."
                                 currentBuild.result = downstreamBuildResult
-                                catchError(buildResult: null, stageResult: downstreamBuildResult) {
+                                catchError(buildResult: downstreamBuildResult, stageResult: downstreamBuildResult) {
                                     sh "exit 1"
                                 }
                                 break

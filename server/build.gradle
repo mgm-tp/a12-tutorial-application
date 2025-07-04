@@ -40,6 +40,10 @@ subprojects {
         }
 
         tasks.withType(Checkstyle).configureEach {
+            if (name == "checkstyleGeneratedTypings") {
+                enabled = false
+            }
+            
             reports {
                 xml.required = true
                 html.required = true
