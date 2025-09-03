@@ -1,6 +1,6 @@
-import { UaaClient } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
 import {
     UaaActions,
+    UaaClient,
     UaaClientConfiguration,
     UaaMiddlewares,
     UaaReducer
@@ -21,9 +21,9 @@ import { CRUDFactories } from "@com.mgmtp.a12.crud/crud-core";
 import { DirtyHandlingFactories } from "@com.mgmtp.a12.client/client-core/lib/extensions/dirtyHandling";
 import {
     cddDataHolderReducerExtension,
-    createCddDataProvider,
     cddReducers,
     cdmSagas,
+    createCddDataProvider,
     createCdmMiddlewares,
     dgReducerFactory,
     RelationshipFactories,
@@ -31,6 +31,9 @@ import {
 } from "@com.mgmtp.a12.relationshipengine/relationshipengine-core";
 import { OverviewEngineFactories } from "@com.mgmtp.a12.overviewengine/overviewengine-core/lib/main/client-extensions";
 import { DeepLinkingFactories } from "@com.mgmtp.a12.client/client-core/lib/extensions/deep-linking";
+import { workflowsSagas } from "@com.mgmtp.a12.workflows/workflows-core/lib/sagas";
+import { workflowsMiddlewares } from "@com.mgmtp.a12.workflows/workflows-core/lib/middlewares";
+import { WorkflowsFactories } from "@com.mgmtp.a12.workflows/workflows-core/lib/factories";
 
 import { registerModulesOnSetModelGraphMiddleware, unregisterModulesOnLogoutMiddleware } from "./modules";
 import { setRolesForUserAfterTokenRefresh } from "./uaa/sagas";
@@ -48,7 +51,7 @@ export function setup(): {
         createCddDataProvider(),
         createEmptyDocumentDataProvider(),
         RelationshipFactories.createRelationshipDataProvider(),
-        ...OverviewEngineFactories.createDataProviders(),
+        ...OverviewEngineFactories.createDataProviders(WorkflowsFactories.createDataLoader()),
         platformSingleDocumentDataProvider
     ];
 
@@ -67,7 +70,8 @@ export function setup(): {
         dataHandlers,
         overridePlatformSagas: [
             ...DirtyHandlingFactories.createSagas(),
-            ...OverviewEngineFactories.createApplicationSagas()
+            ...OverviewEngineFactories.createApplicationSagas(),
+            ...workflowsSagas
         ],
         customSagas: [
             ...CRUDFactories.createSagas(),
@@ -85,7 +89,8 @@ export function setup(): {
             CRUDFactories.createCRUDMiddleware(),
             registerModulesOnSetModelGraphMiddleware,
             unregisterModulesOnLogoutMiddleware,
-            ...UaaMiddlewares()
+            ...UaaMiddlewares(),
+            ...workflowsMiddlewares()
         ],
         dataReducers: [
             ...formEngineDataReducers,

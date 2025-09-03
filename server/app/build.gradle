@@ -47,6 +47,8 @@ dependencies {
     implementation a12Libs.dataservices.server.app
     implementation(a12Libs.dataservices.data.seed)
 
+    implementation a12Libs.workflows.extension
+
     // A12 UAA
     implementation a12Libs.uaa.authorization.a12.extension
     implementation a12Libs.uaa.authorization.introspector
