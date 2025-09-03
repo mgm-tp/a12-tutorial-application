@@ -25,6 +25,7 @@ import { withDeepLinking } from "@com.mgmtp.a12.client/client-core/deepLinking";
 import { withDataServicesConfiguration } from "@com.mgmtp.a12.client/client-core/dataServicesAdapter";
 import { withContentEngine } from "@com.mgmtp.a12.contentengine/contentengine-core";
 import { DefaultElementLibrary } from "@com.mgmtp.a12.contentengine/contentengine-default-element-library";
+import { withWorkflows, WorkflowsFactories } from "@com.mgmtp.a12.workflows/workflows-core/lib";
 
 import { registerModulesOnSetModelGraphMiddleware, unregisterModulesOnLogoutMiddleware } from "./modules";
 import { isProduction } from "./config";
@@ -51,6 +52,9 @@ export function setup() {
         config: {
             preComputeNewDocuments: true,
             composeEnhancer: isProduction ? undefined : enableReduxDevTools()
+        },
+        overviewEngine: {
+            dataLoader: WorkflowsFactories.createDataLoader()
         },
         formEngine: {
             sagas: {
@@ -84,7 +88,8 @@ export function setup() {
         withRelationshipFormEngine,
         withCRUD,
         withContentEngine(DefaultElementLibrary.get().id),
-        withPlatformModelLoader
+        withPlatformModelLoader,
+        withWorkflows
     );
 
     const a12ExtensionFeatures = combineFeatures(withLocalization, withDirtyHandling, withDeepLinking);

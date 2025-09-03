@@ -1,0 +1,199 @@
+{
+  "header": {
+    "id": "CustomerOnboarding_OM",
+    "modelType": "overview",
+    "modelVersion": "38.2.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [
+      {
+        "locale": "en",
+        "text": "Overview"
+      },
+      {
+        "locale": "de",
+        "text": "Überblick"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "admin,user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "purpose": "document-model-for-overview",
+        "modelType": "document",
+        "alias": "DM",
+        "reference": "Contact_DM"
+      }
+    ]
+  },
+  "content": {
+    "configuration": {
+      "enableFilter": true,
+      "filterConfiguration": {
+        "showFilterButton": true,
+        "showFilterBar": true,
+        "filterMode": "all"
+      },
+      "showFullTextSearch": true,
+      "pagingSize": 50,
+      "enableColumnsResize": true
+    },
+    "subHeaderBox": {
+      "majorElements": [
+        {
+          "type": "search"
+        },
+        {
+          "type": "filter"
+        }
+      ],
+      "minorElements": [
+        {
+          "type": "button",
+          "label": [
+            {
+              "locale": "en",
+              "text": "New candidate"
+            },
+            {
+              "locale": "de",
+              "text": "Neuer Kandidat"
+            }
+          ],
+          "event": "startProcess_CustomerOnboardingProcess",
+          "icon": {
+            "name": "double_arrow",
+            "theme": "filled"
+          },
+          "destructive": false,
+          "primary": true
+        }
+      ]
+    },
+    "footerBox": {
+      "majorElements": [],
+      "minorElements": []
+    },
+    "columns": [
+      {
+        "id": "column-c3b30",
+        "label": [
+          {
+            "locale": "en",
+            "text": "Profile Picture"
+          },
+          {
+            "locale": "de",
+            "text": "Profilbild"
+          }
+        ],
+        "width": 1,
+        "elementRef": "group_05909",
+        "sortable": false,
+        "attachmentDisplayMode": "preview"
+      },
+      {
+        "id": "column-79ccd",
+        "width": 1,
+        "styles": {},
+        "elementRef": "F3",
+        "sortable": true,
+        "preferredSorting": "ASC"
+      },
+      {
+        "id": "column-ea556",
+        "width": 1,
+        "styles": {},
+        "elementRef": "F4",
+        "sortable": true,
+        "preferredSorting": "ASC"
+      },
+      {
+        "id": "column-bd2df",
+        "width": 1,
+        "alignment": {
+          "content": {
+            "vertical": "middle"
+          }
+        },
+        "styles": {},
+        "elementRef": "field_e3933",
+        "sortable": true,
+        "preferredSorting": "ASC"
+      },
+      {
+        "id": "column-c8c9a",
+        "width": 1,
+        "styles": {},
+        "elementRef": "include_231d9_F3",
+        "sortable": true,
+        "preferredSorting": "ASC"
+      },
+      {
+        "id": "column-f08bd",
+        "icon": {
+          "name": "person",
+          "theme": "outlined"
+        },
+        "width": 1,
+        "styles": {},
+        "elementRef": "include_231d9_F7",
+        "sortable": true,
+        "preferredSorting": "ASC"
+      }
+    ],
+    "rowActionGroup": {
+      "actions": [
+        {
+          "event": "event_delete",
+          "confirmation": {
+            "title": [
+              {
+                "locale": "en",
+                "text": "Delete Item"
+              },
+              {
+                "locale": "de",
+                "text": "Löschen des Eintrags"
+              }
+            ],
+            "message": [
+              {
+                "locale": "en",
+                "text": "Do you really want to delete this item?"
+              },
+              {
+                "locale": "de",
+                "text": "Möchten Sie diesen Eintrag wirklich löschen?"
+              }
+            ]
+          },
+          "icon": {
+            "name": "delete"
+          },
+          "destructive": false,
+          "primary": false
+        },
+        {
+          "icon": {
+            "name": "assignment_ind",
+            "theme": "filled"
+          },
+          "event": "claim",
+          "destructive": false,
+          "primary": false
+        }
+      ]
+    }
+  }
+}

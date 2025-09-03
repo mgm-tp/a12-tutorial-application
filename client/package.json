@@ -48,6 +48,7 @@
     "@com.mgmtp.a12.utils/utils-localization-react": "7.1.0",
     "@com.mgmtp.a12.utils/utils-logging": "6.1.0",
     "@com.mgmtp.a12.widgets/widgets-core": "38.2.0",
+    "@com.mgmtp.a12.workflows/workflows-core": "12.2.2",
     "@redux-devtools/extension": "3.2.2",
     "date-fns": "^4.1.0",
     "oidc-client-ts": "^2.4.0",
