@@ -77,6 +77,8 @@ dependencies {
     developmentOnly(a12Libs.dataservices.sme.workspace.support)
     implementation a12Libs.rmc.conversion
 
+    implementation a12Libs.workflows.extension
+
     // A12 UAA
     implementation a12Libs.uaa.authorization.a12.extension
     implementation a12Libs.uaa.authorization.introspector

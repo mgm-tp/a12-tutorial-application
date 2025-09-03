@@ -18,7 +18,13 @@
         "value": "user"
       }
     ],
-    "modelReferences": []
+    "modelReferences": [
+      {
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "WorkflowsMetadata_Dc"
+      }
+    ]
   },
   "content": {
     "modelInfo": {
@@ -52,6 +58,12 @@
                       "type": "Field",
                       "id": "F3",
                       "name": "FirstName",
+                      "annotations": [
+                        {
+                          "name": "availableInProcessAs",
+                          "value": "customerFirstName"
+                        }
+                      ],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -75,6 +87,12 @@
                       "type": "Field",
                       "id": "F4",
                       "name": "LastName",
+                      "annotations": [
+                        {
+                          "name": "availableInProcessAs",
+                          "value": "customerLastName"
+                        }
+                      ],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -98,6 +116,12 @@
                       "type": "Field",
                       "id": "field_8d972",
                       "name": "EmailAddress",
+                      "annotations": [
+                        {
+                          "name": "availableInProcessAs",
+                          "value": "customerEmail"
+                        }
+                      ],
                       "Field": {
                         "fieldType": {
                           "type": "StringType",
@@ -217,6 +241,12 @@
                       "type": "Field",
                       "id": "field_e3933",
                       "name": "CustomerType",
+                      "annotations": [
+                        {
+                          "name": "availableInProcessAs",
+                          "value": "customerType"
+                        }
+                      ],
                       "Field": {
                         "fieldType": {
                           "type": "EnumerationType",
@@ -695,6 +725,17 @@
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "Group",
+                "id": "include_231d9",
+                "name": "A12WF",
+                "Group": {
+                  "repeatability": 1,
+                  "includeConfig": {
+                    "reference": "WorkflowsMetadata_Dc"
+                  }
                 }
               }
             ]

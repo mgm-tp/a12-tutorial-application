@@ -38,6 +38,9 @@ gradle-app.setting
 .DS_Store
 /server/postgres/
 
+# CIB 7 file database
+**/cib7.h2*.db
+
 # SME settings file
 import/**/settings.yaml
 

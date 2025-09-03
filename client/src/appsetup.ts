@@ -58,6 +58,7 @@ import { withDataServicesConfiguration } from "@com.mgmtp.a12.client/client-core
 import { withContentEngine } from "@com.mgmtp.a12.contentengine/contentengine-core";
 import { DefaultElementLibrary } from "@com.mgmtp.a12.contentengine/contentengine-default-element-library";
 import { withUaa } from "@com.mgmtp.a12.uaa/uaa-authentication-a12-client";
+import { withWorkflows, WorkflowsFactories } from "@com.mgmtp.a12.workflows/workflows-core";
 
 import { registerModulesOnSetModelGraphMiddleware, unregisterModulesOnLogoutMiddleware } from "./modules";
 import { isProduction } from "./config";
@@ -84,6 +85,9 @@ export function setup() {
         config: {
             preComputeNewDocuments: true,
             composeEnhancer: isProduction ? undefined : enableReduxDevTools()
+        },
+        overviewEngine: {
+            dataLoader: WorkflowsFactories.createDataLoader()
         },
         formEngine: {
             sagas: {
@@ -117,7 +121,8 @@ export function setup() {
         withCRUD,
         withTreeEngine,
         withContentEngine(DefaultElementLibrary.get().id),
-        withPlatformModelLoader
+        withPlatformModelLoader,
+        withWorkflows
     );
 
     const a12ExtensionFeatures = combineFeatures(withDirtyHandling, withDeepLinking);
