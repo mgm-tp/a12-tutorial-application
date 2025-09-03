@@ -95,6 +95,15 @@
             ],
             "cwd": "${workspaceFolder}/server/init",
             "projectName": "init"
+        },
+        {
+            "type": "java",
+            "name": "workflow engine start",
+            "request": "launch",
+            "mainClass": "com.mgmtp.a12.tutorial.workflow.engine.WorkflowEngineTutorialApplication",
+            "args": [],
+            "cwd": "${workspaceFolder}/workflow-engine",
+            "projectName": "workflow-engine"
         }
     ]
 }

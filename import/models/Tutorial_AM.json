@@ -121,6 +121,67 @@
             ]
           }
         ]
+      },
+      {
+        "name": "CustomerOnboardingWorkflowModule",
+        "menu": {
+          "name": "CustomerOnboarding",
+          "label": [
+            {
+              "locale": "en",
+              "text": "Customer Onboarding"
+            },
+            {
+              "locale": "de",
+              "text": "Kunden Onboarding"
+            }
+          ],
+          "initialActivity": {
+            "descriptor": {
+              "view": "TaskList",
+              "model": "Contact_DM"
+            }
+          }
+        },
+        "flows": [
+          {
+            "name": "TaskFlow",
+            "scenes": [
+              {
+                "name": "CustomerOnboardingOverview",
+                "description": "Overview of CustomerOnboarding Processes",
+                "matchConditions": [
+                  {
+                    "key": "model",
+                    "mustEqual": "Contact_DM"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": false
+                  },
+                  {
+                    "key": "view",
+                    "mustEqual": "TaskList"
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "OverviewEngine",
+                      "models": [
+                        {
+                          "modelType": "overview",
+                          "name": "CustomerOnboarding_OM"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       }
     ],
     "region": {

@@ -41,6 +41,13 @@ roles:
       - ATTACHMENT_UPLOAD
       - MODEL_MANAGE
       - QUERY
+      - TASK_ASSIGN
+      - TASK_COMPLETE
+      - SEND_MESSAGE
+      - START_PROCESS
+      - GET_PROCESS_VARIABLE_UPDATES
+      - CREATE_METADATA
+      - REMOVE_METADATA
   - name: systemAdmin
     description: system admin role
     accessRights:
@@ -57,3 +64,7 @@ roles:
       - MODEL_READ
       - ATTACHMENT_UPLOAD
       - QUERY
+      - TASK_ASSIGN
+      - TASK_COMPLETE
+      - SEND_MESSAGE
+      - START_PROCESS

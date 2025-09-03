@@ -38,9 +38,11 @@ include 'server'
 include 'server:app'
 include 'server:init'
 include 'import'
+include 'workflow-engine'
 
 dependencyResolutionManagement {
     def springBootVersion = '3.5.9'
+    def cibsevenVersion = '2.0.0'
     versionCatalogs {
         gradlePluginLibs {
             version('spring-boot', springBootVersion)
@@ -65,12 +67,15 @@ dependencyResolutionManagement {
             version('kernel', '30.8.1')
             version('uaa', '9.3.2')
             version('dataservices', '38.4.1')
+            version('workflows', '12.2.5')
 
             library('uaa-authorization-a12-extension', 'com.mgmtp.a12.uaa', 'uaa-authorization-a12-extension').versionRef('uaa')
             library('uaa-authorization-introspector', 'com.mgmtp.a12.uaa', 'uaa-authorization-introspector').versionRef('uaa')
             library('dataservices-server-app', 'com.mgmtp.a12.dataservices', 'dataservices-server-app').versionRef('dataservices')
             library('dataservices-server-init-app', 'com.mgmtp.a12.dataservices', 'dataservices-server-init-app').versionRef('dataservices')
             library("dataservices-data-seed", "com.mgmtp.a12.dataservices", "dataservices-data-seed").versionRef("dataservices")
+            library("workflows-extension", "com.mgmtp.a12.workflows", "workflows-extension").versionRef("workflows")
+            library("workflows-engine", "com.mgmtp.a12.workflows", "workflows-engine-distribution").versionRef("workflows")
 
             library('base-bom', 'com.mgmtp.a12.base', 'base-bom').versionRef('base')
             library('kernel-bom', 'com.mgmtp.a12.kernel', 'kernel-bom').versionRef('kernel')
@@ -85,13 +90,18 @@ dependencyResolutionManagement {
 
             library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('spring-boot')
             library('spring-boot-devtools', 'org.springframework.boot', 'spring-boot-devtools').versionRef('spring-boot')
+            library('spring-boot-starter-web', 'org.springframework.boot', 'spring-boot-starter-web').versionRef('spring-boot')
             library('logstash', 'net.logstash.logback', 'logstash-logback-encoder').versionRef('logstash')
             library('logback-classic', 'ch.qos.logback', 'logback-classic').versionRef('logback-classic')
         }
 
         testCatalogLibs {
+            version('cibseven', cibsevenVersion)
             version('spring-boot', springBootVersion)
+
             library('spring-boot-starter-test', 'org.springframework.boot', 'spring-boot-starter-test').versionRef('spring-boot')
+            library('cibseven-junit5', 'org.cibseven.bpm', 'cibseven-bpm-junit5').versionRef('cibseven')
+            library('cibseven-bpm-assert', 'org.cibseven.bpm', 'cibseven-bpm-assert').versionRef('cibseven')
         }
     }
 }
