@@ -5,6 +5,7 @@ import { UaaSelectors, UserInfoHeader } from "@com.mgmtp.a12.uaa/uaa-authenticat
 
 import { RESOURCE_KEYS, useLocalizer } from "../localization";
 import LocaleChooser from "../components/LocaleChooser";
+import ThemeChooser from "../components/ThemeChooser";
 
 export const customLayoutProvider: FrameViews.LayoutProvider = (name: string) => {
     // "ApplicationFrame" is the hardcoded layout name taken from the App Model and is the default for the Client.
@@ -32,6 +33,10 @@ function CustomApplicationFrameLayout(props: FrameViews.ApplicationFrameLayoutPr
             additionalHeaderItems={[
                 {
                     item: <LocaleChooser />,
+                    orientation: "rightSlots-left"
+                },
+                {
+                    item: <ThemeChooser />,
                     orientation: "rightSlots-left"
                 },
                 {

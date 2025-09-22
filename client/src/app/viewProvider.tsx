@@ -6,6 +6,7 @@ import { CRUDViews } from "@com.mgmtp.a12.crud/crud-core";
 import { ModuleRegistryProvider } from "@com.mgmtp.a12.client/client-core/lib/core/application";
 import { TreeEngineFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/client";
 import { DefaultElementLibraryFactories } from "@com.mgmtp.a12.contentengine/contentengine-default-element-library";
+import { withFormElementContexts } from "@com.mgmtp.a12.formengine/formengine-content-elements";
 
 import { store } from "..";
 
@@ -22,12 +23,7 @@ export function createViewProvider(): View.Provider {
     const enginesViewMap = createEnginesViewMap();
 
     function chainedViewProvider(componentName: string): ComponentType<View> {
-        return (
-            enginesViewMap[componentName] ||
-            DefaultElementLibraryFactories.viewComponentProvider(componentName) ||
-            FrameFactories.viewProvider(componentName) ||
-            Placeholder
-        );
+        return enginesViewMap[componentName] || FrameFactories.viewProvider(componentName) || Placeholder;
     }
 
     return ModuleRegistryProvider.getViewProvider(store.getState(), chainedViewProvider);
@@ -49,7 +45,8 @@ function createEnginesViewMap(): ViewMap {
         },
         OverviewEngine(props) {
             return <CRUDViews.OverviewEngineView {...props} timeMode="24h" />;
-        }
+        },
+        ContentEngine: withFormElementContexts({ ViewComponent: DefaultElementLibraryFactories.ViewComponent })
     };
 }
 

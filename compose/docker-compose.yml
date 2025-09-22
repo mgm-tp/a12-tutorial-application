@@ -30,10 +30,10 @@ services:
       SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
       MGMTP_A12_DATASERVICES_CONTENTSTORE_BASE-URL: http://localhost:8082
       MGMTP_A12_DATASERVICES_QUERY_REINDEXING_MODE: rebuild_index
-      MGMTP_A12_UAA_AUTHENTICATION_PRINCIPAL_ACCESS-RIGHTS-RESOURCE: file:/var/lib/a12/data/import/data/roles.yaml
-      MGMTP_A12_UAA_AUTHORIZATION_CHILD-AUTHORIZATION-DEFINITIONS: file:/var/lib/a12/data/import/data/childAuthorizationDefinition.json
+      MGMTP_A12_UAA_AUTHENTICATION_PRINCIPAL_ACCESS-RIGHTS-RESOURCE: file:/var/lib/a12/data/import/auth/roles.yaml
+      MGMTP_A12_UAA_AUTHORIZATION_CHILD-AUTHORIZATION-DEFINITIONS: file:/var/lib/a12/data/import/auth/childAuthorizationDefinition.json
       MGMTP_A12_DATASERVICES_INITIALIZATION_IMPORT_MODELS_PATH: file:/var/lib/a12/data/import/models/
-      MGMTP_A12_UAA_AUTHENTICATION_PRINCIPAL_LOCAL-CONFIG_USER-RESOURCES: file:/var/lib/a12/data/import/data/users/*.yaml
+      MGMTP_A12_UAA_AUTHENTICATION_PRINCIPAL_LOCAL-CONFIG_USER-RESOURCES: file:/var/lib/a12/data/import/auth/users/*.yaml
       MGMTP_A12_DATASERVICES_INITIALIZATION_SCRIPTS_JSONRPC_ENABLED: false
 
     depends_on:

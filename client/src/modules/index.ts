@@ -1,4 +1,4 @@
-import { UaaActions, UaaSelectors } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
+import { UaaActions } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
 import { ActivityActions, ActivitySelectors } from "@com.mgmtp.a12.client/client-core/lib/core/activity";
 import {
     AppModelAdapterModule,
@@ -9,15 +9,25 @@ import { StoreFactories } from "@com.mgmtp.a12.client/client-core/lib/core/store
 import { ModelActions } from "@com.mgmtp.a12.client/client-core/lib/core/model";
 import { TreeEngineFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/client";
 import { TreeEngineServerConnectorFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/server-connector";
-import { DefaultElementLibraryFactories } from "@com.mgmtp.a12.contentengine/contentengine-default-element-library";
+import { FormElementsLibrary } from "@com.mgmtp.a12.formengine/formengine-content-elements";
+import {
+    DefaultElementLibrary,
+    DefaultElementLibraryFactories
+} from "@com.mgmtp.a12.contentengine/contentengine-default-element-library";
+import { LoggerFactory } from "@com.mgmtp.a12.utils/utils-logging";
 
-import { mapAppModelByPermission } from "./utils";
+const logger = LoggerFactory.getLogger("PT/modules");
 
 export const ALL_MODULES = [
     AppModelAdapterModule,
     TreeEngineFactories.createModule(),
     TreeEngineServerConnectorFactories.createModule(),
-    DefaultElementLibraryFactories.createModule()
+    DefaultElementLibraryFactories.createModule({
+        library: {
+            ...DefaultElementLibrary.get(),
+            modules: [...DefaultElementLibrary.get().modules, ...FormElementsLibrary.modules]
+        }
+    })
 ];
 const moduleRegistry = ModuleRegistryProvider.getInstance();
 
@@ -32,28 +42,17 @@ export const getAllModules = (): Module[] => {
  * Initializes module registry on `setModelGraph` action.
  */
 export const registerModulesOnSetModelGraphMiddleware = StoreFactories.createMiddleware((api, next, action) => {
-    if (ModelActions.setModelGraph.match(action) && !moduleRegistry.getAllModules().length) {
-        getAllModules().forEach((module) => moduleRegistry.addModule(module));
-    }
+    if (ModelActions.setModelGraph.match(action)) {
+        const registeredModules = moduleRegistry.getAllModules();
 
-    return next(action);
-});
-
-/**
- * Middleware that filters and registers application model modules based on the logged-in user's permissions.
- */
-export const registerAppModelModulesByPermissionMiddleware = StoreFactories.createMiddleware((api, next, action) => {
-    if (ModelActions.addModulesApplicationModels.match(action)) {
-        const roles = UaaSelectors.roles(api.getState()) || [];
-        const applicationModels = action.payload.models;
-        const userAuthorizedAppModels = applicationModels.map((model) => mapAppModelByPermission(model, roles));
-
-        return next({
-            ...action,
-            payload: {
-                models: userAuthorizedAppModels
-            }
-        });
+        if (registeredModules.length > 0) {
+            logger.error(
+                "Module registry already has modules registered with the following ids:",
+                registeredModules.map((module) => module.id)
+            );
+        } else {
+            getAllModules().forEach((module) => moduleRegistry.addModule(module));
+        }
     }
 
     return next(action);

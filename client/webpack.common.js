@@ -51,6 +51,10 @@ module.exports = {
                 generator: {
                     filename: "static/media/[hash][ext][query]"
                 }
+            },
+            {
+                test: /\.json$/,
+                type: "json"
             }
         ]
     },
@@ -98,6 +102,6 @@ module.exports = {
         })
     ],
     resolve: {
-        extensions: [".tsx", ".ts", ".js"]
+        extensions: [".tsx", ".ts", ".js", ".json"]
     }
 };

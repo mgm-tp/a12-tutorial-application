@@ -29,10 +29,6 @@ node {
 //    npmInstallCommand = System.env.BUILD_NUMBER ? "ci" : "install"
 }
 
-npmInstall.configure {
-    args = ['--legacy-peer-deps']
-}
-
 tasks.register('compile', NpmTask) {
     group 'build'
     dependsOn npmInstall

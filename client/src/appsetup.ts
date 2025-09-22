@@ -32,11 +32,7 @@ import {
 import { OverviewEngineFactories } from "@com.mgmtp.a12.overviewengine/overviewengine-core/lib/main/client-extensions";
 import { DeepLinkingFactories } from "@com.mgmtp.a12.client/client-core/lib/extensions/deep-linking";
 
-import {
-    registerAppModelModulesByPermissionMiddleware,
-    registerModulesOnSetModelGraphMiddleware,
-    unregisterModulesOnLogoutMiddleware
-} from "./modules";
+import { registerModulesOnSetModelGraphMiddleware, unregisterModulesOnLogoutMiddleware } from "./modules";
 import { setRolesForUserAfterTokenRefresh } from "./uaa/sagas";
 import { isProduction } from "./config";
 import { enableReduxDevTools } from "./config/devtools";
@@ -88,7 +84,6 @@ export function setup(): {
             ...OverviewEngineFactories.createMiddlewares(),
             CRUDFactories.createCRUDMiddleware(),
             registerModulesOnSetModelGraphMiddleware,
-            registerAppModelModulesByPermissionMiddleware,
             unregisterModulesOnLogoutMiddleware,
             ...UaaMiddlewares()
         ],

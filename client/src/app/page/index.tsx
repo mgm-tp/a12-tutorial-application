@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { DndProvider } from "react-dnd";
@@ -20,13 +21,14 @@ import {
     getA11yResource
 } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/a11y-localization";
 import { GlobalStyles } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/base";
-import { flatTheme } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/flat/flat-theme";
 import { DragAndDropUtils } from "@com.mgmtp.a12.widgets/widgets-core/lib/common";
 import { SizeContext, useWindowSize } from "@com.mgmtp.a12.widgets/widgets-core/lib/layout/size-detector";
 import { shouldForwardProp } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/should-forward-prop";
 import { DateTimeContext } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/date-time/date-time-context";
 
 import { DEFAULT_TRANSLATIONS, LocaleWithName } from "../../localization";
+
+import { ThemeContextProvider, THEMES, useThemeContext } from "../themeContext";
 
 import { AuthenticatedPage } from "./AuthenticatedPage";
 
@@ -83,6 +85,18 @@ export const BasePage = (): React.ReactNode => {
     );
 };
 
+const ThemedPageWrapper: React.FC = () => {
+    const theme = useThemeContext((context) => context.theme);
+    return (
+        <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+            <ThemeProvider theme={THEMES[theme]}>
+                <GlobalStyles />
+                <BasePage />
+            </ThemeProvider>
+        </StyleSheetManager>
+    );
+};
+
 /**
  * Page with global styles and flat theme applied.
  *
@@ -90,11 +104,8 @@ export const BasePage = (): React.ReactNode => {
  */
 export const StyledPage = (): React.ReactNode => {
     return (
-        <StyleSheetManager shouldForwardProp={shouldForwardProp}>
-            <ThemeProvider theme={flatTheme}>
-                <GlobalStyles />
-                <BasePage />
-            </ThemeProvider>
-        </StyleSheetManager>
+        <ThemeContextProvider>
+            <ThemedPageWrapper />
+        </ThemeContextProvider>
     );
 };

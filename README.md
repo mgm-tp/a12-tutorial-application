@@ -1,5 +1,5 @@
 <!--- References --->
-<!--- Project Template getA12 documentation links --->
+<!--- A12 Tutorial getA12 documentation links --->
 [getA12]: https://docs.geta12.com/docs/#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM
 [Artifactory access]: https://docs.geta12.com/docs/?release=2023.06#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM,anchor:_artifactory_access
 [Environment and Tools Setup]: https://docs.geta12.com/docs/?release=2023.06#content:asciidoc,product:PROJECT_TEMPLATE,artifact:project-template-documentation,scene:Qc5TNM,anchor:_environment_and_tools_setup
@@ -66,10 +66,12 @@ Assuming you went through the documentation, your environment is set up and your
 1. Project Template application
    1. Run the server application with the default development Spring profile and keep it running:  
       `gradle :server:app:bootrun --args='--spring.profiles.active=dev-env'`
-   2. Run client
+       > **NOTE**: It is normal for the server startup progress to not quite reach 100% in the terminal output. Once you see the progress indicator hit around 80% or higher without any error logs, the server is running properly.
+   2. Run client:
        1. In another terminal window, move to client directory with `cd client`.
        2. Then start the webpack with `npm start` and keep it running.
 2. Project Template init application (for initialization and migration purposes)
+   > **WARNING**: Before running the init application, make sure to stop the server application first. The init application will lock the Postgres database during initialization, and the database could become inconsistent if data is being initialized while the server is still running.
    - Run the init application with the default development Spring profile:  
           `gradle :server:init:bootrun --args='--spring.profiles.active=dev-env'`
    - Run the init application with the 'init-data' Spring profile additionally to initialize documents based on the `import/data/request` folder:
