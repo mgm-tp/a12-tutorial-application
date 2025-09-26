@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'application'
+    alias(gradlePluginLibs.plugins.spring.boot)
+}
+
+springBoot {
+    mainClass = 'com.mgmtp.a12.workflows.tutorial.worker.generategiftcard.GenerateGiftCardExternalWorkerApplication'
+}
+
+dependencies {
+    implementation libs.cibseven.external.task.client
+    implementation libs.jaxb.api
+
+    developmentOnly libs.spring.boot.devtools
+    annotationProcessor libs.spring.boot.configuration.processor
+
+    testImplementation testCatalogLibs.spring.boot.starter.test
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
