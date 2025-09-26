@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "sources": ["assignSalesRep.ts"],
+  "sourcesContent": [
+    "declare const customerType: string;\ndeclare const execution: ExecutionEntity;\n\nexport declare interface ExecutionEntity {\n    getVariable(variableName: string): any;\n    setVariable(variableName: string, value: any): void\n    // If you want to declare more, see org.cibseven.bpm.engine.impl.persistence.entity.ExecutionEntity\n}\n\nconsole.log(\"Customer type: \" + customerType);\n\nlet salesRep = undefined;\n\nswitch (customerType) {\n    case \"vip\": {\n        salesRep = \"vip@acme.org\";\n        break;\n    }\n    case \"suspended\":\n    case \"inactive\": {\n        salesRep = null;\n        break;\n    }\n    default: {\n        salesRep = \"sales@acme.org\"\n    }\n}\n\nexecution.setVariable(\"salesRep\", salesRep);\n"
+  ],
+  "mappings": ";AASA,QAAQ,IAAI,oBAAoB,YAAY;AAE5C,IAAI,WAAW;AAEf,QAAQ;AAAA,OACC,OAAO;AAAA,IACR,WAAW;AAAA,IACX;AAAA,EACJ;AAAA,OACK;AAAA,OACA,YAAY;AAAA,IACb,WAAW;AAAA,IACX;AAAA,EACJ;AAAA,WACS;AAAA,IACL,WAAW;AAAA,EACf;AAAA;AAGJ,UAAU,YAAY,YAAY,QAAQ;",
+  "debugId": "980A3A310AB7C00F64756E2164756E21",
+  "names": []
+}
