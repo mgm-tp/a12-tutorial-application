@@ -6,15 +6,19 @@ plugins {
 dependencies {
     // Spring Boot
     implementation libs.spring.boot.starter.web
+    implementation libs.spring.boot.starter.mail
     developmentOnly libs.spring.boot.devtools
 
     // A12 Workflows
-    implementation a12Libs.workflows.engine
+    implementation (a12Libs.workflows.engine) {
+        exclude group: "org.cibseven.template-engines", module: "cibseven-template-engines-freemarker"
+    }
 
     // Testing
     testImplementation testCatalogLibs.spring.boot.starter.test
     testImplementation testCatalogLibs.cibseven.junit5
     testImplementation testCatalogLibs.cibseven.bpm.assert
+    testImplementation testCatalogLibs.testcontainers.junit5
 }
 
 test {

@@ -67,6 +67,7 @@ dependencyResolutionManagement {
             library('rewrite-static-analysis', 'org.openrewrite.recipe', 'rewrite-static-analysis').versionRef('rewrite-static-analysis')
             library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('spring-boot')
             library('spring-boot-devtools', 'org.springframework.boot', 'spring-boot-devtools').versionRef('spring-boot')
+            library('spring-boot-starter-mail', 'org.springframework.boot', 'spring-boot-starter-mail').versionRef('spring-boot')
             library('spring-boot-starter-web', 'org.springframework.boot', 'spring-boot-starter-web').versionRef('spring-boot')
             library('logstash', 'net.logstash.logback', 'logstash-logback-encoder').versionRef('logstash')
             library('logback-classic', 'ch.qos.logback', 'logback-classic').versionRef('logback-classic')
@@ -75,8 +76,10 @@ dependencyResolutionManagement {
         testCatalogLibs {
             version('cibseven', cibsevenVersion)
             version('spring-boot', springBootVersion)
+            version('testcontainers', '1.19.8')
 
             library('spring-boot-starter-test', 'org.springframework.boot', 'spring-boot-starter-test').versionRef('spring-boot')
+            library('testcontainers-junit5', 'org.testcontainers', 'junit-jupiter').versionRef('testcontainers')
             library('cibseven-junit5', 'org.cibseven.bpm', 'cibseven-bpm-junit5').versionRef('cibseven')
             library('cibseven-bpm-assert', 'org.cibseven.bpm', 'cibseven-bpm-assert').versionRef('cibseven')
         }
