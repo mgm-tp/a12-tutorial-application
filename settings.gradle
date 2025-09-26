@@ -34,6 +34,7 @@ rootProject.name = 'a12-tutorial-application'
 
 include 'client'
 include 'compose'
+include 'generate-gift-card-external-worker'
 include 'server'
 include 'server:app'
 include 'server:init'
@@ -91,7 +92,12 @@ dependencyResolutionManagement {
             version('spring-boot', springBootVersion)
             version('logstash','7.4')
             version('logback-classic','1.5.6')
+            version('cibseven', cibsevenVersion)
+            version('jaxb','4.0.5')
 
+            library('cibseven-external-task-client', 'org.cibseven.bpm.springboot', 'cibseven-bpm-spring-boot-starter-external-task-client').versionRef('cibseven')
+            library('spring-boot-bom', 'org.springframework.boot', 'spring-boot-dependencies').versionRef('spring-boot')
+            library('jaxb-api', 'jakarta.xml.bind', 'jakarta.xml.bind-api').versionRef('jaxb')
             library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('spring-boot')
             library('spring-boot-devtools', 'org.springframework.boot', 'spring-boot-devtools').versionRef('spring-boot')
             library('spring-boot-starter-web', 'org.springframework.boot', 'spring-boot-starter-web').versionRef('spring-boot')

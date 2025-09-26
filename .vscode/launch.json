@@ -104,6 +104,15 @@
             "args": [],
             "cwd": "${workspaceFolder}/workflow-engine",
             "projectName": "workflow-engine"
+        },
+        {
+            "type": "java",
+            "name": "external worker start",
+            "request": "launch",
+            "mainClass": "com.mgmtp.a12.workflows.tutorial.worker.generategiftcard.GenerateGiftCardExternalWorkerApplication",
+            "args": [],
+            "cwd": "${workspaceFolder}/generate-gift-card-external-worker",
+            "projectName": "generate-gift-card-external-worker"
         }
     ]
 }
