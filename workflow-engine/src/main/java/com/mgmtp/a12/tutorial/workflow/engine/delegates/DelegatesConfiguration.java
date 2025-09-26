@@ -30,33 +30,17 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-plugins {
-    id 'java'
-    alias(gradlePluginLibs.plugins.spring.boot)
-}
+package com.mgmtp.a12.tutorial.workflow.engine.delegates;
 
-dependencies {
-    // Spring Boot
-    implementation libs.spring.boot.starter.web
-    implementation libs.spring.boot.starter.mail
-    developmentOnly libs.spring.boot.devtools
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.MailSender;
 
-    // A12 Workflows
-    implementation (a12Libs.workflows.engine) {
-        exclude group: "org.cibseven.template-engines", module: "cibseven-template-engines-freemarker"
+@Configuration
+public class DelegatesConfiguration {
+
+    @Bean
+    public SendGiftCardDelegate sendGiftCardDelegate(MailSender mailSender) {
+        return new SendGiftCardDelegate(mailSender);
     }
-
-    // Testing
-    testImplementation testCatalogLibs.spring.boot.starter.test
-    testImplementation testCatalogLibs.cibseven.junit5
-    testImplementation testCatalogLibs.cibseven.bpm.assert
-    testImplementation testCatalogLibs.testcontainers.junit5
-}
-
-test {
-    useJUnitPlatform()
-}
-
-springBoot {
-    mainClass = 'com.mgmtp.a12.tutorial.workflow.engine.WorkflowEngineTutorialApplication'
 }
