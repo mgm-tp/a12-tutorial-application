@@ -70,7 +70,7 @@ function dateOfBirthSelector(activityId: string): Selector<Date | null | undefin
     return (state) => {
         // Get the data state from current activity
         const dataState = FormEngineSelectors.dataState(activityId)(state);
-        // The state holds contact data in the shape of our Contact_DM
+        // The state holds contact data in the shape of our Contact_Dc
         const contact = (dataState.document as { Contact?: Contact }).Contact;
 
         return contact?.PersonalData.DateOfBirth;

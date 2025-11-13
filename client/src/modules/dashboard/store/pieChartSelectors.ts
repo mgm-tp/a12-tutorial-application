@@ -30,11 +30,14 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-// AUTO-GENERATED - DO NOT EDIT. Run 'npm run generate' to regenerate.
-import type { Module } from "@com.mgmtp.a12.client/client-core";
+import { ActivitySelectors } from "@com.mgmtp.a12.client/client-core";
 
-import contact from "./contact";
-import dashboard from "./dashboard";
-import help from "./help";
+import { isPieChartData, type PieChartData } from "../types/PieChartData";
 
-export const modules: Module[] = [contact, dashboard, help];
+export function chartDataSelector(activityId: string, dataSet: keyof PieChartData) {
+    return (state: object) => {
+        const busy = ActivitySelectors.busy(activityId)(state);
+        const data = ActivitySelectors.data(activityId)(state);
+        return !busy && isPieChartData(data) ? data[dataSet] : undefined;
+    };
+}
