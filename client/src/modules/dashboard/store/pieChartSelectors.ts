@@ -30,11 +30,16 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-// AUTO-GENERATED - DO NOT EDIT. Run 'npm run generate' to regenerate.
-import type { Module } from "@com.mgmtp.a12.client/client-core";
+import type { DefaultRootState } from "react-redux";
 
-import contact from "./contact";
-import dashboard from "./dashboard";
-import help from "./help";
+import { ActivitySelectors } from "@com.mgmtp.a12.client/client-core";
 
-export const modules: Module[] = [contact, dashboard, help];
+import { isPieChartData, type PieChartData } from "../types/PieChartData";
+
+export function chartDataSelector(activityId: string, dataSet: keyof PieChartData) {
+    return (state: DefaultRootState) => {
+        const busy = ActivitySelectors.busy(activityId)(state);
+        const data = ActivitySelectors.data(activityId)(state);
+        return !busy && isPieChartData(data) ? data[dataSet] : undefined;
+    };
+}

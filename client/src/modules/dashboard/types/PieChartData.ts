@@ -30,11 +30,35 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-// AUTO-GENERATED - DO NOT EDIT. Run 'npm run generate' to regenerate.
-import type { Module } from "@com.mgmtp.a12.client/client-core";
+export type PieChartDataSegment = {
+    name: string;
+    value: number;
+    fill: string;
+};
 
-import contact from "./contact";
-import dashboard from "./dashboard";
-import help from "./help";
+export type PieChartData = { contactsByType: PieChartDataSegment[] };
 
-export const modules: Module[] = [contact, dashboard, help];
+export function isPieChartData(argument: unknown): argument is PieChartData {
+    return !!(
+        argument &&
+        typeof argument === "object" &&
+        "contactsByType" in argument &&
+        isChartDataSet(argument.contactsByType)
+    );
+}
+
+export function isChartDataSet(argument: unknown): argument is PieChartDataSegment[] {
+    // fast resolve if data found is of type ChartData - if necessary change some to every
+    return Array.isArray(argument) && (argument.length === 0 || argument.some((arg) => isChartData(arg)));
+}
+
+export function isChartData(argument: unknown): argument is PieChartDataSegment {
+    return !!(
+        argument &&
+        typeof argument === "object" &&
+        "name" in argument &&
+        "fill" in argument &&
+        "value" in argument &&
+        typeof argument.value === "number"
+    );
+}

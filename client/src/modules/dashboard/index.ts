@@ -30,11 +30,20 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-// AUTO-GENERATED - DO NOT EDIT. Run 'npm run generate' to regenerate.
-import type { Module } from "@com.mgmtp.a12.client/client-core";
+import type { Module, View } from "@com.mgmtp.a12.client/client-core";
 
-import contact from "./contact";
-import dashboard from "./dashboard";
-import help from "./help";
+import PieChartContainer from "./components/PieChartContainer";
 
-export const modules: Module[] = [contact, dashboard, help];
+const VIEWS: { [name: string]: View.ViewComponent } = {
+    PieChartContainer
+};
+
+function viewComponentProvider(name: string) {
+    return VIEWS[name];
+}
+const module: Module = {
+    id: "DashboardModule",
+    views: () => viewComponentProvider
+};
+
+export default module;
