@@ -2,6 +2,7 @@
 import type { Module } from "@com.mgmtp.a12.client/client-core";
 
 import contact from "./contact";
+import dashboard from "./dashboard";
 import help from "./help";
 
-export const modules: Module[] = [contact, help];
+export const modules: Module[] = [contact, dashboard, help];

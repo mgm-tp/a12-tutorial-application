@@ -10,7 +10,8 @@ import {
     ModelActions,
     type A12ApplicationConfig,
     ApplicationFactories,
-    addWrapper
+    addWrapper,
+    addDataHandlers
 } from "@com.mgmtp.a12.client/client-core";
 import { withPlatformModelLoader } from "@com.mgmtp.a12.client/client-core/modelLoader";
 import { withDirtyHandling } from "@com.mgmtp.a12.client/client-core/dirtyHandling";
@@ -35,6 +36,7 @@ import { enginesViewMap } from "./app/viewProvider";
 import { CustomApplicationFrameLayout } from "./app/layoutProvider";
 import { DEFAULT_TRANSLATIONS, supportedLocales, getDateTimeResource } from "./localization";
 import { AuthBarrier } from "./app/AuthBarrier";
+import { PieChartDataLoader } from "./modules/dashboard/data/PieChartDataLoader";
 
 function assertFullyConfigured(
     config: A12ApplicationConfig
@@ -103,7 +105,8 @@ export function setup() {
         addAdditionalMiddlewares(registerModulesOnSetModelGraphMiddleware, unregisterModulesOnLogoutMiddleware),
         withUaa,
         addWrapper(AuthBarrier, "inner"),
-        addCustomSagas(LoadModelGraphSaga)
+        addCustomSagas(LoadModelGraphSaga),
+        addDataHandlers(new PieChartDataLoader())
     );
 
     const configured = combineFeatures(
