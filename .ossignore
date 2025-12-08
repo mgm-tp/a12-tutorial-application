@@ -1,0 +1,6 @@
+.git
+.ossignore
+prepare-oss.sh
+internal
+Jenkinsfile
+e2e/fixtures/users.int.json.encrypted

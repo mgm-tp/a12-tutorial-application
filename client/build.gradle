@@ -1,3 +1,36 @@
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (C) 2012-2025 mgm technology partners GmbH
+ * All rights reserved. Rights of use are granted under the selected license.
+ *
+ * Dual License
+ * ------------
+ * This file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License – EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED “AS IS” AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage
@@ -8,12 +41,14 @@ plugins {
     alias(gradlePluginLibs.plugins.node.gradle)
 }
 
+// === OSS - Excluded start ===
 sonar {
     properties {
         property 'sonar.sources', 'src'
         property 'sonar.exclusions', 'src/localization/resources/**'
     }
 }
+// === OSS - Excluded end ===
 
 ext {
     imageLabels = ["name"       : "${calculateShortTag(clientName)}".toString(),
@@ -28,13 +63,16 @@ node {
 //    CONFIG: Uncommenting this line enables the use of npm ci for reproducible builds.
 //    npmInstallCommand = System.env.BUILD_NUMBER ? "ci" : "install"
 }
+npmInstall.configure {
+    args = ['install', '--legacy-peer-deps']
+}
 
 tasks.register('compile', NpmTask) {
     group 'build'
     dependsOn npmInstall
 
-    if(skipESLintPrettier.toBoolean()) {
-        args = ['run-script', 'skip:eslint-prettier-compile']
+    if(skipLintFormat.toBoolean()) {
+        args = ['run-script', 'skip:lint-format-compile']
     } else {
         args = ['run-script', 'compile']
     }
@@ -59,7 +97,7 @@ tasks.register('stop', NodeTask) {
 }
 
 tasks.register('universalizePackageLock', NodeTask) {
-    description 'Removes "resolved" and "integrity" keys and values from the lockfile.'
+    description 'Removes "resolved" and "integrity" keys and values from package-lock.json files in client and e2e directories.'
 
     script = file('scripts/universalize-package-lock.js')
 }
@@ -68,14 +106,14 @@ tasks.register('update', NpmTask) {
     args = ['update']
 }
 
-tasks.register('prettierFix', NpmTask) {
-    description 'Fixes issues highlighted by prettier.'
-    args = ['run-script','prettier:fix']
+tasks.register('formatFix', NpmTask) {
+    description 'Fixes format issues highlighted by prettier.'
+    args = ['run-script','format:fix']
 }
 
-tasks.register('eslintFix', NpmTask) {
-    description 'Fixes issues highlighted by eslint.'
-    args = ['run-script','eslint:fix']
+tasks.register('lintFix', NpmTask) {
+    description 'Fixes lint issues highlighted by eslint.'
+    args = ['run-script','lint:fix']
 }
 
 assemble.dependsOn compile
@@ -148,3 +186,14 @@ tasks.register('cleanImages') {
     group 'clean'
     dependsOn removeTagFull
 }
+
+
+tasks.register("cyclonedxBomNpm", NpxTask) {
+    group = "npm SBOM"
+    description = "Generates an SBOM using @cyclonedx/cyclonedx-npm"
+    command = "@cyclonedx/cyclonedx-npm"
+    args = ["--ignore-npm-errors", "--output-file", layout.buildDirectory.file("reports/cyclonedx.json").get().asFile.absolutePath]
+}
+
+// the report cyclonedxBom will be correctly replaced by cyclonedxBomNpm result
+tasks.cyclonedxBom.finalizedBy("cyclonedxBomNpm")
