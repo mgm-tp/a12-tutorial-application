@@ -1,51 +1,12 @@
-/*
- * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
- *
- * Copyright (C) 2012-2025 mgm technology partners GmbH
- * All rights reserved. Rights of use are granted under the selected license.
- *
- * Dual License
- * ------------
- * This file is part of the mgm A12 Platform and available under
- * a choice of two different licenses:
- *
- * 1. Open-Source License – EUPL v1.2
- *    You may redistribute and/or modify this file under the terms of the
- *    European Union Public License, version 1.2 - see https://eupl.eu/.
- *
- * 2. Commercial License
- *    Alternatively, you may obtain a commercial license from
- *    mgm technology partners GmbH, that permits use of this software
- *    under different terms (including support and maintenance services).
- *
- *    Please contact a12-license@mgm-tp.com for more information.
- *
- * You must select and comply with exactly one of the above license options.
- *
- * Warranty Disclaimer (applies to either option)
- * ----------------------------------------------
- * THIS SOFTWARE IS PROVIDED “AS IS” AND WITHOUT WARRANTY OF ANY KIND,
- * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
- * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
- */
-
 import com.mgmtp.a12.Utils
 import groovy.json.JsonSlurper
 
 plugins {
     alias(gradlePluginLibs.plugins.docker.remote.api)
     alias(gradlePluginLibs.plugins.versions.update)
-    alias(gradlePluginLibs.plugins.sbom)
-    // === OSS - Excluded start ===
     alias(gradlePluginLibs.plugins.sonarqube)
-    // === OSS - Excluded end ===
 }
 
-apply from: 'copyright/copyright.gradle'
-
-// === OSS - Excluded start ===
 sonar {
     properties {
         property 'sonar.projectKey', 'Project-Template'
@@ -56,15 +17,9 @@ sonar {
         property 'sonar.qualitygate.wait', true
     }
 }
-// === OSS - Excluded end ===
 
 allprojects {
     apply plugin: 'base'
-
-    cyclonedxBom {
-        outputName = "cyclonedx"
-        outputFormat = "json"
-    }
 }
 
 project.ext {
@@ -75,10 +30,7 @@ subprojects {
     apply {
         plugin 'maven-publish'
         plugin 'com.bmuschko.docker-remote-api'
-        plugin 'org.cyclonedx.bom'
-        // === OSS - Excluded start ===
         plugin 'org.sonarqube'
-        // === OSS - Excluded end ===
     }
 
     ext.registryCredentialsForPublishVar = {
@@ -114,8 +66,6 @@ subprojects {
         }
     }
 }
-
-check.dependsOn('validateCopyrightHeaders')
 
 tasks.register('getVersion') {
     println project.version
@@ -161,7 +111,6 @@ tasks.register('checkToolVersions') {
 }
 
 tasks.register('initProject') {
-    // === OSS - Excluded start ===
     // TODO: Remove these lines below in your project. This is only used for the adapting in the project template.
     // BEGIN
     // Only execute on Jenkins
@@ -192,7 +141,6 @@ tasks.register('initProject') {
     allprojects.each { project -> project.version = projectVersion
     }
     // END
-    // === OSS - Excluded end ===
 }
 
 tasks.register('test') {
