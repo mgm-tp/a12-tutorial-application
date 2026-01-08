@@ -30,38 +30,43 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-import { merge } from "webpack-merge";
-import { CleanWebpackPlugin } from "clean-webpack-plugin";
-import TerserPlugin from "terser-webpack-plugin";
+import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
-import common from "./webpack.common.js";
+/** Mock IntersectionObserver - Required by A12 AttachedPortal component */
+class MockIntersectionObserver {
+    observe = vi.fn();
+    disconnect = vi.fn();
+    unobserve = vi.fn();
+}
 
-export default merge({}, common, {
-    mode: "production",
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                use: [
-                    {
-                        loader: "ts-loader",
-                        options: {
-                            transpileOnly: true,
-                            onlyCompileBundledFiles: true
-                        }
-                    }
-                ],
-                exclude: /[\\/](node_modules|src[\\/]tests)[\\/]/
-            }
-        ]
-    },
-    plugins: [new CleanWebpackPlugin()],
-    optimization: {
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                extractComments: /^\**!|@preserve|@license|@cc_on|copyright/i
-            })
-        ]
-    }
+Object.defineProperty(window, "IntersectionObserver", {
+    writable: true,
+    configurable: true,
+    value: MockIntersectionObserver
+});
+
+Object.defineProperty(globalThis, "IntersectionObserver", {
+    writable: true,
+    configurable: true,
+    value: MockIntersectionObserver
+});
+
+/** Mock ResizeObserver - Prevents warnings from react-resize-detector in A12 SizeContext */
+class MockResizeObserver {
+    observe = vi.fn();
+    disconnect = vi.fn();
+    unobserve = vi.fn();
+}
+
+Object.defineProperty(window, "ResizeObserver", {
+    writable: true,
+    configurable: true,
+    value: MockResizeObserver
+});
+
+Object.defineProperty(globalThis, "ResizeObserver", {
+    writable: true,
+    configurable: true,
+    value: MockResizeObserver
 });

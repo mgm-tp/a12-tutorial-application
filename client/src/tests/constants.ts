@@ -30,38 +30,20 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-import { merge } from "webpack-merge";
-import { CleanWebpackPlugin } from "clean-webpack-plugin";
-import TerserPlugin from "terser-webpack-plugin";
+import type { Module } from "@com.mgmtp.a12.client/client-core";
 
-import common from "./webpack.common.js";
-
-export default merge({}, common, {
-    mode: "production",
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                use: [
-                    {
-                        loader: "ts-loader",
-                        options: {
-                            transpileOnly: true,
-                            onlyCompileBundledFiles: true
-                        }
-                    }
-                ],
-                exclude: /[\\/](node_modules|src[\\/]tests)[\\/]/
-            }
-        ]
+/** Mock modules for testing module registry operations */
+export const testModules: Module[] = [
+    {
+        id: "MODULE_1"
     },
-    plugins: [new CleanWebpackPlugin()],
-    optimization: {
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                extractComments: /^\**!|@preserve|@license|@cc_on|copyright/i
-            })
-        ]
+    {
+        id: "MODULE_2"
+    },
+    {
+        id: "MODULE_3"
+    },
+    {
+        id: "MODULE_4"
     }
-});
+];

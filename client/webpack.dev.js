@@ -87,7 +87,7 @@ export default merge({}, common, {
                         }
                     }
                 ],
-                exclude: /[\\/](node_modules|test)[\\/]/
+                exclude: /[\\/](node_modules|src[\\/]tests)[\\/]/
             }
         ]
     },
