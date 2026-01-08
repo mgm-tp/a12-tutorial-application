@@ -127,7 +127,7 @@ export default [
             "import/no-extraneous-dependencies": [
                 "error",
                 {
-                    devDependencies: false,
+                    devDependencies: ["**/*.test.{ts,tsx}", "**/tests/**/*.{ts,tsx}", "**/vitest.config.{js,ts}"],
                     optionalDependencies: false,
                     peerDependencies: false,
                     bundledDependencies: false

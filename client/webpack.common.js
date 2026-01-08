@@ -56,9 +56,7 @@ export default {
     },
     plugins: [
         // Typescript type checking
-        new ForkTsCheckerWebpackPlugin({
-            typescript: { configOverwrite: { exclude: ["./test/**/*"] } }
-        }),
+        new ForkTsCheckerWebpackPlugin(),
         // minify
         new MiniCssExtractPlugin({
             filename: "[name].bundle.[contenthash:8].css"
