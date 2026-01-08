@@ -30,38 +30,18 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-import { merge } from "webpack-merge";
-import { CleanWebpackPlugin } from "clean-webpack-plugin";
-import TerserPlugin from "terser-webpack-plugin";
+import { describe, it, expect } from "vitest";
+import { screen } from "@testing-library/react";
 
-import common from "./webpack.common.js";
+import Footer from "../../components/Footer";
 
-export default merge({}, common, {
-    mode: "production",
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                use: [
-                    {
-                        loader: "ts-loader",
-                        options: {
-                            transpileOnly: true,
-                            onlyCompileBundledFiles: true
-                        }
-                    }
-                ],
-                exclude: /[\\/](node_modules|src[\\/]tests)[\\/]/
-            }
-        ]
-    },
-    plugins: [new CleanWebpackPlugin()],
-    optimization: {
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                extractComments: /^\**!|@preserve|@license|@cc_on|copyright/i
-            })
-        ]
-    }
+import { renderWithProviders } from "../utils";
+
+describe("Footer", () => {
+    it("renders the footer with links", () => {
+        renderWithProviders(<Footer />);
+
+        expect(screen.getByText("Help")).toBeInTheDocument();
+        expect(screen.getByText("FAQ")).toBeInTheDocument();
+    });
 });
