@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom";
+import React from "react";
 import { vi } from "vitest";
 
 /** Mock IntersectionObserver - Required by A12 AttachedPortal component */
@@ -38,3 +39,17 @@ Object.defineProperty(global, "ResizeObserver", {
     configurable: true,
     value: MockResizeObserver
 });
+
+/**
+ * A12 OverviewEngine Core Mocks
+ * Mock DefaultComponentMap to isolate unit tests from the full A12 component tree.
+ * Components render as simple divs for predictable, dependency-free testing.
+ */
+vi.mock("@com.mgmtp.a12.overviewengine/overviewengine-core/lib/main/view/configuration/component-map", () => ({
+    DefaultComponentMap: {
+        TableBodyCell: vi.fn(({ children }) =>
+            React.createElement("div", { "data-testid": "default-table-body-cell" }, children)
+        ),
+        Heading: vi.fn(({ children }) => React.createElement("div", { "data-testid": "default-heading" }, children))
+    }
+}));
