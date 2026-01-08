@@ -31,6 +31,7 @@
  */
 
 import "@testing-library/jest-dom";
+import React from "react";
 import { vi } from "vitest";
 
 /** Mock IntersectionObserver - Required by A12 AttachedPortal component */
@@ -69,4 +70,37 @@ Object.defineProperty(global, "ResizeObserver", {
     writable: true,
     configurable: true,
     value: MockResizeObserver
+});
+
+/** Mock A12 FormEngine content elements - avoids SVG import chain from widgets-core */
+vi.mock("@com.mgmtp.a12.formengine/formengine-content-elements", () => ({
+    FormElementsLibrary: { modules: [] }
+}));
+
+/** Mock A12 ContentEngine default element library - avoids SVG import chain from widgets-core */
+vi.mock("@com.mgmtp.a12.contentengine/contentengine-default-element-library", () => ({
+    DefaultElementLibrary: { get: () => ({ modules: [] }) },
+    DefaultElementLibraryFactories: {
+        createModule: () => ({ id: "DefaultElementLibraryModule" })
+    }
+}));
+
+/**
+ * A12 OverviewEngine Core Mocks
+ * Mock DefaultComponentMap to isolate unit tests from the full A12 component tree.
+ * All other barrel exports (OverviewModel, useOverviewEngineContext, etc.) come from
+ * the real library via importOriginal.
+ * Components render as simple divs for predictable, dependency-free testing.
+ */
+vi.mock("@com.mgmtp.a12.overviewengine/overviewengine-core", async (importOriginal) => {
+    const actual = await importOriginal<typeof import("@com.mgmtp.a12.overviewengine/overviewengine-core")>();
+    return {
+        ...actual,
+        DefaultComponentMap: {
+            TableBodyCell: vi.fn(({ children }) =>
+                React.createElement("div", { "data-testid": "default-table-body-cell" }, children)
+            ),
+            Heading: vi.fn(({ children }) => React.createElement("div", { "data-testid": "default-heading" }, children))
+        }
+    };
 });
