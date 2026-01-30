@@ -23,19 +23,6 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                use: [
-                    {
-                        loader: "ts-loader",
-                        options: {
-                            transpileOnly: true,
-                            onlyCompileBundledFiles: true
-                        }
-                    }
-                ],
-                exclude: /[\\/](node_modules|test)[\\/]/
-            },
-            {
                 test: /\.js$/,
                 enforce: "pre",
                 use: ["source-map-loader"]
@@ -86,9 +73,8 @@ module.exports = {
             chunks: ["silent_renew"]
         }),
         new Webpack.DefinePlugin({
-            // Check if we can enable it in the official release
-            // __A12_MODEL_VERSIONS__: JSON.stringify(collectA12ModelVersions()),
-            minify: true
+            // Used by @com.mgmtp.a12.client/client-core for model versions validation
+            __A12_MODEL_VERSIONS__: JSON.stringify(collectA12ModelVersions())
         }),
         new CopyWebpackPlugin({
             patterns: [

@@ -1,8 +1,7 @@
-import * as React from "react";
+import { PropsWithChildren, useMemo, useState } from "react";
 
 import { type DefaultThemeType } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/index.js";
 import { flatTheme } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/flat/flat-theme.js";
-import { type Container } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/index.js";
 import { createContext, useContextSelector } from "@com.mgmtp.a12.widgets/widgets-core/lib/context/index.js";
 
 interface ThemeContextType {
@@ -49,12 +48,12 @@ const ThemeContext = createContext<ThemeContextType>({
 });
 ThemeContext.displayName = "ThemeContext";
 
-export const ThemeContextProvider: React.FC<Container> = ({ children }) => {
+export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
     const themeNames = getThemeNames();
     const storedTheme = localStorage.getItem(THEME_KEY) ?? themeNames[0];
-    const [theme, setTheme] = React.useState(themeNames.includes(storedTheme) ? storedTheme : themeNames[0]);
+    const [theme, setTheme] = useState(themeNames.includes(storedTheme) ? storedTheme : themeNames[0]);
 
-    const themeContextValue: ThemeContextType = React.useMemo(() => {
+    const themeContextValue: ThemeContextType = useMemo(() => {
         return {
             theme,
             setTheme

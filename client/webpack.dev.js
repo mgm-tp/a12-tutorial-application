@@ -2,6 +2,8 @@ const Dns = require("dns");
 
 const { merge } = require("webpack-merge");
 const Webpack = require("webpack");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const ReactRefreshTypeScript = require("react-refresh-typescript");
 
 const common = require("./webpack.common.js");
 
@@ -30,11 +32,32 @@ module.exports = merge({}, common, {
             }
         ]
     },
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: [
+                    {
+                        loader: "ts-loader",
+                        options: {
+                            transpileOnly: true,
+                            onlyCompileBundledFiles: true,
+                            getCustomTransformers: () => ({
+                                before: [ReactRefreshTypeScript()]
+                            })
+                        }
+                    }
+                ],
+                exclude: /[\\/](node_modules|test)[\\/]/
+            }
+        ]
+    },
     plugins: [
         // Variables injected into the application
         new Webpack.DefinePlugin({
             // Styled components build flag
             SC_DISABLE_SPEEDY: false
-        })
+        }),
+        new ReactRefreshWebpackPlugin()
     ]
 });

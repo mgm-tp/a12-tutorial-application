@@ -1,9 +1,9 @@
-import { UaaClient } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
 import {
     UaaActions,
     UaaClientConfiguration,
     UaaMiddlewares,
-    UaaReducer
+    UaaReducer,
+    UaaClient
 } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
 import { ActivitySelectors } from "@com.mgmtp.a12.client/client-core/lib/core/activity";
 import { ApplicationFactories, ApplicationSetup } from "@com.mgmtp.a12.client/client-core/lib/core/application";
@@ -31,6 +31,8 @@ import {
 } from "@com.mgmtp.a12.relationshipengine/relationshipengine-core";
 import { OverviewEngineFactories } from "@com.mgmtp.a12.overviewengine/overviewengine-core/lib/main/client-extensions";
 import { DeepLinkingFactories } from "@com.mgmtp.a12.client/client-core/lib/extensions/deep-linking";
+import { TreeEngineServerConnectorFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/server-connector";
+import { TreeEngineFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/client";
 
 import { registerModulesOnSetModelGraphMiddleware, unregisterModulesOnLogoutMiddleware } from "./modules";
 import { setRolesForUserAfterTokenRefresh } from "./uaa/sagas";
@@ -45,6 +47,8 @@ export function setup(): {
     initialStoreActions(): Promise<void>;
 } {
     const dataHandlers: DataHandler[] = [
+        TreeEngineServerConnectorFactories.createDataProvider(),
+        TreeEngineFactories.createDataProvider(),
         createCddDataProvider(),
         createEmptyDocumentDataProvider(),
         RelationshipFactories.createRelationshipDataProvider(),
@@ -72,6 +76,7 @@ export function setup(): {
         customSagas: [
             ...CRUDFactories.createSagas(),
             ...RelationshipFactories.createSagas({ dataHandlers }),
+            ...TreeEngineFactories.createSagas({}),
             LoadModelGraphSaga,
             ...cdmSagas({ attachmentLoader: platformAttachmentLoader }),
             setRolesForUserAfterTokenRefresh,
@@ -82,6 +87,7 @@ export function setup(): {
         additionalMiddlewares: [
             ...createCdmMiddlewares(),
             ...OverviewEngineFactories.createMiddlewares(),
+            ...TreeEngineFactories.createMiddlewares(),
             CRUDFactories.createCRUDMiddleware(),
             registerModulesOnSetModelGraphMiddleware,
             unregisterModulesOnLogoutMiddleware,
@@ -91,6 +97,7 @@ export function setup(): {
             ...formEngineDataReducers,
             ...RelationshipReducers.dataReducers,
             ...OverviewEngineFactories.createDataReducers(),
+            ...TreeEngineFactories.createDataReducers(),
             ...dgReducerFactory(cddDataHolderReducerExtension),
             ...cddReducers
         ],

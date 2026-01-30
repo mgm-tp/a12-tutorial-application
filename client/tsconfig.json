@@ -26,7 +26,8 @@
             "ES2020.Intl",
             "ES2020.Promise",
             "ES2020.String",
-            "ES2020.Symbol.WellKnown"
+            "ES2020.Symbol.WellKnown",
+            "ES2022"
         ],
         "module": "commonjs",
         "moduleResolution": "node",

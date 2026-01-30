@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { memo, ReactElement, useCallback, useContext } from "react";
 
 import { HeaderTrigger } from "@com.mgmtp.a12.widgets/widgets-core/lib/button";
 import { Icon } from "@com.mgmtp.a12.widgets/widgets-core/lib/icon";
@@ -14,8 +14,8 @@ interface ThemeItemProps {
     onSelect: (theme: string) => void;
 }
 
-const ThemeItem = React.memo(function ThemeItem({ theme, isActive, onSelect }: ThemeItemProps) {
-    const handleClick = React.useCallback(() => onSelect(theme), [onSelect, theme]);
+const ThemeItem = memo(function ThemeItem({ theme, isActive, onSelect }: ThemeItemProps) {
+    const handleClick = useCallback(() => onSelect(theme), [onSelect, theme]);
 
     return (
         <List.Item
@@ -28,12 +28,12 @@ const ThemeItem = React.memo(function ThemeItem({ theme, isActive, onSelect }: T
     );
 });
 
-export default function ThemeChooser(): React.ReactNode | null {
+export default function ThemeChooser(): ReactElement | null {
     const size = useContext(SizeContext);
     const mobileMode = size.currentSize === "xs" || size.currentSize === "sm";
 
     const { theme: currentTheme, setTheme } = useThemeContext((context) => context);
-    const handleSelect = React.useCallback(
+    const handleSelect = useCallback(
         (theme: string) => {
             setTheme(theme);
             localStorage.setItem(THEME_KEY, theme);

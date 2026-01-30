@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { de, enUS, Locale as DateTimeLocale } from "date-fns/locale";
+import { de, enUS, Locale as DateLocale } from "date-fns/locale";
 
 import {
     Locale,
@@ -41,23 +41,26 @@ export const useLocalizer = () => {
 /**
  * Locale with name of country
  */
-export type LocaleWithName = Locale & { name?: string; dateTimeLocale: DateTimeLocale };
+export type LocaleWithName = { name?: string; locale: Locale };
+
 export const supportedLocalesWithName: LocaleWithName[] = [
     {
         name: "English",
-        language: "en",
-        country: "US",
-        dateTimeLocale: enUS
+        locale: {
+            language: "en",
+            country: "US"
+        }
     },
     {
         name: "Deutsch",
-        language: "de",
-        country: "DE",
-        dateTimeLocale: de
+        locale: {
+            language: "de",
+            country: "DE"
+        }
     }
 ];
 
-export const supportedLocales: Locale[] = supportedLocalesWithName.map(({ country, language }) => ({
-    country,
-    language
-}));
+export const DATE_LOCALES: { [key: string]: DateLocale } = {
+    en: enUS,
+    de: de
+};

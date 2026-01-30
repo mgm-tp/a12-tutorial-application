@@ -1,5 +1,12 @@
 package com.mgmtp.a12.template.server.init.migration;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,12 +20,6 @@ import com.mgmtp.a12.dataservices.document.persistence.IDocumentRepository;
 import com.mgmtp.a12.dataservices.migration.MigrationStep;
 import com.mgmtp.a12.dataservices.migration.MigrationTask;
 import com.mgmtp.a12.uaa.authentication.backend.Authenticated;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
 
 @MigrationStep(version = "202306.1.1", name = "Data migration of Person Document")
 @Component

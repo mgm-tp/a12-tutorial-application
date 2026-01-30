@@ -36,7 +36,7 @@ sourceSets {
 }
 
 dependencies {
-    //Open rewrite analysis
+    //OpenRewrite analysis
     rewrite libs.rewrite.static.analysis
 
     // Spring
@@ -52,7 +52,8 @@ dependencies {
     implementation a12Libs.uaa.authorization.introspector
 
     // Native BOMs
-    implementation(platform(a12Libs.base.bom))
+    // TODO: Removing "platform()" is a workaround until base rc.4 is released to fix the bom
+    implementation(a12Libs.base.bom)
     implementation(platform(a12Libs.kernel.bom))
     implementation(platform(a12Libs.uaa.bom))
     implementation(platform(a12Libs.dataservices.bom))
@@ -75,7 +76,7 @@ tasks.register('runTypedAccessorGenerator', JavaExec) {
 
     def modelPath = "${rootProject.projectDir.path}/import/models";
     def packagePrefix = "com.mgmtp.a12.template.server.typings"
-    def documentModels = fileTree(dir: "${modelPath}", include: '**/*_DM.json')
+    def documentModels = fileTree(dir: "${modelPath}", include: ['**/*_DM.json', '**/*_CDM.json'])
 
     if (!documentModels || documentModels.isEmpty()) {
         throw new GradleException("No model definition files found in ${modelPath}")

@@ -2,7 +2,7 @@
   "header": {
     "id": "Person_DM",
     "modelType": "document",
-    "modelVersion": "28.3.0",
+    "modelVersion": "28.4.0",
     "locales": [
       {
         "code": "en"
@@ -31,8 +31,8 @@
       "joinedModelsInfo": "Person_DM-document-meta-data+Add"
     },
     "modelConfig": {
-      "decimalSeparator": ".",
       "timeZone": "UTC",
+      "decimalSeparator": ".",
       "conditionLanguage": {
         "code": "en_US"
       }

@@ -24,17 +24,16 @@ ext {
                    "description": "The A12 Client is built around the established React/Redux ecosystem, integrates the A12 UI components like engines and widgets, and interact with the A12 Data Services in the backend via HTTP/REST endpoints."]
 }
 
-node {
-//    CONFIG: Uncommenting this line enables the use of npm ci for reproducible builds.
-//    npmInstallCommand = System.env.BUILD_NUMBER ? "ci" : "install"
+npmInstall.configure {
+    args = ['install', '--legacy-peer-deps']
 }
 
 tasks.register('compile', NpmTask) {
     group 'build'
     dependsOn npmInstall
 
-    if(skipESLintPrettier.toBoolean()) {
-        args = ['run-script', 'skip:eslint-prettier-compile']
+    if(skipLintFormat.toBoolean()) {
+        args = ['run-script', 'skip:lint-format-compile']
     } else {
         args = ['run-script', 'compile']
     }
@@ -59,7 +58,7 @@ tasks.register('stop', NodeTask) {
 }
 
 tasks.register('universalizePackageLock', NodeTask) {
-    description 'Removes "resolved" and "integrity" keys and values from the lockfile.'
+    description 'Removes "resolved" and "integrity" keys and values from package-lock.json files in client and e2e directories.'
 
     script = file('scripts/universalize-package-lock.js')
 }
@@ -68,14 +67,14 @@ tasks.register('update', NpmTask) {
     args = ['update']
 }
 
-tasks.register('prettierFix', NpmTask) {
-    description 'Fixes issues highlighted by prettier.'
-    args = ['run-script','prettier:fix']
+tasks.register('formatFix', NpmTask) {
+    description 'Fixes format issues highlighted by prettier.'
+    args = ['run-script','format:fix']
 }
 
-tasks.register('eslintFix', NpmTask) {
-    description 'Fixes issues highlighted by eslint.'
-    args = ['run-script','eslint:fix']
+tasks.register('lintFix', NpmTask) {
+    description 'Fixes lint issues highlighted by eslint.'
+    args = ['run-script','lint:fix']
 }
 
 assemble.dependsOn compile
@@ -148,3 +147,14 @@ tasks.register('cleanImages') {
     group 'clean'
     dependsOn removeTagFull
 }
+
+
+tasks.register("cyclonedxBomNpm", NpxTask) {
+    group = "npm SBOM"
+    description = "Generates an SBOM using @cyclonedx/cyclonedx-npm"
+    command = "@cyclonedx/cyclonedx-npm"
+    args = ["--ignore-npm-errors", "--output-file", layout.buildDirectory.file("reports/cyclonedx.json").get().asFile.absolutePath]
+}
+
+// the report cyclonedxBom will be correctly replaced by cyclonedxBomNpm result
+tasks.cyclonedxBom.finalizedBy("cyclonedxBomNpm")

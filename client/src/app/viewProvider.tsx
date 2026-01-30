@@ -1,4 +1,4 @@
-import { ReactElement, ComponentType } from "react";
+import { ReactElement } from "react";
 
 import { FrameFactories } from "@com.mgmtp.a12.client/client-core/lib/core/frame";
 import { View } from "@com.mgmtp.a12.client/client-core/lib/core/view";
@@ -10,7 +10,7 @@ import { withFormElementContexts } from "@com.mgmtp.a12.formengine/formengine-co
 
 import { store } from "..";
 
-type ViewMap = Record<string, ComponentType<View> | undefined>;
+type ViewMap = Record<string, View.ViewComponent | undefined>;
 
 /**
  * Create Application view providers.
@@ -22,7 +22,7 @@ type ViewMap = Record<string, ComponentType<View> | undefined>;
 export function createViewProvider(): View.Provider {
     const enginesViewMap = createEnginesViewMap();
 
-    function chainedViewProvider(componentName: string): ComponentType<View> {
+    function chainedViewProvider(componentName: string): View.ViewComponent {
         return enginesViewMap[componentName] || FrameFactories.viewProvider(componentName) || Placeholder;
     }
 

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { HeaderTrigger } from "@com.mgmtp.a12.widgets/widgets-core/lib/button";
@@ -15,7 +15,7 @@ interface LocaleChooserProps {
     readonly locales?: LocaleWithName[];
 }
 
-export default function LocaleChooser({ locales }: LocaleChooserProps): React.ReactNode {
+export default function LocaleChooser({ locales }: LocaleChooserProps): ReactElement {
     const dispatch = useDispatch();
     const supportedLocales = locales && locales.length > 0 ? locales : supportedLocalesWithName;
     const size = useContext(SizeContext);
@@ -43,15 +43,23 @@ export default function LocaleChooser({ locales }: LocaleChooserProps): React.Re
                 />
             }>
             <List>
-                {supportedLocales.map((item) => (
-                    <List.Item
-                        key={item.language}
-                        text={`${item.name} (${item.language.toUpperCase()})`}
-                        meta={item.language === locale.language && <Icon>check</Icon>}
-                        selected={item.language === locale.language}
-                        onClick={() => onSelectLocale(item)}
-                    />
-                ))}
+                {supportedLocales.map((item) => {
+                    if (!item?.locale?.language) {
+                        return null;
+                    }
+
+                    const currentLocale = item.locale;
+                    const isSelected = currentLocale.language === locale.language;
+                    return (
+                        <List.Item
+                            key={currentLocale.language}
+                            text={`${item.name} (${currentLocale.language.toUpperCase()})`}
+                            meta={isSelected && <Icon>check</Icon>}
+                            selected={isSelected}
+                            onClick={() => onSelectLocale(currentLocale)}
+                        />
+                    );
+                })}
             </List>
         </PopUpMenu>
     );

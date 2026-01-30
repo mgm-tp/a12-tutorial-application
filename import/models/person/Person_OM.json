@@ -2,7 +2,7 @@
   "header": {
     "id": "Person_OM",
     "modelType": "overview",
-    "modelVersion": "38.1.0",
+    "modelVersion": "38.2.0-pre.1",
     "locales": [
       {
         "code": "en"

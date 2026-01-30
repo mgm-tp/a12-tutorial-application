@@ -1,7 +1,8 @@
 package com.mgmtp.a12.template.server;
 
-import com.mgmtp.a12.dataservices.DataServicesApplication;
 import org.springframework.boot.SpringApplication;
+
+import com.mgmtp.a12.dataservices.DataServicesApplication;
 
 @DataServicesApplication(scanBasePackages = {DataServicesApplication.DATASERVICES_BASE_PACKAGE,
         "com.mgmtp.a12.template.server"})

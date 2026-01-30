@@ -1,5 +1,4 @@
 import { UaaActions } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
-import { ActivityActions, ActivitySelectors } from "@com.mgmtp.a12.client/client-core/lib/core/activity";
 import {
     AppModelAdapterModule,
     Module,
@@ -7,8 +6,6 @@ import {
 } from "@com.mgmtp.a12.client/client-core/lib/core/application";
 import { StoreFactories } from "@com.mgmtp.a12.client/client-core/lib/core/store";
 import { ModelActions } from "@com.mgmtp.a12.client/client-core/lib/core/model";
-import { TreeEngineFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/client";
-import { TreeEngineServerConnectorFactories } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/extensions/server-connector";
 import { FormElementsLibrary } from "@com.mgmtp.a12.formengine/formengine-content-elements";
 import {
     DefaultElementLibrary,
@@ -18,16 +15,32 @@ import { LoggerFactory } from "@com.mgmtp.a12.utils/utils-logging";
 
 const logger = LoggerFactory.getLogger("PT/modules");
 
-export const ALL_MODULES = [
+/**
+ * Webpack's require.context for auto-discovering A12 custom modules.
+ *
+ * Scans the current directory for subfolders containing an index.ts file.
+ * Each matched file should export a default A12 Module object.
+ *
+ * @example Matched paths: "./person/index.ts"
+ */
+const modulesContext = require.context(".", true, /^\.\/[^/]+\/index\.ts$/);
+
+/**
+ * Auto-discovered A12 custom modules from subfolders.
+ */
+const modules: Module[] = modulesContext.keys().map((key) => {
+    return modulesContext(key).default as Module;
+});
+
+const ALL_MODULES: Module[] = [
     AppModelAdapterModule,
-    TreeEngineFactories.createModule(),
-    TreeEngineServerConnectorFactories.createModule(),
     DefaultElementLibraryFactories.createModule({
         library: {
             ...DefaultElementLibrary.get(),
             modules: [...DefaultElementLibrary.get().modules, ...FormElementsLibrary.modules]
         }
-    })
+    }),
+    ...modules
 ];
 const moduleRegistry = ModuleRegistryProvider.getInstance();
 
@@ -73,61 +86,3 @@ export const unregisterModulesOnLogoutMiddleware = StoreFactories.createMiddlewa
     }
     return next(action);
 });
-
-/**
- * Initialize Webpack Hot module replacement.
- *
- * (!) Webpack needs to know the context of the files therefore is not possible to simply declare
- * modules as variables and all the modules has to be declared explicitly in imports as a string.
- *
- * @example
- * ```
- * // OK
- * import("./person");
- *
- * // NOT WORKING
- * const [person] = ["./person"];
- * import(person);
- * ```
- */
-function initializeHMR() {
-    if (module.hot) {
-        module.hot.accept([], async (updatedDependencies) => {
-            const windowStore = window.store!;
-            const state = windowStore.getState();
-            const dispatch = windowStore.dispatch;
-
-            // For modules imported from current folder updatedDependencies are
-            // in format `["./src/modules/<MODULE>/index.ts"]`
-            const updatedDependency = updatedDependencies[0].toString().split("/");
-            const moduleName = updatedDependency[updatedDependency.length - 2];
-
-            const activities = ActivitySelectors.activities()(state);
-            Object.keys(activities).forEach((key) => dispatch(ActivityActions.cancel({ activityId: key })));
-
-            const modules = [...ALL_MODULES];
-            const hotIndex = modules.findIndex((m) => m.id.toLowerCase() === `${moduleName}module`);
-            let hotModule;
-
-            switch (moduleName) {
-                default:
-                    break;
-            }
-
-            if (hotModule && modules[hotIndex]) {
-                // eslint-disable-next-line
-                // @ts-ignore
-                modules[hotIndex] = hotModule.default();
-
-                modules.forEach((m) => {
-                    moduleRegistry.removeModuleById(m.id);
-                    moduleRegistry.addModule(m);
-                });
-            }
-
-            Object.keys(activities).forEach((key) => dispatch(ActivityActions.push({ activity: activities[key]! })));
-        });
-    }
-}
-
-initializeHMR();

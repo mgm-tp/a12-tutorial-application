@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { ReactElement } from "react";
 
 import { FrameFactories, FrameViews } from "@com.mgmtp.a12.client/client-core/lib/core/frame";
 import { UaaSelectors, UserInfoHeader } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
@@ -20,9 +21,9 @@ export const customLayoutProvider: FrameViews.LayoutProvider = (name: string) =>
  * This CustomApplicationFrameLayout uses the default layout and extends it by adding header items (LocaleChooser, UserInfoHeader).
  *
  * @param props Check {@link ApplicationFrameLayoutProps} for all available properties to customize.
- * @return JSX.Element The application layout.
+ * @return ReactElement The application layout.
  */
-function CustomApplicationFrameLayout(props: FrameViews.ApplicationFrameLayoutProps): React.ReactNode {
+function CustomApplicationFrameLayout(props: FrameViews.ApplicationFrameLayoutProps): ReactElement {
     const localizer = useLocalizer();
     const roles = useSelector(UaaSelectors.roles)?.map((role) => role.name);
 

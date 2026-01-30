@@ -6,6 +6,23 @@ const common = require("./webpack.common.js");
 
 module.exports = merge({}, common, {
     mode: "production",
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: [
+                    {
+                        loader: "ts-loader",
+                        options: {
+                            transpileOnly: true,
+                            onlyCompileBundledFiles: true
+                        }
+                    }
+                ],
+                exclude: /[\\/](node_modules|test)[\\/]/
+            }
+        ]
+    },
     plugins: [new CleanWebpackPlugin()],
     optimization: {
         minimize: true,

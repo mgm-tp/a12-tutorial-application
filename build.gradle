@@ -4,8 +4,16 @@ import groovy.json.JsonSlurper
 plugins {
     alias(gradlePluginLibs.plugins.docker.remote.api)
     alias(gradlePluginLibs.plugins.versions.update)
+    alias(gradlePluginLibs.plugins.sbom)
+    id 'idea'
     alias(gradlePluginLibs.plugins.sonarqube)
 }
+
+idea {
+    module {
+        downloadSources = true
+    }
+} 
 
 sonar {
     properties {
@@ -15,11 +23,17 @@ sonar {
         property 'sonar.log.level', 'TRACE'
         property 'sonar.scm.provider', 'git'
         property 'sonar.qualitygate.wait', true
+        property 'sonar.qualitygate.timeout', '1800'
     }
 }
 
 allprojects {
     apply plugin: 'base'
+
+    cyclonedxBom {
+        outputName = "cyclonedx"
+        outputFormat = "json"
+    }
 }
 
 project.ext {
@@ -30,6 +44,7 @@ subprojects {
     apply {
         plugin 'maven-publish'
         plugin 'com.bmuschko.docker-remote-api'
+        plugin 'org.cyclonedx.bom'
         plugin 'org.sonarqube'
     }
 

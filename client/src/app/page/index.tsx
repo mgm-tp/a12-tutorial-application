@@ -1,4 +1,4 @@
-import React from "react";
+import { ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { DndProvider } from "react-dnd";
@@ -26,7 +26,7 @@ import { SizeContext, useWindowSize } from "@com.mgmtp.a12.widgets/widgets-core/
 import { shouldForwardProp } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/should-forward-prop";
 import { DateTimeContext } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/date-time/date-time-context";
 
-import { DEFAULT_TRANSLATIONS, LocaleWithName } from "../../localization";
+import { DATE_LOCALES, DEFAULT_TRANSLATIONS } from "../../localization";
 
 import { ThemeContextProvider, THEMES, useThemeContext } from "../themeContext";
 
@@ -37,7 +37,7 @@ import { AuthenticatedPage } from "./AuthenticatedPage";
  *
  * Based on the authentication state Login or Authenticated page is displayed.
  */
-export const BasePage = (): React.ReactNode => {
+const BasePage = (): ReactElement => {
     const { breakPoint } = useWindowSize();
     const authenticatedState = useSelector(UaaSelectors.state);
     const isAuthenticated = authenticatedState === AuthenticationState.AUTHENTICATED;
@@ -46,7 +46,8 @@ export const BasePage = (): React.ReactNode => {
 
     // Initialize localizations
     const locale = useSelector(LocaleSelectors.locale());
-    const dateTimeLocale = (locale as LocaleWithName).dateTimeLocale;
+    const dateLocaleKey = locale.language;
+    const dateTimeLocale = Object.hasOwn(DATE_LOCALES, dateLocaleKey) ? DATE_LOCALES[dateLocaleKey] : DATE_LOCALES.en;
     const dataFormats = defaultDataFormats(locale);
     const conversion = defaultValueConversion(dataFormats);
     const localizer = defaultLocalizerFactory({
@@ -85,7 +86,7 @@ export const BasePage = (): React.ReactNode => {
     );
 };
 
-const ThemedPageWrapper: React.FC = () => {
+const ThemedPageWrapper = () => {
     const theme = useThemeContext((context) => context.theme);
     return (
         <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -102,7 +103,7 @@ const ThemedPageWrapper: React.FC = () => {
  *
  * Other available themes can be found in the Widgets documentation.
  */
-export const StyledPage = (): React.ReactNode => {
+export const StyledPage = (): ReactElement => {
     return (
         <ThemeContextProvider>
             <ThemedPageWrapper />
