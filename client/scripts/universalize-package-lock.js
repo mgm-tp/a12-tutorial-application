@@ -6,7 +6,7 @@ const path = require("path");
  * Its purpose is to provide universal `package-lock.json` files, independent of partner configuration, with fixed dependency versions.
  * This ensures consistency and predictability in the project's dependencies across different environments and setups.
  *
- * Processes package-lock.json in both client and e2e directories.
+ * Processes package-lock.json in the client directory.
  */
 
 /**
@@ -38,8 +38,7 @@ function processPackageLock(filePath) {
 (() => {
     const projectRoot = path.join(__dirname, "..", "..");
     const packageLockPaths = [
-        path.join(projectRoot, "client", "package-lock.json"),
-        path.join(projectRoot, "e2e", "package-lock.json")
+        path.join(projectRoot, "client", "package-lock.json")
     ];
 
     console.log("Processing package-lock.json files...");
