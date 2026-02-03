@@ -56,11 +56,11 @@ Assuming you went through the documentation, your environment is set up, project
 
 By default, A12 Tutorial services are exposed on the following ports:
 
-| Service                 | Port      | Note        |
-|-------------------------|-----------|-------------|
-| Frontend                | ``:8081`` |             |
-| Project Template Server | ``:8082`` |             |
-| Postgres                | ``:8083`` | Docker only |
+| Service                | Port      | Note        |
+|------------------------|-----------|-------------|
+| Frontend               | ``:8081`` |             |
+| A12 Tutorial Server    | ``:8082`` |             |
+| Postgres               | ``:8083`` | Docker only |
 
 Once all services are running, you can access the frontend at [http://localhost:8081](http://localhost:8081).
 
