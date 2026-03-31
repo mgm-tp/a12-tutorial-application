@@ -28,6 +28,14 @@
             "args": [
                 "--spring.profiles.active=local-db-env"
             ],
+            "vmArgs": [
+                "--add-modules=java.se",
+                "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
+                "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+                "--add-opens=java.management/sun.management=ALL-UNNAMED",
+                "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
+            ],
             "cwd": "${workspaceFolder}/server/app",
             "projectName": "app"
         },
@@ -38,6 +46,14 @@
             "mainClass": "com.mgmtp.a12.template.server.ProjectTemplateServerApplication",
             "args": [
                 "--spring.profiles.active=dev-env"
+            ],
+            "vmArgs": [
+                "--add-modules=java.se",
+                "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
+                "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+                "--add-opens=java.management/sun.management=ALL-UNNAMED",
+                "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
             ],
             "cwd": "${workspaceFolder}/server/app",
             "projectName": "app"
@@ -50,6 +66,14 @@
             "args": [
                 "--spring.profiles.active=local-db-env"
             ],
+            "vmArgs": [
+                "--add-modules=java.se",
+                "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
+                "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+                "--add-opens=java.management/sun.management=ALL-UNNAMED",
+                "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
+            ],
             "cwd": "${workspaceFolder}/server/init",
             "projectName": "init"
         },
@@ -60,6 +84,14 @@
             "mainClass": "com.mgmtp.a12.template.server.init.ProjectTemplateInitApplication",
             "args": [
                 "--spring.profiles.active=dev-env"
+            ],
+            "vmArgs": [
+                "--add-modules=java.se",
+                "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
+                "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+                "--add-opens=java.management/sun.management=ALL-UNNAMED",
+                "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
             ],
             "cwd": "${workspaceFolder}/server/init",
             "projectName": "init"

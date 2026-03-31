@@ -1,11 +1,14 @@
-import { initializeKeys } from "@com.mgmtp.a12.utils/utils-localization/lib/main";
-import { DIRTY_HANDLING_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/lib/extensions/dirtyHandling";
-import { FRAME_RESOURCE_KEYS, LOCALE_SELECT_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/lib/core/frame";
-import { HETEROGENEITY_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/lib/extensions/heterogeneity";
-import { LOCALE_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/lib/core/locale";
-import { RESOURCE_KEYS as FORMENGINE_RESOURCE_KEYS } from "@com.mgmtp.a12.formengine/formengine-core/lib/back-end/localization";
-import { RESOURCE_KEYS as OVERVIEWENGINE_RESOURCE_KEYS } from "@com.mgmtp.a12.overviewengine/overviewengine-core/lib/main/services/localization";
-import { RESOURCE_KEYS as TREEENGINE_RESOURCE_KEYS } from "@com.mgmtp.a12.treeengine/treeengine-core/lib/core/services/localization";
+import { initializeKeys } from "@com.mgmtp.a12.utils/utils-localization";
+import { DIRTY_HANDLING_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/dirtyHandling";
+import { HETEROGENEITY_RESOURCE_KEYS } from "@com.mgmtp.a12.client/client-core/heterogeneity";
+import {
+    FRAME_RESOURCE_KEYS,
+    LOCALE_RESOURCE_KEYS,
+    LOCALE_SELECT_RESOURCE_KEYS
+} from "@com.mgmtp.a12.client/client-core";
+import { RESOURCE_KEYS as FORMENGINE_RESOURCE_KEYS } from "@com.mgmtp.a12.formengine/formengine-core";
+import { RESOURCE_KEYS as OVERVIEWENGINE_RESOURCE_KEYS } from "@com.mgmtp.a12.overviewengine/overviewengine-core";
+import { RESOURCE_KEYS as TREEENGINE_RESOURCE_KEYS } from "@com.mgmtp.a12.treeengine/treeengine-core";
 import {
     CDM_RESOURCE_KEYS,
     RELATIONSHIP_RESOURCE_KEYS
@@ -27,6 +30,11 @@ export const RESOURCE_KEYS = {
                 }
             }
         }
+    },
+
+    locale: {
+        en: "",
+        de: ""
     },
 
     error: {

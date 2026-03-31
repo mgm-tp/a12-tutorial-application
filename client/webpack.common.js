@@ -1,14 +1,18 @@
-const Path = require("path");
+import Path from "node:path";
+import Url from "node:url";
 
-const Webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+import Webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 
-const collectA12ModelVersions = require("./scripts/collect-model-version");
+import collectA12ModelVersions from "./scripts/collect-model-version.js";
 
-module.exports = {
+const __filename = Url.fileURLToPath(import.meta.url);
+const __dirname = Path.dirname(__filename);
+
+export default {
     context: Path.join(__dirname),
     entry: {
         main: [

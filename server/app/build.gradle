@@ -52,8 +52,7 @@ dependencies {
     implementation a12Libs.uaa.authorization.introspector
 
     // Native BOMs
-    // TODO: Removing "platform()" is a workaround until base rc.4 is released to fix the bom
-    implementation(a12Libs.base.bom)
+    implementation(platform(a12Libs.base.bom))
     implementation(platform(a12Libs.kernel.bom))
     implementation(platform(a12Libs.uaa.bom))
     implementation(platform(a12Libs.dataservices.bom))
@@ -101,6 +100,8 @@ springBoot {
         }
     }
 }
+
+bootRun bootRunVar
 
 artifacts artifactsVar
 

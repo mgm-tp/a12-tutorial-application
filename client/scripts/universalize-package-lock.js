@@ -1,5 +1,9 @@
-const fs = require("fs");
-const path = require("path");
+import Fs from "node:fs";
+import Path from "node:path";
+import Url from "node:url";
+
+const __filename = Url.fileURLToPath(import.meta.url);
+const __dirname = Path.dirname(__filename);
 
 /**
  * The method aims to update the `package-lock.json` files by removing certain lines containing the terms "resolved" and "integrity".
@@ -14,14 +18,14 @@ const path = require("path");
  * @param {string} filePath - Absolute path to the package-lock.json file
  */
 function processPackageLock(filePath) {
-    if (!fs.existsSync(filePath)) {
+    if (!Fs.existsSync(filePath)) {
         throw new Error(`The path does not exist: ${filePath}`);
     }
 
     console.log("Starting to update file with path: ", filePath);
-    const contents = fs.readFileSync(filePath, "utf-8");
+    const contents = Fs.readFileSync(filePath, "utf-8");
     const replaced = contents
-        .replace(/.*(resolved|integrity).*/g, "") // Remove lines with "resolved" & "integrity" properties.
+        .replace(/.*"resolved".*/g, "") // Remove lines with "resolved" property.
         .replace(/^(?=\n)|\s*$|\n\n+/gm, "") // Cleanup whitespaces.
         .replace(/,(?=\s*?(}|]))/g, ""); // Remove trailing commas ",".
 
@@ -31,14 +35,14 @@ function processPackageLock(filePath) {
         throw new Error(`Failed to parse JSON for ${filePath}: ${e.message}`);
     }
 
-    fs.writeFileSync(filePath, replaced + "\n", "utf-8");
+    Fs.writeFileSync(filePath, replaced + "\n", "utf-8");
     console.log("Updating completed for:", filePath);
 }
 
 (() => {
-    const projectRoot = path.join(__dirname, "..", "..");
+    const projectRoot = Path.join(__dirname, "..", "..");
     const packageLockPaths = [
-        path.join(projectRoot, "client", "package-lock.json")
+        Path.join(projectRoot, "client", "package-lock.json")
     ];
 
     console.log("Processing package-lock.json files...");

@@ -1,12 +1,8 @@
-import { memo, ReactElement, useCallback, useContext } from "react";
+import { memo, type ReactElement, useCallback, useContext } from "react";
 
-import { HeaderTrigger } from "@com.mgmtp.a12.widgets/widgets-core/lib/button";
-import { Icon } from "@com.mgmtp.a12.widgets/widgets-core/lib/icon";
-import { SizeContext } from "@com.mgmtp.a12.widgets/widgets-core/lib/layout/size-detector";
-import { List } from "@com.mgmtp.a12.widgets/widgets-core/lib/list";
-import { PopUpMenu } from "@com.mgmtp.a12.widgets/widgets-core/lib/pop-up-menu";
+import { HeaderTrigger, Icon, SizeContext, List, PopUpMenu } from "@com.mgmtp.a12.widgets/widgets-core";
 
-import { getThemeNames, THEME_KEY, THEMES, useThemeContext } from "../app/themeContext";
+import { THEME_KEY, THEMES, useThemeContext } from "../app/themeContext";
 
 interface ThemeItemProps {
     theme: string;
@@ -41,7 +37,7 @@ export default function ThemeChooser(): ReactElement | null {
         [setTheme]
     );
 
-    if (getThemeNames().length <= 1) {
+    if (Object.keys(THEMES).length <= 1) {
         return null;
     }
 

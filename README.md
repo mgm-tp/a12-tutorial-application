@@ -39,7 +39,7 @@ To build the application modules:
 Assuming you went through the documentation, your environment is set up, project is prepared and the build was successful, you need to do the following to run the application:
 
 1. Project Template application
-   1. Run the server application with the default development Spring profile and keep it running:  
+   1. Run the server application with the default development Spring profile and keep it running:
       `gradle :server:app:bootrun --args='--spring.profiles.active=dev-env'`
        > **NOTE**: It is normal for the server startup progress to not quite reach 100% in the terminal output. Once you see the progress indicator hit around 80% or higher without any error logs, the server is running properly.
    2. Run client:

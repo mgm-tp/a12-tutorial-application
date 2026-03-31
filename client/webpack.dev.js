@@ -1,23 +1,22 @@
-const Dns = require("dns");
+import Dns from "node:dns";
 
-const { merge } = require("webpack-merge");
-const Webpack = require("webpack");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const ReactRefreshTypeScript = require("react-refresh-typescript");
+import Webpack from "webpack";
+import { merge } from "webpack-merge";
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
+import ReactRefreshTypeScript from "react-refresh-typescript";
 
-const common = require("./webpack.common.js");
-
-const package = require("./package.json");
+import common from "./webpack.common.js";
+import Pkg from "./package.json" with { type: "json" };
 
 // Fix localhost resolving in Node 17+
 Dns.setDefaultResultOrder("ipv4first");
 
-module.exports = merge({}, common, {
+export default merge({}, common, {
     mode: "development",
     devtool: "eval-source-map",
     devServer: {
         hot: true,
-        port: package.webpackPort,
+        port: Pkg.webpackPort,
         devMiddleware: {
             publicPath: ""
         },

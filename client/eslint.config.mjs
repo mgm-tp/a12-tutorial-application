@@ -110,6 +110,13 @@ export default [
                 }
             ],
 
+            "import/no-internal-modules": [
+                "warn",
+                {
+                    forbid: ["@com.mgmtp.a12*/*/*/**"]
+                }
+            ],
+
             "max-nested-callbacks": [
                 "error",
                 {

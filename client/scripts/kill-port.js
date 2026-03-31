@@ -1,11 +1,11 @@
-const killPort = require("kill-port");
-const package = require("../package.json");
-const port = package.webpackPort
+import KillPort from "kill-port";
+import Pkg from "../package.json" with { type: "json" };
+const port = Pkg.webpackPort
 
-killPort(port)
+KillPort(port)
     .then((result) => {
         //Unix and Windows success
-        if (result.code == 0) {
+        if (result.code === 0) {
             console.log('Process stopped on port '+ port +' with command:\n' + result.cmd);
         } else {
             //Windows error

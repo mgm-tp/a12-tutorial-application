@@ -24,10 +24,6 @@ ext {
                    "description": "The A12 Client is built around the established React/Redux ecosystem, integrates the A12 UI components like engines and widgets, and interact with the A12 Data Services in the backend via HTTP/REST endpoints."]
 }
 
-npmInstall.configure {
-    args = ['install', '--legacy-peer-deps']
-}
-
 tasks.register('compile', NpmTask) {
     group 'build'
     dependsOn npmInstall

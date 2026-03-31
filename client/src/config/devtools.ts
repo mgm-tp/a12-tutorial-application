@@ -1,4 +1,4 @@
-import type { ComposeEnhancer } from "@com.mgmtp.a12.client/client-core/lib/core/application/";
+import type { ComposeEnhancer } from "@com.mgmtp.a12.client/client-core";
 
 declare let window: Window & {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: ComposeEnhancer;

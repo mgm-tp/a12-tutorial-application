@@ -1,4 +1,4 @@
-import { LocalizationKeyTreeType } from "../keys";
+import type { LocalizationKeyTreeType } from "../keys";
 
 export const en_US: LocalizationKeyTreeType = {
     application: {
@@ -11,6 +11,11 @@ export const en_US: LocalizationKeyTreeType = {
                 }
             }
         }
+    },
+
+    locale: {
+        en: "English (EN)",
+        de: "German (DE)"
     },
 
     error: {

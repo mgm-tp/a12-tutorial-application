@@ -1,6 +1,5 @@
-import { Settings, ConsoleLoggingStrategy } from "@com.mgmtp.a12.utils/utils-logging";
-import { LogLevel } from "@com.mgmtp.a12.utils/utils-logging/api";
+import { LogLevel, Settings, ConsoleLoggingStrategy } from "@com.mgmtp.a12.utils/utils-logging";
 
-import { isProduction } from "./";
+import { isProduction } from "./environment";
 
 Settings.LogStrategy = new ConsoleLoggingStrategy(console, isProduction ? LogLevel.ERROR : LogLevel.LOG);

@@ -1,9 +1,9 @@
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "typed-redux-saga";
 
-import { ModelGraph } from "@com.mgmtp.a12.dataservices/dataservices-access/lib";
-import { ModelActions, ModelSelectors } from "@com.mgmtp.a12.client/client-core/lib/core/model";
-import { ConnectorLocator, RestServerConnector } from "@com.mgmtp.a12.utils/utils-connector/lib/main";
+import { ModelGraph } from "@com.mgmtp.a12.dataservices/dataservices-access";
+import { ModelActions, ModelSelectors } from "@com.mgmtp.a12.client/client-core";
+import { ConnectorLocator, RestServerConnector } from "@com.mgmtp.a12.utils/utils-connector";
 import { UaaActions } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
 
 /**
@@ -23,7 +23,10 @@ export function* LoadModelGraphSaga(): SagaIterator {
  * @returns An iterator for handling saga effects.
  */
 function* LoadModelGraphWorker(): SagaIterator {
-    const serverConnector = ConnectorLocator.getInstance().getServerConnector() as RestServerConnector;
+    const serverConnector = ConnectorLocator.getInstance().getServerConnector();
+    if (!(serverConnector instanceof RestServerConnector)) {
+        throw new TypeError("Expected RestServerConnector");
+    }
     const modelGraphState = yield* select(ModelSelectors.modelGraph());
 
     if (!hasDocumentsInModelGraphState(modelGraphState)) {

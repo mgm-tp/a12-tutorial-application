@@ -1,9 +1,14 @@
 import com.bmuschko.gradle.docker.tasks.image.*
+import com.mgmtp.a12.JavaOptsConstants
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 subprojects {
     dependencyLocking {
         lockAllConfigurations()
+    }
+
+    ext.bootRunVar = {
+        jvmArgs = JavaOptsConstants.HAZELCAST_JVM_ARGUMENTS
     }
 
     ext.artifactsVar = {
@@ -69,6 +74,7 @@ subprojects {
         from "$baseImage as builder"
         workingDir "extracted"
         arg "JAR_FILE=libs/${project.name}-${project.version}.jar"
+        environmentVariable "JAVA_TOOL_OPTIONS", JavaOptsConstants.HAZELCAST_JVM_ARGUMENTS.join(' ')
         copyFile "\${JAR_FILE}", "application.jar"
         runCommand "java -Djarmode=layertools -jar application.jar extract"
 

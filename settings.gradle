@@ -33,10 +33,10 @@ dependencyResolutionManagement {
         }
 
         a12Libs {
-            version('base', '29.2.0-rc.1')
-            version('kernel', '30.6.0-rc.1')
-            version('uaa', '9.3.0-rc.1')
-            version('dataservices', '38.3.0-rc.1')
+            version('base', '29.2.0')
+            version('kernel', '30.7.1')
+            version('uaa', '9.3.1')
+            version('dataservices', '38.3.4')
 
             library('uaa-authorization-a12-extension', 'com.mgmtp.a12.uaa', 'uaa-authorization-a12-extension').versionRef('uaa')
             library('uaa-authorization-introspector', 'com.mgmtp.a12.uaa', 'uaa-authorization-introspector').versionRef('uaa')
@@ -44,7 +44,7 @@ dependencyResolutionManagement {
             library('dataservices-server-init-app', 'com.mgmtp.a12.dataservices', 'dataservices-server-init-app').versionRef('dataservices')
             library("dataservices-data-seed", "com.mgmtp.a12.dataservices", "dataservices-data-seed").versionRef("dataservices")
 
-            library('base-bom', 'com.mgmtp.a12.base', 'base-bundle').versionRef('base')
+            library('base-bom', 'com.mgmtp.a12.base', 'base-bom').versionRef('base')
             library('kernel-bom', 'com.mgmtp.a12.kernel', 'kernel-bom').versionRef('kernel')
             library('uaa-bom', 'com.mgmtp.a12.uaa', 'uaa-bom').versionRef('uaa')
             library('dataservices-bom', 'com.mgmtp.a12.dataservices', 'dataservices-parent').versionRef('dataservices')

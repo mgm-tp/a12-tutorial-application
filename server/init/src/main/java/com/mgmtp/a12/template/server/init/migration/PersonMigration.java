@@ -21,7 +21,7 @@ import com.mgmtp.a12.dataservices.migration.MigrationStep;
 import com.mgmtp.a12.dataservices.migration.MigrationTask;
 import com.mgmtp.a12.uaa.authentication.backend.Authenticated;
 
-@MigrationStep(version = "202306.1.1", name = "Data migration of Person Document")
+@MigrationStep(version = "38.3.4", name = "Data migration of Person Document")
 @Component
 public class PersonMigration {
 

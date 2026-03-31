@@ -1,11 +1,20 @@
-import { PropsWithChildren, useMemo, useState } from "react";
+import { type PropsWithChildren, useMemo, useState } from "react";
 
-import { type DefaultThemeType } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/index.js";
-import { flatTheme } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/flat/flat-theme.js";
-import { createContext, useContextSelector } from "@com.mgmtp.a12.widgets/widgets-core/lib/context/index.js";
+import {
+    type DefaultThemeType,
+    createContext,
+    flatTheme,
+    useContextSelector
+} from "@com.mgmtp.a12.widgets/widgets-core";
+import { LoggerFactory } from "@com.mgmtp.a12.utils/utils-logging";
+
+import { isTheme } from "../utils/guards";
+
+const logger = LoggerFactory.getLogger("PT/ThemeContext");
 
 interface ThemeContextType {
     theme: string;
+
     setTheme(theme: string): void;
 }
 
@@ -19,27 +28,37 @@ function convertFileNameToDisplayName(filePath: string): string {
         .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-const loadThemesFromFolder = (): { [key: string]: DefaultThemeType } => {
+function loadThemesFromFolder(): { [key: string]: DefaultThemeType } {
     try {
         const context = require.context("../themes", false, /\.json$/);
         const themes: { [key: string]: DefaultThemeType } = {};
         context.keys().forEach((key: string) => {
             const themeName = convertFileNameToDisplayName(key);
-            themes[themeName] = context(key) as DefaultThemeType;
+            const themeData = context(key);
+            if (isTheme(themeData)) {
+                themes[themeName] = themeData;
+            } else {
+                logger.warn(`Theme "${themeName}" does not match the required theme structure and will be skipped.`);
+            }
         });
         return themes;
     } catch {
         return {};
     }
-};
+}
 
-export const THEMES: { [key: string]: DefaultThemeType } = {
+export const THEMES: {
+    Flat: DefaultThemeType;
+    [key: string]: DefaultThemeType;
+} = {
     Flat: flatTheme,
     ...loadThemesFromFolder()
 };
 
-export function getThemeNames(): string[] {
-    return Object.keys(THEMES);
+export const THEME_NAMES = Object.keys(THEMES) as ["Flat"] & string[];
+
+function getThemeNameByString(value: string | null | undefined): string {
+    return typeof value === "string" && THEME_NAMES.includes(value) ? value : THEME_NAMES[0];
 }
 
 const ThemeContext = createContext<ThemeContextType>({
@@ -49,9 +68,7 @@ const ThemeContext = createContext<ThemeContextType>({
 ThemeContext.displayName = "ThemeContext";
 
 export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
-    const themeNames = getThemeNames();
-    const storedTheme = localStorage.getItem(THEME_KEY) ?? themeNames[0];
-    const [theme, setTheme] = useState(themeNames.includes(storedTheme) ? storedTheme : themeNames[0]);
+    const [theme, setTheme] = useState(getThemeNameByString(localStorage.getItem(THEME_KEY)));
 
     const themeContextValue: ThemeContextType = useMemo(() => {
         return {

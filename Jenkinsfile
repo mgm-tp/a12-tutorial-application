@@ -7,7 +7,7 @@ String downstreamBuildResult = 'Not triggerred'
 
 // BEGIN environment specific variables
 // TODO: Adapt the following variables according to your Jenkins build environment
-String BUILD_AGENT_LABEL = 'linux-node-mci'
+String BUILD_AGENT_LABEL = 'linux-node'
 String GRADLE_VERSION = 'Gradle8'
 @Field
 String JDK_VERSION = 'OpenJDK21'
@@ -47,27 +47,27 @@ pipeline {
 
     stages {
 
-                stage('Review') {
-                    when {
-                        allOf {
-                            anyOf {
-                                triggeredBy 'BranchIndexingCause'
-                                triggeredBy 'BranchEventCause'
-                                triggeredBy "UserIdCause"
-                            }
-                            changeRequest()
-                        }
+        stage('Review') {
+            when {
+                allOf {
+                    anyOf {
+                        triggeredBy 'BranchIndexingCause'
+                        triggeredBy 'BranchEventCause'
+                        triggeredBy "UserIdCause"
                     }
-                    steps {
-                        script {
-                            withBuildConfiguration {
-                                sh 'gradle build'
-                                String projectVersion = sh script: 'gradle getVersion -q', returnStdout: true
-                                currentBuild.displayName += ': ' + projectVersion
-                            }
-                        }
+                    changeRequest()
+                }
+            }
+            steps {
+                script {
+                    withBuildConfiguration {
+                        sh 'gradle build'
+                        String projectVersion = sh script: 'gradle getVersion -q', returnStdout: true
+                        currentBuild.displayName += ': ' + projectVersion
                     }
                 }
+            }
+        }
 
         stage('Pre-release') {
             when {

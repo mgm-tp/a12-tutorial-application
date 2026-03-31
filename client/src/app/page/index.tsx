@@ -1,98 +1,49 @@
-import { ReactElement } from "react";
+import type { PropsWithChildren, ReactElement } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { DndProvider } from "react-dnd";
 
-import { LoginPage } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
-import { ApplicationSelectors } from "@com.mgmtp.a12.client/client-core/lib/core/application";
-import { LocaleSelectors } from "@com.mgmtp.a12.client/client-core/lib/core/locale";
-import { NotificationViews } from "@com.mgmtp.a12.client/client-core/lib/core/notification";
-import { ViewViews } from "@com.mgmtp.a12.client/client-core/lib/core/view";
-import { DirtyHandlingViews } from "@com.mgmtp.a12.client/client-core/lib/extensions/dirtyHandling";
-import { AuthenticationState, UaaSelectors } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
-import { LocalizerContext } from "@com.mgmtp.a12.utils/utils-localization-react/lib/main";
-import {
-    defaultDataFormats,
-    defaultLocalizerFactory,
-    defaultValueConversion
-} from "@com.mgmtp.a12.utils/utils-localization/lib/main";
-import {
-    A11YLanguageContext,
-    getA11yResource
-} from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/a11y-localization";
-import { GlobalStyles } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/base";
-import { DragAndDropUtils } from "@com.mgmtp.a12.widgets/widgets-core/lib/common";
-import { SizeContext, useWindowSize } from "@com.mgmtp.a12.widgets/widgets-core/lib/layout/size-detector";
-import { shouldForwardProp } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/should-forward-prop";
-import { DateTimeContext } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/date-time/date-time-context";
-
-import { DATE_LOCALES, DEFAULT_TRANSLATIONS } from "../../localization";
+import { ApplicationSelectors } from "@com.mgmtp.a12.client/client-core";
+import { NotificationViews } from "@com.mgmtp.a12.client/client-core";
+import { ViewViews } from "@com.mgmtp.a12.client/client-core";
+import { GlobalStyles } from "@com.mgmtp.a12.widgets/widgets-core";
+import { DragAndDropUtils } from "@com.mgmtp.a12.widgets/widgets-core";
+import { SizeContext, useWindowSize } from "@com.mgmtp.a12.widgets/widgets-core";
+import { shouldForwardProp } from "@com.mgmtp.a12.widgets/widgets-core";
 
 import { ThemeContextProvider, THEMES, useThemeContext } from "../themeContext";
 
-import { AuthenticatedPage } from "./AuthenticatedPage";
-
 /**
- * Base application page.
- *
- * Based on the authentication state Login or Authenticated page is displayed.
+ * Base application page providing UI infrastructure: size context, drag-and-drop, notifications, and progress indicator.
  */
-const BasePage = (): ReactElement => {
+const BasePage = ({ children }: PropsWithChildren): ReactElement => {
     const { breakPoint } = useWindowSize();
-    const authenticatedState = useSelector(UaaSelectors.state);
-    const isAuthenticated = authenticatedState === AuthenticationState.AUTHENTICATED;
-
     const busyState = useSelector(ApplicationSelectors.busy());
-
-    // Initialize localizations
-    const locale = useSelector(LocaleSelectors.locale());
-    const dateLocaleKey = locale.language;
-    const dateTimeLocale = Object.hasOwn(DATE_LOCALES, dateLocaleKey) ? DATE_LOCALES[dateLocaleKey] : DATE_LOCALES.en;
-    const dataFormats = defaultDataFormats(locale);
-    const conversion = defaultValueConversion(dataFormats);
-    const localizer = defaultLocalizerFactory({
-        locale,
-        conversion,
-        dataFormats,
-        translationSource: DEFAULT_TRANSLATIONS
-    });
-
-    const A11yResource = getA11yResource(locale.language);
+    const sizeContextValue = useMemo(() => ({ currentSize: breakPoint.size }), [breakPoint.size]);
 
     return (
-        <SizeContext.Provider value={{ currentSize: breakPoint.size }}>
+        <SizeContext.Provider value={sizeContextValue}>
             <DndProvider
                 backend={DragAndDropUtils.DefaultDndBackend}
                 options={DragAndDropUtils.DefaultDndBackendOptions}>
-                <LocalizerContext.Provider value={{ locale, conversion, dataFormats, localizer }}>
-                    <DateTimeContext.Provider value={{ locale: dateTimeLocale }}>
-                        <A11YLanguageContext.Provider value={A11yResource}>
-                            <NotificationViews.Frame>
-                                <DirtyHandlingViews.VetoDialog>
-                                    <ViewViews.ProgressIndicator progress={busyState ? "loading" : "none"} global>
-                                        {isAuthenticated ? (
-                                            <AuthenticatedPage />
-                                        ) : (
-                                            <LoginPage imageURL={"/images/login_bg.jpg"} />
-                                        )}
-                                    </ViewViews.ProgressIndicator>
-                                </DirtyHandlingViews.VetoDialog>
-                            </NotificationViews.Frame>
-                        </A11YLanguageContext.Provider>
-                    </DateTimeContext.Provider>
-                </LocalizerContext.Provider>
+                <NotificationViews.Frame>
+                    <ViewViews.ProgressIndicator progress={busyState ? "loading" : "none"} global>
+                        {children}
+                    </ViewViews.ProgressIndicator>
+                </NotificationViews.Frame>
             </DndProvider>
         </SizeContext.Provider>
     );
 };
 
-const ThemedPageWrapper = () => {
+const ThemedPageWrapper = ({ children }: PropsWithChildren) => {
     const theme = useThemeContext((context) => context.theme);
     return (
         <StyleSheetManager shouldForwardProp={shouldForwardProp}>
-            <ThemeProvider theme={THEMES[theme]}>
+            <ThemeProvider theme={THEMES[theme] ?? THEMES.Flat}>
                 <GlobalStyles />
-                <BasePage />
+                <BasePage>{children}</BasePage>
             </ThemeProvider>
         </StyleSheetManager>
     );
@@ -103,10 +54,10 @@ const ThemedPageWrapper = () => {
  *
  * Other available themes can be found in the Widgets documentation.
  */
-export const StyledPage = (): ReactElement => {
+export const StyledPage = ({ children }: PropsWithChildren): ReactElement => {
     return (
         <ThemeContextProvider>
-            <ThemedPageWrapper />
+            <ThemedPageWrapper>{children}</ThemedPageWrapper>
         </ThemeContextProvider>
     );
 };

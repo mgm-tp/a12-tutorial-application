@@ -1,12 +1,12 @@
 package com.mgmtp.a12.template.server.event;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.mgmtp.a12.dataservices.common.events.CommonDataServicesEventListener;
 import com.mgmtp.a12.dataservices.common.events.ContentTypeDetectedEvent;
 import com.mgmtp.a12.template.server.attachment.MimeTypeValidator;
 
-@Service
+@Component
 public class AttachmentEventListener {
     private final MimeTypeValidator mimeTypeValidator;
 

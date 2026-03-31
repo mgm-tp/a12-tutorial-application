@@ -1,10 +1,10 @@
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const { merge } = require("webpack-merge");
+import { merge } from "webpack-merge";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import TerserPlugin from "terser-webpack-plugin";
 
-const common = require("./webpack.common.js");
+import common from "./webpack.common.js";
 
-module.exports = merge({}, common, {
+export default merge({}, common, {
     mode: "production",
     module: {
         rules: [
