@@ -34,3 +34,5 @@ gradle-app.setting
 *.txt
 .DS_Store
 /server/postgres/
+# SME settings file
+import/**/settings.yaml
