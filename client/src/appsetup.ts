@@ -69,6 +69,8 @@ import { CustomApplicationFrameLayout } from "./app/LayoutProvider";
 import { DEFAULT_TRANSLATIONS, supportedLocales, getDateTimeResource } from "./localization";
 import { AuthBarrier } from "./app/AuthBarrier";
 import { PieChartDataLoader } from "./modules/dashboard/data/PieChartDataLoader";
+import { ReloadMiddleware } from "./middlewares/reloadMiddleware";
+import { ReloadNotificationSaga } from "./sagas/reloadNotificationSaga";
 
 function assertFullyConfigured(
     config: A12ApplicationConfig
@@ -135,8 +137,12 @@ export function setup() {
 
     const applicationFeatures = combineFeatures(
         viewAndLayoutFeatures,
-        addAdditionalMiddlewares(registerModulesOnSetModelGraphMiddleware, unregisterModulesOnLogoutMiddleware),
-        addCustomSagas(LoadModelGraphSaga),
+        addAdditionalMiddlewares(
+            ReloadMiddleware,
+            registerModulesOnSetModelGraphMiddleware,
+            unregisterModulesOnLogoutMiddleware
+        ),
+        addCustomSagas(ReloadNotificationSaga, LoadModelGraphSaga),
         addDataHandlers(new PieChartDataLoader())
     );
 
