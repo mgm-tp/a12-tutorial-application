@@ -68,6 +68,19 @@ export const RESOURCE_KEYS = {
         noData: ""
     },
 
+    notification: {
+        reload: {
+            success: {
+                title: "",
+                message: ""
+            },
+            error: {
+                title: "",
+                message: ""
+            }
+        }
+    },
+
     application: {
         header: {
             userinfo: {

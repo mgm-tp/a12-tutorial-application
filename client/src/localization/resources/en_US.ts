@@ -48,6 +48,19 @@ export const en_US: LocalizationKeyTreeType = {
         noData: "No data"
     },
 
+    notification: {
+        reload: {
+            success: {
+                title: "Reload was successful",
+                message: "The data was successfully reload."
+            },
+            error: {
+                title: "Reload failed",
+                message: "The data was not successfully reload."
+            }
+        }
+    },
+
     application: {
         title: "Customer Relationship Management",
         header: {
