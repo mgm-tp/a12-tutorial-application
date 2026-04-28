@@ -16,6 +16,19 @@ export const de_DE: LocalizationKeyTreeType = {
         noData: "Keine Daten"
     },
 
+    notification: {
+        reload: {
+            success: {
+                title: "Neuladen war erfolgreich",
+                message: "Die Daten wurden erfolgreich neugeladen."
+            },
+            error: {
+                title: "Neuladen ist fehlgeschlagen",
+                message: "Die Daten konnten nicht erfolgreich neugeladen werden."
+            }
+        }
+    },
+
     application: {
         title: "Kundenbeziehungsmanagement",
         header: {
