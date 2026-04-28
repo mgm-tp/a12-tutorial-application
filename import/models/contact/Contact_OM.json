@@ -75,6 +75,26 @@
           },
           "destructive": false,
           "primary": false
+        },
+        {
+          "destructive": false,
+          "icon": {
+            "name": "sync",
+            "theme": "filled"
+          },
+          "label": [
+            {
+              "locale": "en",
+              "text": "Reload"
+            },
+            {
+              "locale": "de",
+              "text": "Neuladen"
+            }
+          ],
+          "type": "button",
+          "event": "reload",
+          "primary": false
         }
       ]
     },
