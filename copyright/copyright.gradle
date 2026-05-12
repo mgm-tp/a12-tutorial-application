@@ -80,6 +80,7 @@ def EXCLUDE_PATTERNS = [
     '**/package-lock.json',
     '**/playwright-report/**',
     '**/test-results/**',
+    'import/**/settings.yaml',
 ]
 
 def getExtension = { File file ->

@@ -5,3 +5,4 @@
 # Declare files that will always have LF line endings on checkout
 *.sh text eol=lf
 *.generated.ts text eol=lf
+package-lock.json text eol=lf

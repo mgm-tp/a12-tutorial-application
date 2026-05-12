@@ -173,16 +173,9 @@ tasks.register('test') {
     dependsOn initProject
 }
 
-tasks.register('prerelease') {
-    dependsOn test, initProject
-}
-
 subprojects.each { sub ->
     tasks.named('test').configure {
         dependsOn sub.tasks.matching { it.name == 'test' || it.name == 'checkstyleMain' }
-    }
-    tasks.named('prerelease').configure {
-        dependsOn sub.tasks.matching { it.name == 'pushImages' }
     }
 }
 

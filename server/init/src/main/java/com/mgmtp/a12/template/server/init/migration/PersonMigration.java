@@ -57,7 +57,7 @@ import tools.jackson.core.JacksonException;
 @Component
 public class PersonMigration {
 
-    private static final String MODEL_TO_MIGRATE = "Person_DM";
+    private static final String MODEL_TO_MIGRATE = "Person_Dc";
     private static final String REMOVED_FIELD_PATH = "/Person/PersonalData/PlaceOfBirth";
     private final IDocumentRepository documentRepository;
     private final DocumentService documentService;
@@ -89,7 +89,7 @@ public class PersonMigration {
     }
 
     @CommonDataServicesEventListener(condition = "@migrationConfiguration.isEnabled() &&"
-            + "#afterRepositoryLoadEvent.documentReference.documentModelName.equalsIgnoreCase('Person_DM')")
+            + "#afterRepositoryLoadEvent.documentReference.documentModelName.equalsIgnoreCase('Person_Dc')")
     public void listenOnDocumentLoadFromRepository(DocumentAfterRepositoryLoadEvent afterRepositoryLoadEvent)
             throws IllegalArgumentException, JacksonException {
         String documentContent = afterRepositoryLoadEvent.getDocumentContent();

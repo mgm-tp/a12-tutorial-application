@@ -1,6 +1,6 @@
 {
   "header": {
-    "id": "Person_OM",
+    "id": "Person_Ov",
     "modelType": "overview",
     "modelVersion": "39.0.0",
     "locales": [
@@ -32,7 +32,7 @@
         "purpose": "document-model-for-overview",
         "modelType": "document",
         "alias": "DM",
-        "reference": "Person_DM"
+        "reference": "Person_Dc"
       }
     ]
   },

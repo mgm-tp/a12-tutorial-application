@@ -107,7 +107,12 @@ tasks.register('runTypedAccessorGenerator', JavaExec) {
     def packagePrefix = 'com.mgmtp.a12.template.server.typings'
 
     doFirst {
-        def documentModels = fileTree(dir: modelPath, include: ['**/*_DM.json', '**/*_CDM.json'])
+        // The model header is the only definitive type test; Document Models and Composed Document Models
+        // both use modelType "document", Type Definition Models do too but carry no modelRoot.
+        def documentModels = fileTree(dir: modelPath, include: '**/*.json').filter { File jsonFile ->
+            def model = new groovy.json.JsonSlurper().parse(jsonFile)
+            model?.header?.modelType == 'document' && model?.content?.modelRoot != null
+        }
         if (!documentModels || documentModels.isEmpty()) {
             throw new org.gradle.api.GradleException("No converted document models found in ${modelPath}")
         }

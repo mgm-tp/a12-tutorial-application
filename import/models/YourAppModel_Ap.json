@@ -1,6 +1,6 @@
 {
   "header": {
-    "id": "YourAppModel_AM",
+    "id": "YourAppModel_Ap",
     "modelType": "application",
     "modelVersion": "6.0.0",
     "locales": [
@@ -82,7 +82,7 @@
                       "models": [
                         {
                           "modelType": "overview",
-                          "name": "Person_OM"
+                          "name": "Person_Ov"
                         }
                       ]
                     }
@@ -113,8 +113,8 @@
                       "models": [
                         {
                           "modelType": "form",
-                          "name": "Person_FM",
-                          "documentModel": "Person_DM"
+                          "name": "Person_Fm",
+                          "documentModel": "Person_Dc"
                         }
                       ]
                     }

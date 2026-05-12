@@ -1,8 +1,0 @@
-{
-    "extends": "../client/tsconfig",
-    "compilerOptions": {
-        "types": ["node"]
-    },
-    "include": ["./**/*.ts"],
-    "exclude": ["node_modules", "playwright-report", "test-results"]
-}

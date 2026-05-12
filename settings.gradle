@@ -38,7 +38,6 @@ include 'server'
 include 'server:app'
 include 'server:init'
 include 'import'
-include 'e2e'
 
 dependencyResolutionManagement {
     def springBootVersion = '4.0.6'

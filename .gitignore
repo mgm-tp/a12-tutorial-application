@@ -37,3 +37,9 @@ gradle-app.setting
 !licenses/*.txt
 .DS_Store
 /server/postgres/
+
+# SME settings file
+import/**/settings.yaml
+
+# Claude
+.claude/settings.local.*

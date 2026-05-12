@@ -83,7 +83,7 @@ tasks.register('stop', NodeTask) {
 }
 
 tasks.register('universalizePackageLock', NodeTask) {
-    description 'Removes "resolved" and "integrity" keys and values from package-lock.json files in client and e2e directories.'
+    description 'Removes "resolved" and "integrity" keys and values from package-lock.json files in client directory.'
 
     script = file('scripts/universalize-package-lock.js')
 }

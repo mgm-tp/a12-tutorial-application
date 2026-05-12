@@ -1,6 +1,6 @@
 {
   "header": {
-    "id": "Person_DM",
+    "id": "Person_Dc",
     "modelType": "document",
     "modelVersion": "29.4.0",
     "locales": [
@@ -26,9 +26,9 @@
   },
   "content": {
     "modelInfo": {
-      "name": "Person_DM",
+      "name": "Person_Dc",
       "immutable": false,
-      "joinedModelsInfo": "Person_DM-document-meta-data+Add"
+      "joinedModelsInfo": "Person_Dc-document-meta-data+Add"
     },
     "modelConfig": {
       "decimalSeparator": ".",
