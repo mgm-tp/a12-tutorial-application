@@ -47,25 +47,9 @@ import { LoggerFactory } from "@com.mgmtp.a12.utils/utils-logging";
 
 import { isModule } from "../utils/guards";
 
+import { modules } from "./modules.generated";
+
 const logger = LoggerFactory.getLogger("PT/modules");
-
-/**
- * Webpack's require.context for auto-discovering A12 custom modules.
- *
- * Scans the current directory for subfolders containing an index.ts file.
- * Each matched file should export a default A12 Module object.
- *
- * @example Matched paths: "./person/index.ts"
- */
-const modulesContext = require.context(".", true, /^\.\/[^/]+\/index\.ts$/);
-
-/**
- * Auto-discovered A12 custom modules from subfolders.
- */
-const modules: Module[] = modulesContext
-    .keys()
-    .map((key) => modulesContext(key).default)
-    .filter(isModule);
 
 const ALL_MODULES: Module[] = [
     AppModelAdapterModule,
@@ -75,7 +59,7 @@ const ALL_MODULES: Module[] = [
             modules: [...DefaultElementLibrary.get().modules, ...FormElementsLibrary.modules]
         }
     }),
-    ...modules
+    ...modules.filter(isModule)
 ];
 const moduleRegistry = ModuleRegistryProvider.getInstance();
 

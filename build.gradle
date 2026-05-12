@@ -155,13 +155,8 @@ tasks.register('test') {
     dependsOn initProject
 }
 
-tasks.register('prerelease') {
-    dependsOn test, initProject
-}
-
 subprojects.each {
     test.dependsOn it.getTasksByName('test', true), it.getTasksByName('checkstyleMain', true)
-    prerelease.dependsOn it.getTasksByName('pushImages', true)
 }
 
 tasks.register("replacePlaceholders") {

@@ -4,7 +4,7 @@
   "description": "Project Template",
   "repository": {
     "type": "git",
-    "url": "<YOUR_REPO_URL>,"
+    "url": "<YOUR_REPO_URL>"
   },
   "publishConfig": {
     "registry": "<YOUR_PUBLISH_CONFIG_REGISTRY>"
