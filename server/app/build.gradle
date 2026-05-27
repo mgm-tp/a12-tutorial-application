@@ -102,7 +102,7 @@ tasks.register('runTypedAccessorGenerator', JavaExec) {
     mainClass = 'com.mgmtp.a12.kernel.md.document.typed_accessor_gen.TypedAccessorGenerator'
 
     def modelPath = "${rootProject.projectDir.path}/import/models";
-    def packagePrefix = "com.mgmtp.a12.template.server.typings"
+    def packagePrefix = "com.mgmtp.a12.tutorial.server.typings"
     def documentModels = fileTree(dir: "${modelPath}", include: ['**/*_DM.json', '**/*_CDM.json'])
 
     if (!documentModels || documentModels.isEmpty()) {
@@ -121,7 +121,7 @@ tasks.register('runTypedAccessorGenerator', JavaExec) {
 tasks.compileGeneratedTypingsJava.dependsOn(runTypedAccessorGenerator)
 
 springBoot {
-    mainClass = 'com.mgmtp.a12.template.server.ProjectTemplateServerApplication'
+    mainClass = 'com.mgmtp.a12.tutorial.server.TutorialServerApplication'
     buildInfo {
         properties {
             version = project.version

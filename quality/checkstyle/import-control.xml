@@ -34,7 +34,7 @@
   LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
 -->
 
-<import-control pkg="com.mgmtp.a12.template.server*" strategyOnMismatch="allowed" regex="true">
-    <allow class="com.mgmtp.a12.template.server(\.\w+)*\.internal(\.\w+)*" regex="true" />
+<import-control pkg="com.mgmtp.a12.tutorial.server*" strategyOnMismatch="allowed" regex="true">
+    <allow class="com.mgmtp.a12.tutorial.server(\.\w+)*\.internal(\.\w+)*" regex="true" />
     <disallow class=".*\.internal(\.\w+)*|.*\.a12internal(\.\w+)*" regex="true" />
 </import-control>

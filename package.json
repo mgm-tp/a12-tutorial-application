@@ -1,7 +1,7 @@
 {
   "name": "@com.mgmtp.a12.projecttemplate/project-template-local-auth",
   "version": "202506.5.1",
-  "description": "Project Template",
+  "description": "A12 Tutorial Application",
   "repository": {
     "type": "git",
     "url": "<YOUR_REPO_URL>"

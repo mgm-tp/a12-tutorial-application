@@ -30,27 +30,16 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-package com.mgmtp.a12.template.server.attachment;
+package com.mgmtp.a12.tutorial.server;
 
-import com.mgmtp.a12.dataservices.common.exception.InvalidInputException;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.SpringApplication;
 
-import java.util.List;
+import com.mgmtp.a12.dataservices.DataServicesApplication;
 
-import static com.mgmtp.a12.dataservices.exception.ExceptionKeys.ATTACHMENT_INVALID_TYPE_ERROR_KEY;
-
-@Component
-public class MimeTypeValidator {
-    @Value("${mgmtp.a12.template.server.attachment.allowedMimeTypes:*}")
-    private List<String> allowedMimeTypes;
-
-    public void validateMimeType(String mimeType) {
-        String detectedMimeGroup = mimeType.substring(0, mimeType.indexOf('/') + 1) + '*';
-
-        if (!allowedMimeTypes.contains("*") && !allowedMimeTypes.contains(detectedMimeGroup)
-                && !allowedMimeTypes.contains(mimeType)) {
-            throw new InvalidInputException(ATTACHMENT_INVALID_TYPE_ERROR_KEY, "Invalid MIME type.");
-        }
+@DataServicesApplication(scanBasePackages = {DataServicesApplication.DATASERVICES_BASE_PACKAGE,
+        "com.mgmtp.a12.tutorial.server"})
+public class TutorialServerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(TutorialServerApplication.class, args);
     }
 }

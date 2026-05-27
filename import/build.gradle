@@ -35,7 +35,7 @@ def hasPackableContent = hasContent(importDirectory)
 
 tasks.register('importsPackage', Zip) {
     group 'Publishing'
-    description 'Packages importable resources of Project Template to zip.'
+    description 'Packages importable resources of A12 Tutorial Application to zip.'
 
     from importDirectory
     exclude 'build','build.gradle'
@@ -58,8 +58,8 @@ if (hasPackableContent) {
                 artifact source: importsPackage, extension: 'zip'
                 version project.version
                 pom {
-                    name = 'Project Template Imports'
-                    description = 'Packed resources to be imported to Project Template.'
+                    name = 'A12 Tutorial Application Imports'
+                    description = 'Packed resources to be imported to A12 Tutorial Application.'
                 }
             }
         }
@@ -82,9 +82,9 @@ boolean hasContent (File importDir) {
 
 String getArtifactName () {
     if (project.hasProperty("variant")) {
-        return "project-template-imports-${project.getProperty("variant")}"
+        return "a12-tutorial-application-imports-${project.getProperty("variant")}"
     } else {
-        return "project-template-imports"
+        return "a12-tutorial-application-imports"
     }
 }
 
