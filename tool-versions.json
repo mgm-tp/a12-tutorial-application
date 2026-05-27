@@ -1,0 +1,40 @@
+{ "notesForUsage": "Versions of tools can be written in NPM semver style described here: https://github.com/npm/node-semver.",
+  "tools": {
+    "jdk": {
+      "name": "JDK",
+      "superscript": "",
+      "version": "21",
+      "note": ""
+    },
+    "gradle": {
+      "name": "Gradle",
+      "superscript": "1",
+      "version": ">=8.5.x <9",
+      "note": ""
+    },
+    "node": {
+      "name": "Node",
+      "superscript": "",
+      "version": "22.x.x",
+      "note": ""
+    },
+    "npm": {
+      "name": "npm",
+      "superscript": "1",
+      "version": ">=10.7.x",
+      "note": ""
+    },
+    "docker": {
+      "name": "Docker",
+      "superscript": "1",
+      "version": ">=20.x",
+      "note": ""
+    },
+    "docker compose": {
+      "name": "Docker Compose",
+      "superscript": "",
+      "version": ">=2.20.3",
+      "note": ""
+    }
+  }
+}

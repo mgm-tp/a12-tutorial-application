@@ -1,0 +1,369 @@
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
+def copyrightTemplateFile = file('copyright/copyright-template.md')
+def currentYear = java.time.Year.now().getValue()
+def YEAR_PLACEHOLDER = '{year}'
+
+// TODO: Adjust to currentYear if needed 
+// (then file without copyright header will only have currentYear, otherwise 2012-currentYear)
+def DEFAULT_START_YEAR = 2012
+
+def COMMENT_STYLES = [
+    'java'      : [start: '/*', linePrefix: ' * ', end: ' */'],
+    'js'        : [start: '/*', linePrefix: ' * ', end: ' */'],
+    'jsx'       : [start: '/*', linePrefix: ' * ', end: ' */'],
+    'ts'        : [start: '/*', linePrefix: ' * ', end: ' */'],
+    'tsx'       : [start: '/*', linePrefix: ' * ', end: ' */'],
+    'gradle'    : [start: '/*', linePrefix: ' * ', end: ' */'],
+    'properties': [start: '#', linePrefix: '# ', end: '#'],
+    'mjs'       : [start: '/*', linePrefix: ' * ', end: ' */'],
+    'yaml'      : [start: '#', linePrefix: '# ', end: '#'],
+    'yml'       : [start: '#', linePrefix: '# ', end: '#'],
+    'xml'       : [start: '<!--', linePrefix: '  ', end: '-->'],
+    'adoc'      : [start: '////', linePrefix: '  ', end: '////'],
+]
+
+def FILE_PATTERNS = [
+    '**/*.java',
+    '**/*.js',
+    '**/*.jsx',
+    '**/*.ts',
+    '**/*.tsx',
+    '**/*.gradle',
+    '**/*.properties',
+    '**/*.mjs',
+    '**/*.yaml',
+    '**/*.yml',
+    '**/*.xml',
+    '**/*.adoc',
+]
+
+def EXCLUDE_PATTERNS = [
+    '**/node_modules/**',
+    '**/build/**',
+    '.idea',
+    '.run',
+    'copyright/copyright-template.md',
+    'gradle',
+    '**/target/**',
+    '**/.gradle/**',
+    '**/package-lock.json',
+    '**/playwright-report/**',
+    '**/test-results/**',
+]
+
+def getExtension = { File file ->
+    def name = file.name
+    def dotIndex = name.lastIndexOf('.')
+    dotIndex >= 0 ? name.substring(dotIndex + 1) : ''
+}
+
+def getCommentStyle = { File file ->
+    COMMENT_STYLES[getExtension(file)]
+}
+
+def extractStartYear = { String content ->
+    def matcher = (content =~ /Copyright \([Cc]\) (\d{4})/)
+    matcher.find() ? matcher.group(1) : null
+}
+
+def extractEndYear = { String content ->
+    def matcher = (content =~ /Copyright \([Cc]\) [\d\-]+/)
+    if (!matcher.find()) return null
+    
+    def copyrightPart = matcher.group(0)
+    def years = (copyrightPart =~ /\d{4}/).collect { it }
+    years.isEmpty() ? null : years[-1]
+}
+
+def buildYearRange = { String startYear, int endYear ->
+    startYear == endYear.toString() ? startYear : "${startYear}-${endYear}"
+}
+
+def formatCopyrightHeader = { String template, Map commentStyle, String yearRange ->
+    if (commentStyle == null) return null
+    
+    def templateWithYear = template.replace(YEAR_PLACEHOLDER, yearRange)
+    
+    // For XML comments, replace -- with == to avoid XML parser errors
+    if (commentStyle.start == '<!--') {
+        templateWithYear = templateWithYear.replaceAll(/-{2,}/) { match -> '=' * match.length() }
+    }
+    
+    def lines = templateWithYear.split('\n')
+    def header = new StringBuilder()
+    
+    header.append(commentStyle.start).append('\n')
+    lines.each { line ->
+        if (line.trim().isEmpty()) {
+            header.append(commentStyle.linePrefix.replaceAll(/\s+$/, '')).append('\n')
+        } else {
+            header.append(commentStyle.linePrefix).append(line).append('\n')
+        }
+    }
+    header.append(commentStyle.end).append('\n')
+    header.append('\n')
+
+    header.toString()
+}
+
+def getHeaderPattern = { Map commentStyle ->
+    switch (commentStyle.start) {
+        case '/*':
+            return ~/^\s*\/\*[\s\S]*?Copyright[\s\S]*?\*\/\n\n/
+        case '#':
+            return ~/^(#[^\n]*\n)*#[^\n]*Copyright[^\n]*\n(#[^\n]*\n)*\n/
+        case '<!--':
+            return ~/^\s*<!--[\s\S]*?Copyright[\s\S]*?-->\n\n/
+        case '////':
+            return ~/^\s*\/\/\/\/\n[\s\S]*?Copyright[\s\S]*?\/\/\/\/\n\n/
+        default:
+            return null
+    }
+}
+
+/*
+ * Removes XML declaration and DOCTYPE if present,
+ * Returns [declaration, rest of content]
+ */
+def removeXmlDeclaration = { String content ->
+    def XML_DECLARATION_PATTERN = ~/^(\s*<\?xml[^?]*\?>\s*(?:<!DOCTYPE[^>]*>\s*)?)/
+    def matcher = XML_DECLARATION_PATTERN.matcher(content)
+    if (matcher.find()) {
+        return [matcher.group(1), content.substring(matcher.group(1).length())]
+    }
+    ['', content]
+}
+
+def extractExistingHeader = { String content, Map commentStyle ->
+    def pattern = getHeaderPattern(commentStyle)
+    if (pattern == null) return null
+
+    def targetContent = content
+    
+    if (commentStyle.start == '<!--') {
+        def (_, restContent) = removeXmlDeclaration(content)
+        targetContent = restContent
+    }
+
+    def matcher = pattern.matcher(targetContent)
+    matcher.find() ? matcher.group(0) : null
+}
+
+def normalizeHeader = { String header ->
+    if (header == null) return null
+    header
+        .replaceAll(/\r\n|\r|\n/, '\n')  // Normalize all line endings to \n
+        .replaceAll(/Copyright \([Cc]\) \d{4}(-\d{4})?/, "Copyright (c) ${YEAR_PLACEHOLDER}")
+        .trim()
+}
+
+def headersMatch = { String existingHeader, String template, Map commentStyle ->
+    def expectedHeader = formatCopyrightHeader(template, commentStyle, YEAR_PLACEHOLDER)
+    normalizeHeader(existingHeader) == normalizeHeader(expectedHeader)
+}
+
+def isRootGradleProperties = { File file ->
+    file.name == 'gradle.properties' && file.parentFile == project.rootDir
+}
+
+def removeTimestampPrefix = { String content ->
+    def GRADLE_PROPERTIES_TIMESTAMP_PATTERN = ~/^(#[A-Z][a-z]{2}, \d{2} [A-Z][a-z]{2} \d{4} [\d:]{8} [+-]\d{4}\n)/
+    content.replaceFirst(GRADLE_PROPERTIES_TIMESTAMP_PATTERN, '')
+}
+
+def checkFile = { File file, String template, int year ->
+    def commentStyle = getCommentStyle(file)
+    if (commentStyle == null) return []
+
+    def content = file.text.replaceAll(/\r\n|\r/, '\n')  // Normalize line endings
+
+    // Strip Gradle-written timestamp from root gradle.properties (Java Properties.store() always adds one)
+    if (isRootGradleProperties(file)) {
+        content = removeTimestampPrefix(content)
+    }
+
+    def existingHeader = extractExistingHeader(content, commentStyle)
+    def startYear = extractStartYear(content)
+    def endYear = extractEndYear(content)
+
+    def issue = null;
+
+    if (existingHeader == null) {
+        issue = 'missing'
+    } else if (!headersMatch(existingHeader, template, commentStyle)) {
+        issue = 'mismatched'
+    } else if (endYear.toInteger() != year) {
+        issue = 'outdated'
+    }
+
+    [issue: issue, existingHeader: existingHeader, startYear: startYear ?: DEFAULT_START_YEAR.toString(), endYear: endYear]
+}
+
+def updateFile = { File file, String template, int year ->
+    def check = checkFile(file, template, year)
+    def issue = check.issue
+    def existingHeader = check.existingHeader
+    def startYear = check.startYear
+    def endYear = check.endYear
+
+    if (issue == null) {
+        return 'unchanged'
+    }
+
+    def content = file.text
+    def commentStyle = getCommentStyle(file)
+    def yearRange = buildYearRange(startYear, year)
+
+    if (issue == 'outdated') {
+        file.text = content.replaceFirst(
+            /Copyright \(C\) \d{4}(-\d{4})?/,
+            "Copyright (C) ${yearRange}"
+        )
+        return 'updated'
+    }
+
+    def newHeader = formatCopyrightHeader(template, commentStyle, yearRange)
+
+    if (commentStyle.start == '<!--') {
+        def (xmlDecl, restContent) = removeXmlDeclaration(content)
+        if (existingHeader) {
+            file.text = xmlDecl + restContent.replace(existingHeader, newHeader)
+        } else {
+            file.text = xmlDecl + newHeader + restContent.trim() + '\n'
+        }
+    } else if (existingHeader) {
+        file.text = content.replace(existingHeader, newHeader)
+    } else {
+        file.text = newHeader + content.trim() + '\n'
+    }
+
+    'updated'
+}
+
+def getSourceFiles = {
+    def includes = FILE_PATTERNS
+    def excludes = EXCLUDE_PATTERNS
+    fileTree('.') {
+        includes.each { pattern -> include pattern }
+        excludes.each { pattern -> exclude pattern }
+    }
+}
+
+tasks.register('validateCopyrightHeaders') {
+    group 'copyright'
+    description 'Validates that all source and configuration files have up-to-date copyright headers'
+
+    doLast {
+        if (!copyrightTemplateFile.exists()) {
+            throw new GradleException("Copyright template file not found: ${copyrightTemplateFile}")
+        }
+
+        def template = copyrightTemplateFile.text.replaceAll(/\r\n|\r/, '\n')  // Normalize line endings
+
+        def filesWithIssue = []
+        def validCount = 0
+
+        println "Validating copyright headers..."
+        println "Current year: ${currentYear}"
+        println ""
+
+        getSourceFiles().each { file ->
+            def check = checkFile(file, template, currentYear)
+            def issue = check.issue
+
+            if (!issue) {
+                validCount++
+                return
+            }
+
+            filesWithIssue.add(file)
+        }
+
+        def hasErrors = !filesWithIssue.isEmpty()
+
+        if (hasErrors) {
+            println "[x] Files need to be updated (${filesWithIssue.size()}):"
+            filesWithIssue.each { println "  - ${it.path}" }
+            println ""
+        }
+
+        println "=" * 60
+        println "Summary:"
+        println "  [✓] Valid: ${validCount}"
+        println "  [x] Invalid: ${filesWithIssue.size()}"
+        println "=" * 60
+
+        if (hasErrors) {
+            println ""
+            println "Run 'gradle updateCopyrightHeaders' to fix these issues."
+            throw new GradleException("Copyright header validation failed!")
+        } else {
+            println ""
+            println "[✓] All files have valid copyright headers!"
+        }
+    }
+}
+
+tasks.register('updateCopyrightHeaders') {
+    group 'copyright'
+    description 'Adds or updates copyright headers with year range to current year'
+
+    doLast {
+        if (!copyrightTemplateFile.exists()) {
+            throw new GradleException("Copyright template file not found: ${copyrightTemplateFile}")
+        }
+
+        def template = copyrightTemplateFile.text.replaceAll(/\r\n|\r/, '\n')  // Normalize line endings
+        def results = [updated: [], unchanged: []]
+
+        println "Updating copyright headers..."
+        println "Current year: ${currentYear}"
+        println ""
+
+        getSourceFiles().each { file ->
+            def result = updateFile(file, template, currentYear)
+            results[result].add(file)
+
+            if (result == 'updated') {
+                println "  ✓ Updated: ${file.path}"
+            }
+        }
+
+        println ""
+        println "=" * 60
+        println "[✓] Updated: ${results.updated.size()} file(s)"
+        println "[-] Unchanged: ${results.unchanged.size()} file(s)"
+        println "=" * 60
+    }
+}

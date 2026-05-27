@@ -1,0 +1,98 @@
+{
+  "name": "Extend Data Services Permission Definition",
+  "description": "Authorization for user access",
+  "policies": [
+    {
+      "name": "Document Delete By User Created",
+      "description": "User is only able to delete the documents created by them",
+      "target": "hasAccessRight('DOCUMENT_DELETE') && !containsAnyRole('admin')",
+      "rules": [
+        "principal.username == #resource.kernelDocument.__meta.creator"
+      ]
+    },
+    {
+      "name": "Document Update By User Created",
+      "description": "User is only able to update the documents created by them",
+      "target": "hasAccessRight('DOCUMENT_UPDATE') && !containsAnyRole('admin')",
+      "rules": [
+        "principal.username == #resource.oldDocument.__meta.creator"
+      ]
+    },
+    {
+      "name": "User Has Actuator Path Access",
+      "description": "Users with access right ACCESS_ACTUATOR are allowed to access /actuator/** path",
+      "rules": [
+        "hasAccessRight('ACCESS_ACTUATOR')"
+      ]
+    },
+    {
+      "name": "Reload Authorization Rules by System-Admin",
+      "description": "Users with access right RELOAD_AUTH_RULES are allowed to access /uaa-authorization/reloadRules path",
+      "rules": [
+        "hasAccessRight('RELOAD_AUTH_RULES')"
+      ]
+    }
+  ],
+  "repositoryPolicies": [
+    {
+      "name": "Document List By User Created",
+      "description": "User is only able to see the documents created by them",
+      "target": "!containsAnyRole('admin')",
+      "templates": [
+        {
+          "operator": "exact_match",
+          "field": "/__meta/creator",
+          "value": "principal.username"
+        }
+      ]
+    }
+  ],
+  "permissions": [
+    {
+      "name": "User Delete Document Permission",
+      "policy-refs": [
+        "Document Delete By User Created"
+      ],
+      "scopes": [
+        "Document Delete"
+      ]
+    },
+    {
+      "name": "User Update Document Permission",
+      "policy-refs": [
+        "Document Update By User Created"
+      ],
+      "scopes": [
+        "Document Update"
+      ]
+    },
+    {
+      "name": "User List Document Permission",
+      "repository-refs": [
+        "Document List By User Created"
+      ],
+      "scopes": [
+        "Query"
+      ]
+    },
+    {
+      "name": "Actuator Access Permission",
+      "description": "Control actuator accessibility by relative URL",
+      "policy-refs": [
+        "User Has Actuator Path Access"
+      ],
+      "scopes": [
+        "RelativePath"
+      ]
+    },
+    {
+      "name": "Reload Authorization Rules",
+      "policy-refs": [
+        "Reload Authorization Rules by System-Admin"
+      ],
+      "scopes": [
+        "Reload Rules"
+      ]
+    }
+  ]
+}

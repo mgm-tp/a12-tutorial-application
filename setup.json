@@ -1,0 +1,90 @@
+{
+  "serverPackage": {
+    "current": "com.mgmtp.a12.template.server",
+    "alternative": "com.mgmtp.a12.template.server"
+  },
+  "serverApplication": {
+    "current": "ProjectTemplateServerApplication",
+    "alternative": "ProjectTemplateServerApplication"
+  },
+  "initApplication": {
+    "current": "ProjectTemplateInitApplication",
+    "alternative": "ProjectTemplateInitApplication"
+  },
+  "projectProperties": {
+    "current": "mgmtp.a12.template.server",
+    "alternative": "mgmtp.a12.template.server"
+  },
+  "projectGroup": {
+    "current": "com.mgmtp.your-project-name",
+    "alternative": "com.mgmtp.your-project-name"
+  },
+  "projectName": {
+    "current": "your-project-name",
+    "alternative": "your-project-name"
+  },
+  "projectImportsArtifact": {
+    "current": "project-template-imports",
+    "alternative": "project-template-imports"
+  },
+  "sonarProjectKey": {
+    "current": "Project-Template",
+    "alternative": "Project-Template"
+  },
+  "projectDisplayName": {
+    "current": "Project Template",
+    "alternative": "Project Template"
+  },
+  "appModelName": {
+    "current": "YourAppModel_AM",
+    "alternative": "YourAppModel_AM"
+  },
+  "title": {
+    "current": "Your-Project-Name",
+    "alternative": "Your-Project-Name"
+  },
+  "dsDatabaseName": {
+    "current": "your-ds-db-name",
+    "alternative": "your-ds-db-name"
+  },
+  "dsDatabaseUsername": {
+    "current": "your-ds-username",
+    "alternative": "your-ds-username"
+  },
+  "dsDatabasePassword": {
+    "current": "your-ds-password",
+    "alternative": "your-ds-password"
+  },
+  "csDatabaseName": {
+    "current": "your-cs-db-name",
+    "alternative": "your-cs-db-name"
+  },
+  "csDatabaseUsername": {
+    "current": "your-cs-username",
+    "alternative": "your-cs-username"
+  },
+  "csDatabasePassword": {
+    "current": "your-cs-password",
+    "alternative": "your-cs-password"
+  },
+  "postgresDatabasePassword": {
+    "current": "your-postgres-password",
+    "alternative": "your-postgres-password"
+  },
+  "keycloakDatabaseName": {
+    "current": "your-keycloak-db-name",
+    "alternative": "your-keycloak-db-name"
+  },
+  "keycloakDatabaseUsername": {
+    "current": "your-keycloak-db-username",
+    "alternative": "your-keycloak-db-username"
+  },
+  "keycloakDatabasePassword": {
+    "current": "your-keycloak-db-password",
+    "alternative": "your-keycloak-db-password"
+  },
+  "nginxServerBaseUrlVarName": {
+    "current": "NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL",
+    "alternative": "NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL"
+  }
+}

@@ -1,0 +1,39 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "client",
+			"label": "start client",
+			"detail": "npm run webpack-dev-server",
+			"isBackground": true,
+			"options": {
+				"env": {
+					"BROWSER": "none"
+				}
+			},
+			"problemMatcher": {
+				"pattern": {
+					"regexp": "^$"
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": ".*",
+					"endsPattern": ".*No issues found..*"
+				}
+			}
+		},
+		{
+			"label": "stop client",
+			"command": "echo ${input:terminate}",
+			"type": "shell"
+		}
+	],
+	"inputs": [{
+		"id": "terminate",
+		"type": "command",
+		"command": "workbench.action.tasks.terminate",
+		"args": "terminateAll"
+	  }]
+}

@@ -1,0 +1,186 @@
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
+plugins {
+    alias(gradlePluginLibs.plugins.node.gradle)
+}
+
+npmInstall.configure {
+    args = ['--legacy-peer-deps']
+}
+
+
+ext {
+    imageLabels = ["name"       : "${calculateShortTag(clientName)}".toString(),
+                   "vendor"     : "mgm technology partners GmbH",
+                   "version"    : project.version,
+                   "release"    : rootProject.a12ReleaseLine,
+                   "summary"    : "A Nginx-based server for serving A12 Client",
+                   "description": "The A12 Client is built around the established React/Redux ecosystem, integrates the A12 UI components like engines and widgets, and interact with the A12 Data Services in the backend via HTTP/REST endpoints."]
+}
+
+tasks.register('compile', NpmTask) {
+    group 'build'
+    dependsOn npmInstall
+
+    if(skipLintFormat.toBoolean()) {
+        args = ['run-script', 'skip:lint-format-compile']
+    } else {
+        args = ['run-script', 'compile']
+    }
+}
+
+tasks.register('webpack', NpmTask) {
+    group 'build'
+    dependsOn compile
+
+    args = ['run-script', 'webpack']
+}
+
+tasks.register('start', NpmTask) {
+    dependsOn "stop"
+    args = ['run-script', 'start']
+}
+
+tasks.register('stop', NodeTask) {
+    description 'Stops the service that runs on port defined in webpack-dev-server setup.'
+
+    script = file('scripts/kill-port.js')
+}
+
+tasks.register('universalizePackageLock', NodeTask) {
+    description 'Removes "resolved" and "integrity" keys and values from package-lock.json files in client and e2e directories.'
+
+    script = file('scripts/universalize-package-lock.js')
+}
+
+tasks.register('update', NpmTask) {
+    args = ['update']
+}
+
+tasks.register('formatFix', NpmTask) {
+    description 'Fixes format issues highlighted by prettier.'
+    args = ['run-script','format:fix']
+}
+
+tasks.register('lintFix', NpmTask) {
+    description 'Fixes lint issues highlighted by eslint.'
+    args = ['run-script','lint:fix']
+}
+
+assemble.dependsOn compile
+
+tasks.register('copyNginxConf', Sync) {
+    group 'docker'
+
+    from 'nginx.conf.template'
+    from 'nginx.conf.k8s'
+    into 'build'
+}
+
+tasks.register('createDockerfile', Dockerfile) {
+    group 'docker'
+    dependsOn webpack, copyNginxConf
+
+    destFile = layout.buildDirectory.file("Dockerfile")
+    def baseImage = "${dockerRegistryForRead}/${dockerClientBaseImage}"
+
+    // NOTE: Apple Silicon users may experience bad performance
+    def currentArchitecture = DefaultNativePlatform.currentArchitecture
+    if (currentArchitecture.isArm() || (currentArchitecture.getName().toLowerCase() in ['aarch64','arm64'])) {
+        baseImage = "--platform=linux/amd64 $baseImage"
+    }
+
+    from "$baseImage"
+    copyFile 'nginx.conf.k8s', '/etc/nginx/nginx.conf'
+    copyFile 'nginx.conf.template', '/etc/nginx/nginx.conf.template'
+    copyFile 'webpack', '/var/lib/a12/application/nginx/html'
+
+    runCommand "set -eux; " +
+        "touch /var/run/nginx.pid; " +
+        "addgroup -S -g 1001 a12; " +
+        "adduser -S --home /home/a12 --uid 1001 --ingroup a12 a12; " +
+        "mkdir -p /var/lib/a12; " +
+        "chown -R a12:a12 /var/lib/a12; " +
+        "chown -R a12:a12 /etc/nginx; " +
+        "chown -R a12:a12 /var/cache/nginx;" +
+        "chown -R a12:a12 /var/run/nginx.pid;"
+    user "a12"
+    workingDir "/var/lib/a12/application"
+    label(imageLabels)
+    defaultCommand "/bin/sh\" , \"-c\" , \"([ -z \${NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL} ] || envsubst '\${NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL}\${NGINX_PROJECT_TEMPLATE_SERVER_ACTUATOR_URL}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf) && cat /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+}
+
+tasks.register('buildImages', DockerBuildImage) {
+    group 'docker'
+    dependsOn createDockerfile
+
+    images.add(calculateFullTag(clientName))
+    inputDir.set(file(layout.buildDirectory)) 
+    if (dockerUseCredentials.toBoolean()) {
+        dockerRegistryCredentialsForRead
+    }
+}
+
+tasks.register('pushImages', DockerPushImage) {
+    group 'docker'
+    dependsOn buildImages
+
+    images.add(calculateFullTag(clientName))
+}
+
+tasks.register('removeTagFull', DockerRemoveImage) {
+    group 'clean'
+    targetImageId calculateFullTag(clientName)
+}
+
+tasks.register('cleanImages') {
+    group 'clean'
+    dependsOn removeTagFull
+}
+
+
+tasks.register("cyclonedxBomNpm", NpxTask) {
+    group = "npm SBOM"
+    description = "Generates an SBOM using @cyclonedx/cyclonedx-npm"
+    command = "@cyclonedx/cyclonedx-npm"
+    args = ["--ignore-npm-errors", "--output-file", layout.buildDirectory.file("reports/cyclonedx.json").get().asFile.absolutePath]
+}
+
+// the report cyclonedxBom will be correctly replaced by cyclonedxBomNpm result
+tasks.cyclonedxBom.finalizedBy("cyclonedxBomNpm")

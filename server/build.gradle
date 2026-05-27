@@ -1,0 +1,151 @@
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
+import com.bmuschko.gradle.docker.tasks.image.*
+import com.mgmtp.a12.JavaOptsConstants
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
+subprojects {
+    dependencyLocking {
+        lockAllConfigurations()
+    }
+
+    ext.bootRunVar = {
+        jvmArgs = JavaOptsConstants.HAZELCAST_JVM_ARGUMENTS
+    }
+
+    ext.artifactsVar = {
+        archives bootJar
+    }
+
+    ext.publishingVar = {
+        publications {
+            serverBootJar(MavenPublication) {
+                groupId = rootProject.group
+                artifactId = serviceName
+                version = project.version
+
+                artifact bootJar
+            }
+        }
+    }
+
+    if (!skipCheckstyle.toBoolean()) {
+        apply plugin: 'checkstyle'
+
+        def configDir = "${project.rootDir}/quality/checkstyle"
+
+        checkstyle {
+            toolVersion "${checkstyleVersion}"
+            configFile file("$configDir/checkstyle.xml")
+            configProperties = ['importControlFile': "${configDir}/import-control.xml"]
+            ignoreFailures false
+        }
+
+        tasks.withType(Checkstyle).configureEach {
+            if (name == "checkstyleGeneratedTypings") {
+                enabled = false
+            }
+            
+            reports {
+                xml.required = true
+                html.required = true
+            }
+        }
+    }
+
+    // build server image using spring layer index approach
+    tasks.register('createDockerfile', Dockerfile) {
+        group 'docker'
+        dependsOn build
+
+        destFile = layout.buildDirectory.file("Dockerfile")
+
+        def baseImage = "${dockerRegistryForRead}/${dockerSeverBaseImage}"
+
+        // NOTE: Apple Silicon users may experience bad performance
+        def currentArchitecture = DefaultNativePlatform.currentArchitecture
+        if (currentArchitecture.isArm() || (currentArchitecture.getName().toLowerCase() in ['aarch64', 'arm64'])) {
+            baseImage = "--platform=linux/amd64 $baseImage"
+        }
+
+        from "$baseImage as builder"
+        workingDir "extracted"
+        arg "JAR_FILE=libs/${project.name}-${project.version}.jar"
+        environmentVariable "JAVA_TOOL_OPTIONS", JavaOptsConstants.HAZELCAST_JVM_ARGUMENTS.join(' ')
+        copyFile "\${JAR_FILE}", "application.jar"
+        runCommand "java -Djarmode=layertools -jar application.jar extract"
+
+        from baseImage
+        label(imageLabels)
+        runCommand "set -eux; " +
+            "groupadd -r -g 1001 a12; " +
+            "useradd -r -m -d /home/a12 -u 1001 -g 1001 a12; " +
+            "mkdir -p /var/lib/a12/application/logs; " +
+            "chown -R a12:a12 /var/lib/a12;"
+        user "a12"
+        workingDir "/var/lib/a12/application"
+        copyFile "--from=builder extracted/dependencies/", "./"
+        copyFile "--from=builder extracted/spring-boot-loader/", "./"
+        copyFile "--from=builder extracted/snapshot-dependencies/", "./"
+        copyFile "--from=builder extracted/application/", "./"
+        entryPoint "java", "org.springframework.boot.loader.launch.JarLauncher", "\$JAVA_OPTS"
+    }
+
+    tasks.register('buildImages', DockerBuildImage) {
+        group 'docker'
+        dependsOn createDockerfile
+
+        images.add(calculateFullTag(serviceName))
+        inputDir.set(file(layout.buildDirectory))
+        if (dockerUseCredentials.toBoolean()) {
+            dockerRegistryCredentialsForRead
+        }
+    }
+
+    tasks.register('pushImages', DockerPushImage) {
+        group 'docker'
+        dependsOn buildImages, ':import:publish'
+        images.add(calculateFullTag(serviceName))
+    }
+
+
+    tasks.register('removeTagFull', DockerRemoveImage) {
+        group 'clean'
+        targetImageId calculateFullTag(serviceName)
+    }
+
+    tasks.register('cleanImages') {
+        group 'clean'
+        dependsOn removeTagFull
+    }
+}
