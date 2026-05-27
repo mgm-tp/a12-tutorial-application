@@ -104,7 +104,7 @@ tasks.register('runTypedAccessorGenerator', JavaExec) {
     mainClass = 'com.mgmtp.a12.kernel.md.document.typed_accessor_gen.TypedAccessorGenerator'
 
     def modelPath = rootProject.file('build/wcf-output/data/models')
-    def packagePrefix = 'com.mgmtp.a12.template.server.typings'
+    def packagePrefix = 'com.mgmtp.a12.tutorial.server.typings'
 
     doFirst {
         // The model header is the only definitive type test; Document Models and Composed Document Models
@@ -134,7 +134,7 @@ processResources {
 }
 
 springBoot {
-    mainClass = 'com.mgmtp.a12.template.server.ProjectTemplateServerApplication'
+    mainClass = 'com.mgmtp.a12.tutorial.server.TutorialServerApplication'
     buildInfo {
         properties {
             version = project.version

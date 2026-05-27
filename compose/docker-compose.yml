@@ -35,7 +35,7 @@ services:
     image: ${FRONTEND_IMAGE}
     container_name: ${PROJECT_NAME}_frontend
     environment:
-      NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL: http://server:8080/api
+      NGINX_A12_TUTORIAL_APPLICATION_SERVER_BASE_URL: http://server:8080/api
       NGINX_PROJECT_TEMPLATE_SERVER_ACTUATOR_URL: http://server:8080/actuator
     ports:
       - 8081:8081

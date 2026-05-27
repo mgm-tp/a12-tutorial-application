@@ -30,7 +30,7 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-rootProject.name = 'your-project-name'
+rootProject.name = 'a12-tutorial-application'
 
 include 'client'
 include 'compose'

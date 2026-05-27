@@ -30,26 +30,16 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-package com.mgmtp.a12.template.server.init.migration;
+package com.mgmtp.a12.tutorial.server;
 
-import com.mgmtp.a12.dataservices.common.events.CommonDataServicesEventListener;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.SpringApplication;
 
+import com.mgmtp.a12.dataservices.DataServicesApplication;
 
-/**
- * This {@link MigrationConfiguration} class prevents {@link CommonDataServicesEventListener} in {@link PersonMigration}
- * from calling multiple times even the migration task is already executed.
- * This improves the application's performance.
- **/
-@Configuration
-public class MigrationConfiguration {
-    private boolean isEnabled;
-
-    public boolean isEnabled() {
-        return isEnabled;
-    }
-
-    public void setEnabled(boolean isEnabled) {
-        this.isEnabled = isEnabled;
+@DataServicesApplication(scanBasePackages = {DataServicesApplication.DATASERVICES_BASE_PACKAGE,
+        "com.mgmtp.a12.tutorial.server", "com.mgmtp.a12.rmc"})
+public class TutorialServerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(TutorialServerApplication.class, args);
     }
 }

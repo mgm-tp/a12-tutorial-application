@@ -30,16 +30,24 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
-package com.mgmtp.a12.template.server;
+package com.mgmtp.a12.tutorial.server.event;
 
-import org.springframework.boot.SpringApplication;
+import org.springframework.stereotype.Component;
 
-import com.mgmtp.a12.dataservices.DataServicesApplication;
+import com.mgmtp.a12.dataservices.common.events.CommonDataServicesEventListener;
+import com.mgmtp.a12.dataservices.common.events.ContentTypeDetectedEvent;
+import com.mgmtp.a12.tutorial.server.attachment.MimeTypeValidator;
 
-@DataServicesApplication(scanBasePackages = {DataServicesApplication.DATASERVICES_BASE_PACKAGE,
-        "com.mgmtp.a12.template.server", "com.mgmtp.a12.rmc"})
-public class ProjectTemplateServerApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(ProjectTemplateServerApplication.class, args);
+@Component
+public class AttachmentEventListener {
+    private final MimeTypeValidator mimeTypeValidator;
+
+    public AttachmentEventListener(MimeTypeValidator mimeTypeValidator) {
+        this.mimeTypeValidator = mimeTypeValidator;
+    }
+
+    @CommonDataServicesEventListener
+    public void onContentTypeDetection(ContentTypeDetectedEvent event) {
+        mimeTypeValidator.validateMimeType(event.getDetectedMimeType());
     }
 }

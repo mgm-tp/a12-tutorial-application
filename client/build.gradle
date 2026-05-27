@@ -142,7 +142,7 @@ tasks.register('createDockerfile', Dockerfile) {
     user "a12"
     workingDir "/var/lib/a12/application"
     label(imageLabels)
-    defaultCommand "/bin/sh\" , \"-c\" , \"([ -z \${NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL} ] || envsubst '\${NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL}\${NGINX_PROJECT_TEMPLATE_SERVER_ACTUATOR_URL}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf) && cat /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+    defaultCommand "/bin/sh\" , \"-c\" , \"([ -z \${NGINX_A12_TUTORIAL_APPLICATION_SERVER_BASE_URL} ] || envsubst '\${NGINX_A12_TUTORIAL_APPLICATION_SERVER_BASE_URL}\${NGINX_PROJECT_TEMPLATE_SERVER_ACTUATOR_URL}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf) && cat /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
 }
 
 tasks.register('buildImages', DockerBuildImage) {

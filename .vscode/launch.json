@@ -24,7 +24,7 @@
             "type": "java",
             "name": "server start (local-db)",
             "request": "launch",
-            "mainClass": "com.mgmtp.a12.template.server.ProjectTemplateServerApplication",
+            "mainClass": "com.mgmtp.a12.tutorial.server.TutorialServerApplication",
             "args": [
                 "--spring.profiles.active=local-db-env"
             ],
@@ -43,7 +43,7 @@
             "type": "java",
             "name": "server start (postgres-in-file)",
             "request": "launch",
-            "mainClass": "com.mgmtp.a12.template.server.ProjectTemplateServerApplication",
+            "mainClass": "com.mgmtp.a12.tutorial.server.TutorialServerApplication",
             "args": [
                 "--spring.profiles.active=dev-env"
             ],
@@ -62,7 +62,7 @@
             "type": "java",
             "name": "init app start (local-db)",
             "request": "launch",
-            "mainClass": "com.mgmtp.a12.template.server.init.ProjectTemplateInitApplication",
+            "mainClass": "com.mgmtp.a12.tutorial.server.init.TutorialInitApplication",
             "args": [
                 "--spring.profiles.active=local-db-env"
             ],
@@ -81,7 +81,7 @@
             "type": "java",
             "name": "init app start (postgres-in-file)",
             "request": "launch",
-            "mainClass": "com.mgmtp.a12.template.server.init.ProjectTemplateInitApplication",
+            "mainClass": "com.mgmtp.a12.tutorial.server.init.TutorialInitApplication",
             "args": [
                 "--spring.profiles.active=dev-env"
             ],

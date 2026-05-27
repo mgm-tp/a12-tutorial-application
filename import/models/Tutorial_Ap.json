@@ -1,6 +1,6 @@
 {
   "header": {
-    "id": "Contact_Ap",
+    "id": "Tutorial_Ap",
     "modelType": "application",
     "modelVersion": "6.0.0",
     "locales": [
@@ -9,6 +9,16 @@
       },
       {
         "code": "de"
+      }
+    ],
+    "labels": [
+      {
+        "locale": "en",
+        "text": "A12 Tutorial Application"
+      },
+      {
+        "locale": "de",
+        "text": "A12 Tutorial Application"
       }
     ],
     "annotations": [
@@ -124,11 +134,28 @@
           "layout": {
             "name": "MasterDetail"
           }
+        },
+        {
+          "name": "SIDEBAR",
+          "layout": {
+            "name": "Null"
+          }
+        },
+        {
+          "name": "MODAL",
+          "layout": {
+            "name": "Stack"
+          }
         }
       ]
     },
     "defaultRegion": [
       "CONTENT"
-    ]
+    ],
+    "initialActivity": {
+      "descriptor": {
+        "module": "Contact"
+      }
+    }
   }
 }

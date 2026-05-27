@@ -40,7 +40,7 @@ http {
        }
 
        location /api {
-            proxy_pass ${NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL};
+            proxy_pass ${NGINX_A12_TUTORIAL_APPLICATION_SERVER_BASE_URL};
             proxy_redirect off;
             proxy_pass_request_headers on;
        }

@@ -1,6 +1,6 @@
 {
-  "name": "@com.mgmtp.your-project-name/client",
-  "description": "Your-Project-Name",
+  "name": "@com.mgmtp.a12-tutorial-application/client",
+  "description": "A12 Tutorial Application",
   "publishConfig": {
     "registry": "<YOUR_CLIENT_PUBLISH_CONFIG_REGISTRY>"
   },
