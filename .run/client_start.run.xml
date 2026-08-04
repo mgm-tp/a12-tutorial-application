@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="client start" type="ShConfigurationType">
+    <option name="EXECUTE_SCRIPT_FILE" value="false" />
+    <option name="SCRIPT_TEXT" value="npm start" />
+    <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/client" />
+    <option name="INTERPRETER_PATH" value="/bin/sh" />
+    <option name="EXECUTE_IN_TERMINAL" value="true" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -1,0 +1,22 @@
+{
+  "name": "@com.mgmtp.a12.projecttemplate/project-template-local-auth",
+  "version": "202606.0.1",
+  "description": "Project Template",
+  "repository": {
+    "type": "git",
+    "url": "<YOUR_REPO_URL>,"
+  },
+  "publishConfig": {
+    "registry": "<YOUR_PUBLISH_CONFIG_REGISTRY>"
+  },
+  "keywords": [
+    "a12",
+    "project",
+    "template"
+  ],
+  "author": "mgm technology partners",
+  "license": "(EUPL-1.2 OR LicenseRef-commercial)",
+  "scripts": {
+    "prepack": "cat .gitignore >> .npmignore;"
+  }
+}

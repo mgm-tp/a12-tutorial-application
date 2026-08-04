@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="server start (local-db)" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.mgmtp.a12.template.server.ProjectTemplateServerApplication" />
+    <option name="PROGRAM_PARAMETERS" value="--spring.profiles.active=local-db-env" />
+    <option name="VM_PARAMETERS"
+            value="--add-modules java.se --add-exports java.base/jdk.internal.ref=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.management/sun.management=ALL-UNNAMED --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/app" />
+    <module name="your-project-name.server.app.main" />
+    <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

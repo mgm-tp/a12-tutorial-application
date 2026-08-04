@@ -1,0 +1,144 @@
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
+plugins {
+    id 'java'
+    alias(gradlePluginLibs.plugins.spring.boot)
+    alias(gradlePluginLibs.plugins.test.logger)
+}
+
+ext {
+    serviceName = rootProject.serverName
+    imageLabels = ["name"       : "${calculateShortTag(rootProject.serverName)}".toString(),
+                   "vendor"     : "mgm technology partners GmbH",
+                   "version"    : project.version,
+                   "release"    : rootProject.a12ReleaseLine,
+                   "summary"    : "A Data Services extensible server application that provides all functionalities to facilitate A12 Application",
+                   "description": "A Data Services server with API and implementations to deal with models and documents supporting creation, retrieval, update, deletion and querying"]
+}
+
+configurations {
+    runTypedAccessorGeneratorConfig
+}
+
+def generatedTypingsOutputDir = layout.buildDirectory.dir("generatedTypings").get().asFile
+
+sourceSets {
+    generatedTypings {
+        java {
+            srcDir(generatedTypingsOutputDir)
+        }
+    }
+    main {
+        java {
+            compileClasspath += sourceSets.generatedTypings.output
+            runtimeClasspath += sourceSets.generatedTypings.output
+        }
+    }
+}
+
+dependencies {
+    // Spring
+    annotationProcessor libs.spring.boot.configuration.processor
+    developmentOnly(libs.spring.boot.devtools)
+
+    // A12 Dataservices
+    implementation a12Libs.dataservices.server.app
+    // dev/SME only — excluded from the production build
+    developmentOnly(a12Libs.dataservices.sme.workspace.support)
+    implementation a12Libs.rmc.conversion
+
+    // A12 UAA
+    implementation a12Libs.uaa.authorization.a12.extension
+    implementation a12Libs.uaa.authorization.introspector
+
+    // Native BOMs
+    implementation(platform(a12Libs.base.bom))
+    implementation(platform(a12Libs.kernel.bom))
+    implementation(platform(a12Libs.uaa.bom))
+    implementation(platform(a12Libs.dataservices.bom))
+
+    // for logback.xml configurations
+	//implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+    implementation(libs.logstash)
+    implementation(libs.logback.classic)
+
+    runTypedAccessorGeneratorConfig group: 'com.mgmtp.a12.kernel', name: 'kernel-md-facade', version: a12Libs.versions.kernel.get(), classifier: 'typed-accessor-gen-cli'
+    generatedTypingsImplementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-document-v2', version: a12Libs.versions.kernel.get()
+    implementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-facade', version: a12Libs.versions.kernel.get()
+}
+
+
+tasks.register('runTypedAccessorGenerator', JavaExec) {
+    dependsOn ':convertModels'
+    classpath = configurations.runTypedAccessorGeneratorConfig
+    mainClass = 'com.mgmtp.a12.kernel.md.document.typed_accessor_gen.TypedAccessorGenerator'
+
+    def modelPath = rootProject.file('build/wcf-output/data/models')
+    def packagePrefix = 'com.mgmtp.a12.template.server.typings'
+
+    doFirst {
+        def documentModels = fileTree(dir: modelPath, include: ['**/*_DM.json', '**/*_CDM.json'])
+        if (!documentModels || documentModels.isEmpty()) {
+            throw new org.gradle.api.GradleException("No converted document models found in ${modelPath}")
+        }
+        def argsList = []
+        argsList += ['--document-model-file', documentModels.first().absolutePath]
+        argsList += ['--package-prefix', packagePrefix]
+        argsList += ['--output-dir', generatedTypingsOutputDir]
+        documentModels.each { File jsonFile ->
+            argsList += ['-i', jsonFile.absolutePath]
+        }
+        args argsList
+    }
+}
+
+tasks.named('compileGeneratedTypingsJava').configure { dependsOn(runTypedAccessorGenerator) }
+
+processResources {
+    dependsOn ':convertModels'
+}
+
+springBoot {
+    mainClass = 'com.mgmtp.a12.template.server.ProjectTemplateServerApplication'
+    buildInfo {
+        properties {
+            version = project.version
+        }
+    }
+}
+
+bootRun bootRunVar
+
+artifacts artifactsVar
+
+publishing publishingVar

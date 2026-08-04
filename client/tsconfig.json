@@ -1,0 +1,57 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "declarationMap": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2023",
+      "ES2024.arraybuffer",
+      "ES2024.collection",
+      "ES2024.object",
+      "ES2024.promise",
+      "ES2024.regexp",
+      //"ES2024.sharedmemory", -> newly available since November 2025
+      "ES2024.string",
+      "ES2025.collection",
+      "ES2025.float16",
+      "ES2025.intl",
+      "ES2025.iterator",
+      "ES2025.promise",
+      "ES2025.regexp"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "newLine": "LF",
+    "noEmit": true,
+    "noEmitOnError": true,
+    "noErrorTruncation": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "outDir": "build/javascript",
+    "preserveConstEnums": true,
+    "resolveJsonModule": true,
+    "rootDir": "./src",
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2025",
+    "tsBuildInfoFile": "./build/tsconfig.tsbuildinfo",
+    "types": [
+      "webpack-env"
+    ],
+    "verbatimModuleSyntax": true
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}

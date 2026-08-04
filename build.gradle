@@ -1,0 +1,256 @@
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
+import com.mgmtp.a12.Utils
+import groovy.json.JsonSlurper
+
+plugins {
+    alias(gradlePluginLibs.plugins.docker.remote.api)
+    alias(gradlePluginLibs.plugins.versions.update)
+    alias(gradlePluginLibs.plugins.sbom)
+    id 'idea'
+}
+apply from: 'copyright/copyright.gradle'
+
+
+idea {
+    module {
+        downloadSources = true
+    }
+} 
+
+
+allprojects {
+    apply plugin: 'base'
+
+    def packageJson = new JsonSlurper().parse rootProject.file('package.json')
+    // Version is resolved here (not inside the 'initProject' task) so that every Gradle invocation
+    // agrees on it - 'getVersion', 'cleanImages' and 'prerelease' would otherwise diverge, because
+    // the lazily-wired 'initProject' is only realized for 'prerelease'.
+    if (rootProject.hasProperty('releaseVersion')) {
+        version = rootProject.getProperty('releaseVersion')
+    } else {
+        String baseVersion = packageJson.version?.trim() ? packageJson.version.split('-')[0].trim() : rootProject.a12ReleaseLine
+        if (System.env.BUILD_NUMBER) {
+            // TODO: We currently keep it simple here to publish only current build version. You should update this pattern to adapt with your project's strategy.
+            version = baseVersion + "-build.${String.format("%05d", Integer.parseInt(System.env.BUILD_NUMBER))}"
+        } else {
+            version = baseVersion
+        }
+    }
+
+    plugins.withId('org.cyclonedx.bom') {
+        tasks.named('cyclonedxBom').configure {
+            jsonOutput.set(layout.buildDirectory.file("reports/cyclonedx.json"))
+            xmlOutput.unsetConvention()
+        }
+    }
+}
+
+project.ext {
+    imageGroup = project.group
+}
+
+subprojects {
+    apply {
+        plugin 'maven-publish'
+        plugin 'com.bmuschko.docker-remote-api'
+        plugin 'org.cyclonedx.bom'
+    }
+
+    ext.registryCredentialsForPublishVar = {
+        url = dockerRegistryForPublish
+        username = project.repository_username
+        password = project.repository_password
+    }
+
+    ext.registryCredentialsForReadVar = {
+        url = dockerRegistryForRead
+        username = project.repository_username
+        password = project.repository_password
+    }
+
+    if (dockerUseCredentials.toBoolean()) {
+        docker {
+            url = project.findProperty('dockerHost') ?: url.get()
+            registryCredentials registryCredentialsForPublishVar
+        }
+
+        ext.dockerRegistryCredentialsForRead = docker {
+            registryCredentials registryCredentialsForReadVar
+        }
+    }
+
+    ext.calculateShortTag = { String name -> "${rootProject.name}-${name}" }
+    ext.calculateFullTag = { String name ->
+        if (project.hasProperty("variant")) {
+            String variant = project.getProperty("variant")
+            "${dockerRegistryForPublish}/${imageGroup}/${name}/${variant}:${project.version}".toString()
+        } else {
+            "${dockerRegistryForPublish}/${imageGroup}/${name}:${project.version}".toString()
+        }
+    }
+}
+
+check.dependsOn('validateCopyrightHeaders')
+
+tasks.register('getVersion') {
+    println project.version
+}
+
+def readmeFile = file("README.md")
+def versionsFile = file("tool-versions.json")
+//should run with every build
+tasks.named('build').configure { dependsOn('updateReadmeToolsVersions') }
+tasks.register('updateReadmeToolsVersions') {
+    group 'Config'
+    description "Checks if './tool-versions.json' file was changed and updates tool versions table in README accordingly."
+
+    def diffExitCode
+    try {
+        println "\nChecking diff of '$versionsFile.name'."
+        diffExitCode = providers.exec {
+            commandLine("git diff --ignore-cr-at-eol --exit-code HEAD $versionsFile".split(" "))
+            ignoreExitValue = true
+        }.getResult().get().rethrowFailure().getExitValue()
+    } catch (Exception e) {
+        logger.warn("""\
+                There is probably no git installed on the system. Diff for '$versionsFile.name' finished with error:
+                $e
+                Tool versions table will be updated regardless of diff.""".stripIndent())
+        diffExitCode = 127
+    }
+
+    if (diffExitCode == 0) {
+        println "'$versionsFile.name' not changed, no need to update '$readmeFile.name' tool versions table.\n"
+    } else {
+        println "'$versionsFile.name' possibly changed, updating tool versions table in '$readmeFile.name' from '$versionsFile.name'."
+        Utils.updateReadmeToolVersions(versionsFile, readmeFile)
+    }
+}
+
+//should run with every build
+tasks.named('check').configure { dependsOn('checkToolVersions') }
+tasks.register('checkToolVersions') {
+    group 'Config'
+    description 'Checks if tool system versions satisfy required versions in \'./tool-versions.json\' file.'
+    Utils.checkAllToolVersions(providers, versionsFile)
+}
+
+tasks.register('initProject') {
+}
+
+tasks.register('test') {
+    dependsOn initProject
+}
+
+tasks.register('prerelease') {
+    dependsOn test, initProject
+}
+
+subprojects.each { sub ->
+    tasks.named('test').configure {
+        dependsOn sub.tasks.matching { it.name == 'test' || it.name == 'checkstyleMain' }
+    }
+    tasks.named('prerelease').configure {
+        dependsOn sub.tasks.matching { it.name == 'pushImages' }
+    }
+}
+
+tasks.register("replacePlaceholders") {
+    doLast {
+        logger.warn("WARNING: There should not be data persisted, when running 'replacePlaceholders', find more details in the documentation.")
+        def filesContainingDocs = fileTree("${project.projectDir}")
+        def setupFile = new File("setup.json")
+        Utils.replacePlaceholders(setupFile, filesContainingDocs, project.projectDir.path)
+    }
+}
+
+dependencyLocking {
+    lockAllConfigurations()
+}
+
+configurations {
+    wcfCli {
+        attributes {
+            attribute(org.gradle.api.attributes.Bundling.BUNDLING_ATTRIBUTE,
+                    objects.named(org.gradle.api.attributes.Bundling, org.gradle.api.attributes.Bundling.EXTERNAL))
+        }
+    }
+}
+
+dependencies {
+    wcfCli a12Libs.dataservices.wcf.cli
+    wcfCli a12Libs.rmc.conversion
+}
+
+def importModelsDir = file('import/models')
+def wcfOutputDir = layout.buildDirectory.dir('wcf-output').get().asFile
+
+tasks.register('convertModels', Exec) {
+    description = 'Convert WCF source models in import/models to RMC in build/wcf-output/data/models'
+    group = 'model'
+
+    doFirst {
+        wcfOutputDir.deleteDir()
+        wcfOutputDir.mkdirs()
+        def cp = configurations.wcfCli.files.collect { it.absolutePath }.join(File.pathSeparator)
+        def convertersJar = configurations.wcfCli.files.find { it.name.startsWith('conversion-') }
+        if (convertersJar == null) {
+            throw new GradleException("Could not find RMC conversion jar in wcfCli configuration. " +
+                "Available: ${configurations.wcfCli.files*.name}")
+        }
+        commandLine 'java', '-cp', cp, 'com.mgmtp.a12.dataservices.wcf.WcfCli',
+                importModelsDir.absolutePath, wcfOutputDir.absolutePath,
+                '-c', convertersJar.absolutePath
+    }
+
+    inputs.dir importModelsDir
+    outputs.dir file("${wcfOutputDir}/data/models")
+}
+
+tasks.register('cleanConvertedModels', Delete) {
+    delete wcfOutputDir
+}
+tasks.named('clean').configure { dependsOn('cleanConvertedModels') }
+
+tasks.register("buildImagesComposeUp") {
+    group 'Docker'
+
+    description 'Alias for combining image build and docker compose tasks to improve user experience.'
+
+    subprojects.each {
+        dependsOn it.getTasksByName('buildImages', true)
+
+    }
+    finalizedBy ':compose:composeUp'
+}

@@ -1,0 +1,149 @@
+#
+# SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+#
+# Copyright (c) 2012-2026 mgm technology partners GmbH
+#
+# Dual License
+# ------------
+# This source file is part of the mgm A12 Platform and available under
+# a choice of two different licenses:
+#
+# 1. Open-Source License - EUPL v1.2
+#    You may redistribute and/or modify this file under the terms of the
+#    European Union Public License, version 1.2 - see https://eupl.eu/.
+#
+# 2. Commercial License
+#    Alternatively, you may obtain a commercial license from
+#    mgm technology partners GmbH, that permits use of this software
+#    under different terms (including support and maintenance services).
+#
+#    Please contact a12-license@mgm-tp.com for more information.
+#
+# You must select and comply with exactly one of the above license options.
+#
+# Warranty Disclaimer (applies to either option)
+# ----------------------------------------------
+# THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+# WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+# LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+#
+
+services:
+  frontend:
+    image: ${FRONTEND_IMAGE}
+    container_name: ${PROJECT_NAME}_frontend
+    environment:
+      NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL: http://server:8080/api
+      NGINX_PROJECT_TEMPLATE_SERVER_ACTUATOR_URL: http://server:8080/actuator
+    ports:
+      - 8081:8081
+    depends_on:
+      - "server"
+    networks:
+      - a12_compose
+
+  server:
+    image: ${SERVER_IMAGE}
+    container_name: ${PROJECT_NAME}_server
+    environment:
+      SPRING_PROFILES_ACTIVE: dev-env,dataservices-external_postgres
+      SERVER_PORT: 8080
+      SERVER_ADDRESS: 0.0.0.0
+
+      SPRING_DATASOURCES_DATASERVICES_URL: jdbc:postgresql://postgres:5432/${DATASERVICES_DB}
+      SPRING_DATASOURCES_DATASERVICES_USERNAME: ${DATASERVICES_USERNAME}
+      SPRING_DATASOURCES_DATASERVICES_PASSWORD: ${DATASERVICES_PASSWORD}
+      SPRING_DATASOURCES_CONTENTSTORE_URL: jdbc:postgresql://postgres:5432/${CONTENTSTORE_DB}
+      SPRING_DATASOURCES_CONTENTSTORE_USERNAME: ${CONTENTSTORE_USERNAME}
+      SPRING_DATASOURCES_CONTENTSTORE_PASSWORD: ${CONTENTSTORE_PASSWORD}
+      SPRING_DATASOURCES_CONTENTSTORE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE: postgresql
+      SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      MGMTP_A12_DATASERVICES_CONTENTSTORE_BASE-URL: http://localhost:8082
+      MGMTP_A12_DATASERVICES_QUERY_REINDEXING_MODE: rebuild_index
+      MGMTP_A12_UAA_AUTHENTICATION_PRINCIPAL_ACCESS-RIGHTS-RESOURCE: file:/var/lib/a12/data/import/auth/roles.yaml
+      MGMTP_A12_UAA_AUTHORIZATION_CHILD-AUTHORIZATION-DEFINITIONS: file:/var/lib/a12/data/import/auth/childAuthorizationDefinition.json
+      MGMTP_A12_DATASERVICES_INITIALIZATION_IMPORT_MODELS_PATH: file:/var/lib/a12/data/models/
+      MGMTP_A12_UAA_AUTHENTICATION_PRINCIPAL_LOCAL-CONFIG_USER-RESOURCES: file:/var/lib/a12/data/import/auth/users/*.yaml
+      MGMTP_A12_DATASERVICES_INITIALIZATION_SCRIPTS_JSONRPC_ENABLED: false
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      server-init:
+        # when applying server-init profile, it must be completed successfully.
+        # make sure you have docker compose version 2.20.2 or higher to use this feature.
+        required: false
+        condition: service_completed_successfully
+    networks:
+      - a12_compose
+    ports:
+      - 8082:8080
+    volumes:
+      - ../import:/var/lib/a12/data/import
+      - ../build/wcf-output/data/models:/var/lib/a12/data/models
+
+  server-init:
+    image: ${SERVER_INIT_IMAGE}
+    container_name: ${PROJECT_NAME}_server-init
+    environment:
+      SPRING_PROFILES_ACTIVE: dev-env,dataservices-external_postgres
+      SPRING_DATASOURCES_DATASERVICES_URL: jdbc:postgresql://postgres:5432/${DATASERVICES_DB}
+      SPRING_DATASOURCES_DATASERVICES_USERNAME: ${DATASERVICES_USERNAME}
+      SPRING_DATASOURCES_DATASERVICES_PASSWORD: ${DATASERVICES_PASSWORD}
+      SPRING_DATASOURCES_CONTENTSTORE_URL: jdbc:postgresql://postgres:5432/${CONTENTSTORE_DB}
+      SPRING_DATASOURCES_CONTENTSTORE_USERNAME: ${CONTENTSTORE_USERNAME}
+      SPRING_DATASOURCES_CONTENTSTORE_PASSWORD: ${CONTENTSTORE_PASSWORD}
+      SPRING_DATASOURCES_CONTENTSTORE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE: postgresql
+      SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      MGMTP_A12_DATASERVICES_INITIALIZATION_SCRIPTS_JSONRPC_PATHS: file:/var/lib/a12/data/import/data/request/*.json
+      MGMTP_A12_DATASERVICES_INITIALIZATION_IMPORT_MODELS_PATH: file:/var/lib/a12/data/models/
+    profiles:
+      - server-init
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - a12_compose
+    volumes:
+      - ../import:/var/lib/a12/data/import
+      - ../build/wcf-output/data/models:/var/lib/a12/data/models
+
+  postgres:
+    image: ${DOCKER_REGISTRY_FOR_READ}/postgres:${POSTGRES_VERSION}
+    container_name: ${PROJECT_NAME}_postgres
+    ports:
+      - 8083:5432
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DATASERVICES_USER: ${DATASERVICES_USERNAME}
+      DATASERVICES_PASSWORD: ${DATASERVICES_PASSWORD}
+      DATASERVICES_DB: ${DATASERVICES_DB}
+      CONTENTSTORE_USER: ${CONTENTSTORE_USERNAME}
+      CONTENTSTORE_PASSWORD: ${CONTENTSTORE_PASSWORD}
+      CONTENTSTORE_DB: ${CONTENTSTORE_DB}
+    healthcheck:
+      # Checks whether Postgres is ready.
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready --username your-ds-username --dbname your-ds-db-name && pg_isready --username your-cs-username --dbname your-cs-db-name",
+        ]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/db-init.sh:/docker-entrypoint-initdb.d/db-init.sh
+    networks:
+      - a12_compose
+
+networks:
+  a12_compose:
+    driver: bridge
+
+volumes:
+  postgres_data:

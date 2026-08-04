@@ -1,0 +1,102 @@
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
+rootProject.name = 'your-project-name'
+
+include 'client'
+include 'compose'
+include 'server'
+include 'server:app'
+include 'server:init'
+include 'import'
+include 'e2e'
+
+dependencyResolutionManagement {
+    def springBootVersion = '4.0.6'
+    versionCatalogs {
+        gradlePluginLibs {
+            version('spring-boot', springBootVersion)
+            version('test-logger', '4.0.0')
+            version('docker-compose', '0.17.21')
+            version('docker-remote-api', '10.0.0')
+            version('versions-update', '0.53.0')
+            version('node-gradle', '7.1.0')
+            version('sbom', '3.2.0')
+
+            plugin('spring-boot', 'org.springframework.boot').versionRef('spring-boot')
+            plugin('test-logger', 'com.adarshr.test-logger').versionRef('test-logger')
+            plugin('docker-compose', 'com.avast.gradle.docker-compose').versionRef('docker-compose')
+            plugin('docker-remote-api', 'com.bmuschko.docker-remote-api').versionRef('docker-remote-api')
+            plugin('versions-update', 'com.github.ben-manes.versions').versionRef('versions-update')
+            plugin('node-gradle', 'com.github.node-gradle.node').versionRef('node-gradle')
+            plugin('sbom', 'org.cyclonedx.bom').versionRef('sbom')
+        }
+
+        a12Libs {
+            version('base', '30.0.1')
+            version('kernel', '31.1.0')
+            version('uaa', '10.0.0')
+            version('dataservices', '39.0.2')
+            version('wcf', '1.1.1')
+            version('rmc-conversion', '0.4.2')
+
+            library('uaa-authorization-a12-extension', 'com.mgmtp.a12.uaa', 'uaa-authorization-a12-extension').versionRef('uaa')
+            library('uaa-authorization-introspector', 'com.mgmtp.a12.uaa', 'uaa-authorization-introspector').versionRef('uaa')
+            library('dataservices-server-app', 'com.mgmtp.a12.dataservices', 'dataservices-server-app').versionRef('dataservices')
+            library('dataservices-server-init-app', 'com.mgmtp.a12.dataservices', 'dataservices-server-init-app').versionRef('dataservices')
+            library("dataservices-sme-workspace-support", "com.mgmtp.a12.dataservices", "dataservices-sme-workspace-support").versionRef("dataservices")
+            library('dataservices-wcf-cli', 'com.mgmtp.a12.dataservices.wcf', 'dataservices-wcf-cli').versionRef('wcf')
+            library('rmc-conversion', 'com.mgmtp.a12.rmc', 'conversion').versionRef('rmc-conversion')
+
+            library('base-bom', 'com.mgmtp.a12.base', 'base-bom').versionRef('base')
+            library('kernel-bom', 'com.mgmtp.a12.kernel', 'kernel-bom').versionRef('kernel')
+            library('uaa-bom', 'com.mgmtp.a12.uaa', 'uaa-bom').versionRef('uaa')
+            library('dataservices-bom', 'com.mgmtp.a12.dataservices', 'dataservices-parent').versionRef('dataservices')
+        }
+
+        libs {
+            version('spring-boot', springBootVersion)
+            version('logstash','7.4')
+            version('logback-classic','1.5.6')
+
+            library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('spring-boot')
+            library('spring-boot-devtools', 'org.springframework.boot', 'spring-boot-devtools').versionRef('spring-boot')
+            library('logstash', 'net.logstash.logback', 'logstash-logback-encoder').versionRef('logstash')
+            library('logback-classic', 'ch.qos.logback', 'logback-classic').versionRef('logback-classic')
+        }
+
+        testCatalogLibs {
+            version('spring-boot', springBootVersion)
+            library('spring-boot-starter-test', 'org.springframework.boot', 'spring-boot-starter-test').versionRef('spring-boot')
+        }
+    }
+}

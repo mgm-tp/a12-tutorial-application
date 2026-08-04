@@ -1,0 +1,100 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "name": "client start",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [ "start" ],
+            "cwd": "${workspaceFolder}/client"
+        },
+        {
+            "type": "chrome",
+            "name": "client start [debug]",
+            "request": "launch",
+            "url": "http://localhost:8081",
+            "runtimeExecutable": "stable",
+            "webRoot": "${workspaceFolder}/client",
+            "preLaunchTask": "start client",
+            "postDebugTask": "stop client",
+            "sourceMaps": true
+        },
+        {
+            "type": "java",
+            "name": "server start (local-db)",
+            "request": "launch",
+            "mainClass": "com.mgmtp.a12.template.server.ProjectTemplateServerApplication",
+            "args": [
+                "--spring.profiles.active=local-db-env"
+            ],
+            "vmArgs": [
+                "--add-modules=java.se",
+                "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
+                "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+                "--add-opens=java.management/sun.management=ALL-UNNAMED",
+                "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
+            ],
+            "cwd": "${workspaceFolder}/server/app",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "server start (postgres-in-file)",
+            "request": "launch",
+            "mainClass": "com.mgmtp.a12.template.server.ProjectTemplateServerApplication",
+            "args": [
+                "--spring.profiles.active=dev-env"
+            ],
+            "vmArgs": [
+                "--add-modules=java.se",
+                "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
+                "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+                "--add-opens=java.management/sun.management=ALL-UNNAMED",
+                "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
+            ],
+            "cwd": "${workspaceFolder}/server/app",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "init app start (local-db)",
+            "request": "launch",
+            "mainClass": "com.mgmtp.a12.template.server.init.ProjectTemplateInitApplication",
+            "args": [
+                "--spring.profiles.active=local-db-env"
+            ],
+            "vmArgs": [
+                "--add-modules=java.se",
+                "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
+                "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+                "--add-opens=java.management/sun.management=ALL-UNNAMED",
+                "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
+            ],
+            "cwd": "${workspaceFolder}/server/init",
+            "projectName": "init"
+        },
+        {
+            "type": "java",
+            "name": "init app start (postgres-in-file)",
+            "request": "launch",
+            "mainClass": "com.mgmtp.a12.template.server.init.ProjectTemplateInitApplication",
+            "args": [
+                "--spring.profiles.active=dev-env"
+            ],
+            "vmArgs": [
+                "--add-modules=java.se",
+                "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
+                "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+                "--add-opens=java.management/sun.management=ALL-UNNAMED",
+                "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
+            ],
+            "cwd": "${workspaceFolder}/server/init",
+            "projectName": "init"
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "A12PT-admintest"
+  },
+  "user1": {
+    "username": "user1",
+    "password": "A12PT-user1test"
+  },
+  "user2": {
+    "username": "user2",
+    "password": "A12PT-user2test"
+  }
+}

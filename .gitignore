@@ -1,0 +1,39 @@
+# Tools / IDE
+.classpath
+.project
+.settings
+.idea
+.sdkmanrc
+**/*.iml
+
+# Dev configs
+**/developer.properties
+
+# Build tools
+**/.gradle/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Build directories
+**/build
+# Exception: the "build" Claude Code skill is not a build-output directory
+!.claude/skills/build/
+**/bin
+**/out
+**/target
+**/node_modules
+**/lib
+**/.npm
+
+# Log files
+*.log
+*.gz
+*.tgz
+
+# Other
+**/*.bak
+*.txt
+!licenses/*.txt
+.DS_Store
+/server/postgres/
